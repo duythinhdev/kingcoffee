@@ -1,0 +1,56 @@
+<app-header [title]="'Order Detail'"></app-header>
+<ion-content class="profile animated fadeIn common-bg">
+  <!-- anh -->
+  <ion-list class="my-order-detail" no-lines>
+    <ion-item class="pl-10 pr-10">
+      <h4 class="fl-l">{{statusText}}</h4>
+      <div class="order-detail">
+        <div class="product-img">
+          <img
+            [src]="order.details[0]?.product?.mainImage?.mediumPath"
+            alt="Sản phẩm"
+            width="100"
+            height="100"
+          />
+        </div>
+        <div class="product-content">
+          <p style="white-space: normal; color: black">
+            <b> {{order.details[0]?.product?.name}} </b>
+          </p>
+          <p style="white-space: normal; color: black">
+            <b> {{order.details[0]?.product?.sku}} </b>
+          </p>
+          <p style="white-space: normal; padding-top: 10px">
+            {{order.totalProducts}} sản phẩm |
+            <span style="color: red"
+              >{{order.totalPrice || 0 | number : '1.0-0'}} đ</span
+            >
+          </p>
+        </div>
+      </div>
+    </ion-item>
+
+    <ion-item class="pl-10 pr-10">
+      <ion-row>
+        <ion-col>
+          <h2 class="fl-l" col-12>Theo dõi đơn hàng</h2>
+        </ion-col>
+        <ion-col col-12>
+          <ul class="StepProgress">
+            <li
+              class="StepProgress-item"
+              [ngClass]="{'is-done': status.isDone}"
+              *ngFor="let status of statuses"
+            >
+              <h4 class="fl-l">{{status.value}}</h4>
+              <p *ngIf="status.createdAt">
+                {{status?.createdAt | date: 'HH:mm - dd/MM/yyyy '}}
+              </p>
+            </li>
+          </ul>
+        </ion-col>
+      </ion-row>
+    </ion-item>
+  </ion-list>
+  <!-- anh -->
+</ion-content>

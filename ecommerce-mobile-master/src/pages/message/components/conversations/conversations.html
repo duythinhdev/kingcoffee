@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="chatboxes"></ion-icon>
+    </button>
+    <ion-title>
+      <strong translate>Conversations</strong>
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content class="animated fadeIn">
+  <div class="messaging">
+    <div class="inbox_msg">
+      <div class="inbox_people">
+        <div class="list-chat">
+          <div class="headind_srch">
+            <ion-searchbar placeholder="{{'Search...' | translate}}" *ngIf="conversations.length > 0" [autocomplete]="off" [debounce]="500" [(ngModel)]="q" name="q" [(ngModel)]="myInput" [showCancelButton]="shouldShowCancel" (ionInput)="filter()">
+            </ion-searchbar>
+          </div>
+          <ion-list>
+            <div class="chat_list" *ngFor="let conversation of conversations" [ngClass]="{active_chat: conversation._id === activeConversation?._id}">
+              <div class="chat_people" (click)="selectConversation(conversation)">
+                <div class="chat_img"> <img [src]="conversation?.member?.avatarUrl" [alt]="conversation?.member?.name"> {{conversation?.name}}
+                  <div class="chat_date" *ngIf="conversation.lastMessage">{{conversation.lastMessage.createdAt | date: 'medium'}}</div>
+                </div>
+                <div class="chat_ib text-center">
+                  <p>
+                    <small *ngIf="!conversation?.lastMessage" translate>No message right now</small>
+                    <small *ngIf="conversation?.lastMessage">"{{conversation.lastMessage.text}}"</small>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="chat_ib text-center">
+                <p *ngIf="conversations.length == 0" translate>There is no conversation yet</p>
+            </div>
+          </ion-list>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

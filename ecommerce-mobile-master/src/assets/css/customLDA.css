@@ -1,0 +1,49 @@
+
+  .footer-media .toolbar-md-primary .toolbar-background-md{
+    background: linear-gradient(90deg, #0e113b 0%, #bc0073 45%, #bc0073 100%) !important;      
+  }
+
+  ion-list .pass .button{
+      color: #777777;
+  }
+
+ .button-50{
+     width: 50%;
+     margin: 5px auto;
+ }
+
+ .page-change-pass{
+    margin-top: 100px;
+ }
+
+ .page-change-pass .bt-login{
+     margin: 30px auto;
+ }
+
+ .page-change-pass ion-list ion-item ion-input{
+    border-radius: 0px;
+    border-width: 0px 0px 1px;
+    border-top-style: initial;
+    border-right-style: initial;
+    border-left-style: initial;
+    border-top-color: initial;
+    border-right-color: initial;
+    border-left-color: initial;
+    border-image: initial;
+    border-bottom: 1px solid rgb(57, 12, 73);
+    text-align: left;
+ }
+
+ .page-change-pass ion-list ion-item ion-input .text-input{
+    text-align: left;
+ }
+
+ .page-change-pass ion-list .item-md{
+    padding-left: 0px;
+ }
+ .page-change-pass .font-err{
+ }
+
+ .button-inner .icon{
+     line-height: 25px;
+ }

@@ -1,0 +1,22 @@
+image: beevelop/ionic:latest
+
+stages:
+  - deploy
+
+cache:
+  untracked: true
+  key: "$CI_PROJECT_ID"
+  paths:
+    - node_modules/
+
+build_android:
+  stage: deploy
+  only:
+    - develop
+  script:
+    - ls
+    - npm i
+    - ionic info
+    - ionic cordova platform rm android
+    - ionic cordova platform add android --verbose
+    - ionic cordova build android --verbose

@@ -1,0 +1,20 @@
+<ion-header class="header_logo">
+  <ion-navbar class="linear-bunting-flirt bg-transparent text-center">
+    <ion-icon class="icon-left" name="arrow-round-back" slot="start" (click)="close()" style="left: 15px; top: 15px;font-size: 24px; position: absolute; color: #fff; z-index: 9;"></ion-icon>
+    <ion-title class="title-head">Chính sách chung</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="wrap-training" style="margin-top: 0;">
+  <div class="pt-10 pb-10 pr-15 pl-15">
+    <ion-item-group>
+      <ion-item>
+        <a (click)="openUrl()" translate mode="ios">
+          <label style="color: #D11287; font-weight: bold; font-size: 20px;">Chính sách chung</label>
+        </a>
+      </ion-item>
+    </ion-item-group>
+  </div>
+  <iframe id="security-policy" src="https://womencando.com.vn/assets/files/html/chinh-sach-chung.html" title="womencando">
+  </iframe>
+</ion-content>

@@ -1,0 +1,39 @@
+<div class="review-list">
+  <div *ngIf="loading" class="loading-img">
+    <img src="../../../assets/img/loading-icon.gif" width="40px" />
+  </div>
+  <ion-card *ngIf="!loading">
+    <review-card
+      [options]="options"
+      (onRating)="onRating($event)"
+      class="inline"
+    ></review-card>
+    <ion-item *ngFor="let item of items; let i = index">
+      <div class="avatar">
+        <ion-avatar item-start>
+          <img [src]="item?.rater?.avatarUrl | checkPhoto" alt="img" />
+        </ion-avatar>
+      </div>
+      <div class="content">
+        <h2>
+          {{item?.rater?.name}}
+          <span>{{item.createdAt | date:'short'}}</span>
+        </h2>
+        <star-rating [rate]="item.rating"></star-rating>
+        <p>{{item?.comment}}</p>
+      </div>
+      <ion-icon
+        name="construct"
+        class="pull-right"
+        (click)="update(item, i)"
+        *ngIf="currentUserId && item.rateBy && currentUserId === item.rateBy"
+      ></ion-icon>
+    </ion-item>
+    <div class="text-center" *ngIf="items.length < total">
+      <button ion-button (click)="loadMore()">
+        <span translate>Load More</span>
+      </button>
+    </div>
+    <p class="no-review" *ngIf="!total" translate>There is no reviews.</p>
+  </ion-card>
+</div>

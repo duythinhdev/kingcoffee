@@ -1,0 +1,429 @@
+<ion-header class="header_logo">
+  <ion-toolbar class="linear-bunting-flirt bg-transparent text-center">
+    <img src="/assets/img/logo/WELogoWhite.png" class="h-65" />
+  </ion-toolbar>
+</ion-header>
+<div class="aesert"></div>
+<div class="desert"></div>
+<ion-content class="forgot bg-transparent">
+  <!-- <div class="forgot-logo">
+    <img [src]="logoUrl" width="100px" *ngIf="logoUrl">
+  </div> -->
+  <div class="body_register position-relative">
+    <ion-list no-lines *ngIf="!inputOTP" class="no-margin">
+      <h2
+        translate=""
+        class="fs-24 fw-700 mb-30 text-left"
+        style="color: black"
+      >
+        Quên mật khẩu
+      </h2>
+      <div>
+        <ion-label>Số điện thoại di động</ion-label>
+        <ion-item>
+          <ion-input
+            type="text"
+            maxlength="10"
+            placeholder="Nhập số điện thoại ..."
+            pattern="[0-9]{9,10}"
+            #phone="ngModel"
+            type="phone"
+            name="phone"
+            required
+            [(ngModel)]="info.phone"
+          >
+          </ion-input>
+        </ion-item>
+      </div>
+      <div *ngIf="phone.errors && (phone.dirty || phone.touched || submitted)">
+        <p
+          [hidden]="!phone.errors.required"
+          ion-text
+          color="danger"
+          padding-left
+          translate
+        >
+          Số điện thoại không được để trống!
+        </p>
+        <p
+          [hidden]="!phone.errors.pattern"
+          ion-text
+          color="danger"
+          padding-left
+          translate
+        >
+        Số điện thoại không đúng định dạng!
+        </p>
+      </div>
+      <ion-row responsive-sm class="mt-30">
+        <ion-col>
+          <button
+            [disabled]="isButton"
+            *ngIf="!inputOTP"
+            ion-button
+            class="w-200 auto-margin linear-bunting-flirt no-transform fs-12"
+            clear
+            block
+            (click)="forgot()"
+            translate
+          >
+            Gửi đi
+          </button>
+        </ion-col>
+      </ion-row>
+      <ion-row responsive-sm class="mt-10">
+        <ion-col>
+          <button
+            [disabled]="isButton"
+            *ngIf="!inputOTP"
+            ion-button
+            class="w-200 auto-margin linear-bunting-flirt no-transform fs-12"
+            clear
+            block
+            (click)="goTo('login')"
+            translate
+          >
+            Quay lại
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-list>
+
+    <div
+      *ngIf="inputOTP && !isChange"
+      style="text-align: center"
+      class="no-margin"
+    >
+      <h2
+        translat
+        class="fs-15 fw-700 mb-30 text-center"
+        style="color: #707070"
+      >
+        XÁC NHẬN SỐ ĐIỆN THOẠI
+      </h2>
+      <h3 translate class="fs-15 mt-30 text-center" style="color: #707070">
+        Nhập mã OTP được gửi qua điện thoại
+      </h3>
+      <div>
+        <ion-row class="row_otp">
+          <ion-col>
+            <ion-item>
+              <ion-input
+                #otp1
+                no-lines
+                type="number"
+                pattern="\d*"
+                [minlength]="1"
+                [maxlength]="1"
+                #otpCode1="ngModel"
+                class="textOTP"
+                name="otpCode1"
+                required
+                [(ngModel)]="info.otpCode1"
+                (keydown)="kd_ChangeOTP($event, info.otpCode1)"
+                (keyup)="changeOTP($event, null, otp2)"
+              >
+              </ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item>
+              <ion-input
+                #otp2
+                no-lines
+                type="number"
+                pattern="\d*"
+                [minlength]="1"
+                [maxlength]="1"
+                #otpCode2="ngModel"
+                class="textOTP"
+                name="otpCode2"
+                required
+                [(ngModel)]="info.otpCode2"
+                (keydown)="kd_ChangeOTP($event, info.otpCode2)"
+                (keyup)="changeOTP($event, otp1, otp3)"
+              >
+              </ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item>
+              <ion-input
+                #otp3
+                no-lines
+                type="number"
+                pattern="\d*"
+                [minlength]="1"
+                [maxlength]="1"
+                #otpCode3="ngModel"
+                class="textOTP"
+                name="otpCode3"
+                required
+                [(ngModel)]="info.otpCode3"
+                (keydown)="kd_ChangeOTP($event, info.otpCode3)"
+                (keyup)="changeOTP($event, otp2, otp4)"
+              >
+              </ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item>
+              <ion-input
+                #otp4
+                no-lines
+                type="number"
+                pattern="\d*"
+                [minlength]="1"
+                [maxlength]="1"
+                #otpCode4="ngModel"
+                class="textOTP"
+                name="otpCode4"
+                required
+                [(ngModel)]="info.otpCode4"
+                (keydown)="kd_ChangeOTP($event, info.otpCode4)"
+                (keyup)="changeOTP($event, otp3, null)"
+              >
+              </ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <div
+          style="color: red"
+          *ngIf="(otpCode1.errors && (otpCode1.dirty || otpCode1.touched || submitted)) &&
+          (otpCode2.errors && (otpCode2.dirty || otpCode2.touched || submitted)) &&
+          (otpCode3.errors && (otpCode3.dirty || otpCode3.touched || submitted)) &&
+          (otpCode4.errors && (otpCode4.dirty || otpCode4.touched || submitted))"
+        >
+          <p
+            ion-text
+            color="danger"
+            padding-left
+            translate
+            class="no-margin no-padding mt-10 mb-10"
+            [hidden]="!otpCode1.errors.required && !otpCode2.errors.required && !otpCode3.errors.required && !otpCode4.errors.required"
+          >
+            Vui lòng nhập mã OTP!
+          </p>
+        </div>
+        <p class="no-margin mt-10 mb-10 fs-12 text-center">
+          Còn lại {{miniDown}}:{{secondDown == 0 ? '00' : secondDown}}
+        </p>
+        <br />
+        <p class="no-margin mt-10 mb-10 fs-12 text-center">
+          Bạn chưa nhận được mã OTP?
+          <a class="color-light-blue fw-700" (click)="forgot()"
+            >Gửi lại mã OTP</a
+          >
+        </p>
+        <ion-row responsive-sm class="mt-30">
+          <ion-col>
+            <button
+              [disabled]="isButton"
+              ion-button
+              class="w-full auto-margin linear-bunting-flirt no-transform fs-12"
+              block
+              (click)="confirmForgot()"
+              translate
+            >
+              Xác nhận
+            </button>
+          </ion-col>
+        </ion-row>
+        <ion-row responsive-sm class="mt-10">
+          <ion-col>
+            <button
+              [disabled]="isButton"
+              ion-button
+              class="w-full auto-margin linear-bunting-flirt no-transform fs-12"
+              block
+              (click)="goTo('login')"
+              translate
+            >
+              Quay lại
+            </button>
+          </ion-col>
+        </ion-row>
+      </div>
+    </div>
+
+    <ion-list *ngIf="isChange" class="no-margin">
+      <!-- <p translate="">Mật khẩu</p>
+        <div class="item item-block item-md item-input login-modified ">
+          <ion-input placeholder="{{'Password' | translate}}" required [type]="password_type" autocomplete="off"
+            name="password" [minlength]="6" #password="ngModel" [(ngModel)]="input.password">
+          </ion-input>
+          <button ion-button clear  type="button" item-right (click)="togglePasswordMode()" style="position: absolute; right: 0; bottom: 0; background: transparent">
+            <ion-icon clear [name]="eye_type"slot="end" ></ion-icon>
+        </button>
+        </div>
+        <div *ngIf="password.errors && (password.dirty || password.touched || submitted)" style="color: red;">
+          <p [hidden]="!password.errors.minlength" ion-text color="danger" padding-left translate>
+            Password must be at least 6 characters!
+          </p>
+          <p [hidden]="!password.errors.required" ion-text color="danger" padding-left translate>
+            Password is required
+          </p>
+        </div>
+        <p translate="">Nhập lại mật khẩu</p>
+        <div class="item item-block item-md item-input login-modified ">
+          <ion-input placeholder="Nhập lại mật khẩu" required [type]="password_type" autocomplete="off"
+              name="rePassword" [minlength]="6" #rePassword="ngModel" [(ngModel)]="input.rePassword">
+          </ion-input>
+          <button ion-button clear  type="button" item-right (click)="togglePasswordMode()" style="position: absolute; right: 0; bottom: 0; background: transparent">
+              <ion-icon clear [name]="eye_type"slot="end" ></ion-icon>
+          </button>
+        </div> -->
+      <!-- <h2 translate="" class="fs-30 fw-700 color-primary mb-30 text-center">Forgot Password</h2> -->
+      <div>
+        <ion-label>Mật khẩu (*) </ion-label>
+        <ion-item no-lines class="position-relative">
+          <ion-input
+            [type]="password_type_1"
+            [ngClass]="{'error': password.errors && (password.dirty || password.touched || submitted )}"
+            (ionBlur)="checkvalidPass()"
+            autocomplete="off"
+            #password="ngModel"
+            required
+            name="password"
+            [(ngModel)]="input.password"
+            clearOnEdit="false"
+          ></ion-input>
+          <button
+            ion-button
+            clear
+            type="button"
+            item-right
+            (click)="togglePasswordMode_1()"
+            style="
+              position: absolute;
+              right: 0;
+              background: transparent;
+              color: #610c3e;
+            "
+          >
+            <ion-icon clear [name]="eye_type_1" slot="end"></ion-icon>
+          </button>
+        </ion-item>
+        <div
+          *ngIf="password.errors  && (password.dirty || password.touched || submitted)"
+        >
+          <p
+            [hidden]="!password.errors.required"
+            ion-text
+            color="danger"
+            padding-left
+            translate
+          >
+            Vui lòng nhập mật khẩu!
+          </p>
+        </div>
+        <div *ngIf="!this.checkValid">
+          <p
+            *ngIf="!this.checkValid"
+            ion-text
+            color="danger"
+            padding-left
+            translate
+          >
+            Mật khẩu phải dài ít nhất 8 ký tự, chứa chữ hoa, chữ thường và chữ
+            số!
+          </p>
+        </div>
+      </div>
+
+      <div>
+        <ion-label>Nhập lại mật khẩu (*)</ion-label>
+        <ion-item no-lines class="position-relative">
+          <ion-input
+            [type]="password_type_2"
+            autocomplete="off"
+            required
+            [ngClass]="{'error': rePassword.errors && (rePassword.dirty || rePassword.touched || submitted )}"
+            #rePassword="ngModel"
+            required
+            name="rePassword"
+            [(ngModel)]="input.rePassword"
+            clearOnEdit="false"
+          >
+          </ion-input>
+          <button
+            ion-button
+            clear
+            type="button"
+            item-right
+            (click)="togglePasswordMode_2()"
+            style="
+              position: absolute;
+              right: 0;
+              background: transparent;
+              color: #610c3e;
+            "
+          >
+            <ion-icon clear [name]="eye_type_2" slot="end"></ion-icon>
+          </button>
+        </ion-item>
+        <div
+          *ngIf="rePassword.errors && (rePassword.dirty || rePassword.touched || submitted)"
+        >
+          <p
+            [hidden]="!rePassword.errors.required"
+            ion-text
+            color="danger"
+            padding-left
+            translate
+          >
+            Vui lòng nhập xác nhận mật khẩu!
+          </p>
+        </div>
+        <div
+          *ngIf="(input.password != input.rePassword) && (rePassword.dirty || rePassword.touched || submitted)"
+        >
+          <p ion-text color="danger" padding-left translate>
+            Mật khẩu không trùng khớp!
+          </p>
+        </div>
+      </div>
+
+      <!-- <ion-item>
+          <ion-input type="text" placeholder="Nhập lại mật khẩu" autocomplete="off" required #rePassword="ngModel" required name="rePassword" [(ngModel)]="input.rePassword"></ion-input>
+        </ion-item> -->
+
+      <div style="text-align: center">
+        <ion-row responsive-sm class="mt-30">
+          <ion-col>
+            <button
+              [disabled]="isButton"
+              ion-button
+              class="w-200 auto-margin linear-bunting-flirt no-transform fs-12"
+              clear
+              block
+              (click)="changePassword()"
+              translate
+            >
+              Xác nhận
+            </button>
+          </ion-col>
+        </ion-row>
+        <ion-row responsive-sm class="mt-30">
+          <ion-col>
+            <button
+              [disabled]="isButton"
+              ion-button
+              class="w-200 auto-margin linear-bunting-flirt no-transform fs-12"
+              clear
+              block
+              (click)="goTo('login')"
+              translate
+            >
+              Quay lại
+            </button>
+          </ion-col>
+        </ion-row>
+      </div>
+    </ion-list>
+  </div>
+</ion-content>
+<ion-footer class="footer_logo">
+  <ion-toolbar class="linear-bunting-flirt bg-transparent text-center">
+  </ion-toolbar>
+</ion-footer>

@@ -1,0 +1,442 @@
+<ion-header class="header_logo">
+  <ion-navbar class="linear-bunting-flirt bg-transparent text-center">
+    <ion-title>
+      <img src="/assets/img/logo/WELogoWhite.png" class="h-65" />
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<div class="aesert"></div>
+<div class="desert"></div>
+
+<ion-content class="register bg-transparent">
+  <div class="body_register position-relative" style="margin-top: 0 !important">
+    <ion-list no-lines class="position-relative no-margin">
+      <h2 translate class="fs-30 fw-700 color-primary mb-30 text-center">
+        Đăng ký
+      </h2>
+      <ion-row>
+        <ion-col col-12>
+          <div class="register_step">
+            <ul class="progressbar">
+              <li class="complete fs-12">
+                <span class="icon_register icon-subject"></span>
+                Đối tượng
+              </li>
+              <li class="complete fs-12">
+                <span class="icon_register icon-info"></span>
+                Thông tin
+              </li>
+              <li class="active fs-12">
+                <span class="icon_register icon-account"></span>
+                Tài khoản
+              </li>
+              <li class="fs-12">
+                <span class="icon_register icon-survey"></span>
+                Khảo sát
+              </li>
+            </ul>
+          </div>
+        </ion-col>
+      </ion-row>
+      <form #frm="ngForm">
+        <div>
+          <ion-label>Điện thoại (*)</ion-label>
+          <ion-item>
+            <ion-input
+              type="text"
+              [maxlength]="10"
+              [minlength]="10"
+              [ngClass]="{
+                error:
+                  mobile.errors && (mobile.dirty || mobile.touched || submitted)
+              }"
+              autocomplete="off"
+              required
+              name="mobile"
+              #mobile="ngModel"
+              [(ngModel)]="input.Mobile"
+              pattern="[0-9]{10}"
+              (change)="changeMobile()"
+            ></ion-input>
+          </ion-item>
+          <div
+            *ngIf="
+              mobile.errors && (mobile.dirty || mobile.touched || submitted)
+            "
+          >
+            <p
+              *ngIf="mobile.errors.pattern || mobile.errors.minlength"
+              ion-text
+              color="danger"
+              padding-left
+              translate
+            >
+              Điện thoại không đúng định dạng!
+            </p>
+            <p
+              [hidden]="!mobile.errors.required"
+              ion-text
+              color="danger"
+              padding-left
+              translate
+            >
+              Vui lòng nhập Điện thoại!
+            </p>
+            <p
+              [hidden]="checkMobile"
+              ion-text
+              color="danger"
+              padding-left
+              translate
+            >
+              Điện thoại đã tồn tại!
+            </p>
+          </div>
+        </div>
+        <div>
+          <ion-label>Mật khẩu (*) </ion-label>
+          <ion-item class="position-relative">
+            <ion-input
+              [type]="password_type"
+              [ngClass]="{
+                error:
+                  password.errors &&
+                  (password.dirty || password.touched || submitted)
+              }"
+              (ionBlur)="checkvalidPass()"
+              autocomplete="off"
+              #password="ngModel"
+              required
+              name="password"
+              [(ngModel)]="input.PassWord"
+              clearOnEdit="false"
+            ></ion-input>
+            <button
+              ion-button
+              clear
+              type="button"
+              item-right
+              (click)="togglePasswordMode()"
+              style="
+                position: absolute;
+                right: -10px;
+                top: 1px;
+                background: transparent;
+              "
+            >
+              <ion-icon
+                clear
+                [name]="eye_type"
+                slot="end"
+                style="height: 25px; color: #000; margin-right: 5px"
+              >
+              </ion-icon>
+            </button>
+          </ion-item>
+          <div
+            *ngIf="
+              password.errors &&
+              (password.dirty || password.touched || submitted)
+            "
+          >
+            <p
+              [hidden]="!password.errors.required"
+              ion-text
+              color="danger"
+              padding-left
+              translate
+            >
+              Vui lòng nhập mật khẩu
+            </p>
+          </div>
+          <div *ngIf="!this.checkValid">
+            <p
+              *ngIf="!this.checkValid"
+              ion-text
+              color="danger"
+              padding-left
+              translate
+            >
+              Mật khẩu phải dài ít nhất 8 ký tự, chứa chữ hoa, chữ thường và chữ
+              số
+            </p>
+          </div>
+        </div>
+
+        <div>
+          <ion-label>Xác nhận mật khẩu (*)</ion-label>
+          <ion-item class="position-relative">
+            <ion-input
+              [type]="password_type"
+              autocomplete="off"
+              required
+              [ngClass]="{
+                error:
+                  rePassword.errors &&
+                  (rePassword.dirty || rePassword.touched || submitted)
+              }"
+              #rePassword="ngModel"
+              required
+              name="rePassword"
+              [(ngModel)]="input.ConfirmPassword"
+              clearOnEdit="false"
+            >
+            </ion-input>
+            <button
+              ion-button
+              clear
+              type="button"
+              item-right
+              (click)="togglePasswordMode()"
+              style="
+                position: absolute;
+                right: -10px;
+                top: 1px;
+                background: transparent;
+              "
+            >
+              <ion-icon
+                clear
+                [name]="eye_type"
+                slot="end"
+                style="height: 25px; color: #000; margin-right: 5px"
+              >
+              </ion-icon>
+            </button>
+          </ion-item>
+          <div
+            *ngIf="
+              rePassword.errors &&
+              (rePassword.dirty || rePassword.touched || submitted)
+            "
+          >
+            <p
+              [hidden]="!rePassword.errors.required"
+              ion-text
+              color="danger"
+              padding-left
+              translate
+            >
+              Vui lòng nhập xác nhận mật khẩu
+            </p>
+          </div>
+          <div
+            *ngIf="
+              input.PassWord != input.ConfirmPassword &&
+              (rePassword.dirty || rePassword.touched || submitted)
+            "
+          >
+            <p ion-text color="danger" padding-left translate>
+              Mật khẩu không trùng khớp!
+            </p>
+          </div>
+        </div>
+
+        <div>
+          <ion-label>Email</ion-label>
+          <ion-item>
+            <ion-input
+              type="text"
+              [ngClass]="{
+                error:
+                  email.errors && (email.dirty || email.touched || submitted)
+              }"
+              autocomplete="off"
+              #email="ngModel"
+              pattern="[A-Za-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+              name="email"
+              required
+              [(ngModel)]="input.Email"
+              (change)="changeEmail()"
+            ></ion-input>
+          </ion-item>
+          <div
+            *ngIf="email.errors && (email.dirty || email.touched || submitted)"
+          >
+            <p
+              [hidden]="!email.errors.pattern"
+              ion-text
+              color="danger"
+              padding-left
+              translate
+            >
+              Định dạng email không đúng!
+            </p>
+            <p
+              [hidden]="checkEmail"
+              ion-text
+              color="danger"
+              padding-left
+              translate
+            >
+              Địa chỉ email đã tồn tại!
+            </p>
+          </div>
+        </div>
+
+        <div>
+          <ion-label>Chọn ngân hàng</ion-label>
+          <ion-item>
+            <ion-select
+              [(ngModel)]="input.BankId"
+              [required]="true"
+              name="state"
+              required
+              ngModel
+              #state="ngModel"
+              placeholder="-- Chọn --"
+              okText="Xác nhận"
+              cancelText="Đóng"
+            >
+              <ion-option *ngFor="let item of banks" [value]="item.Id">{{
+                item.Name
+              }}</ion-option>
+            </ion-select>
+          </ion-item>
+        </div>
+
+        <div>
+          <ion-label>Chi nhánh</ion-label>
+          <ion-item>
+            <ion-input
+              autocomplete="off"
+              required
+              #bankBranchName="ngModel"
+              required
+              name="bankBranchName"
+              [(ngModel)]="input.BankBranchName"
+            ></ion-input>
+          </ion-item>
+        </div>
+
+        <div>
+          <ion-label>Số tài khoản</ion-label>
+          <ion-item>
+            <ion-input
+              type="number"
+              autocomplete="off"
+              required
+              #bankNumber="ngModel"
+              required
+              name="bankNumber"
+              [(ngModel)]="input.BankNumber"
+              pattern="[0-9]"
+            ></ion-input>
+          </ion-item>
+        </div>
+
+        <div>
+          <ion-label>Tên chủ thẻ</ion-label>
+          <ion-item>
+            <ion-input
+              autocomplete="off"
+              required
+              #bankHoldername="ngModel"
+              required
+              name="bankHoldername"
+              [(ngModel)]="input.BankHoldername"
+              pattern="[a-z A-Z]+"
+            ></ion-input>
+          </ion-item>
+          <div
+            *ngIf="
+              bankHoldername.errors &&
+              (bankHoldername.dirty || bankHoldername.touched || submitted)
+            "
+          >
+            <p
+              [hidden]="!bankHoldername.errors.pattern"
+              ion-text
+              color="danger"
+              padding-left
+              translate
+            >
+              Vui lòng nhập chữ la tinh!
+            </p>
+          </div>
+        </div>
+        <div>
+          <ion-label>Mã nhân viên TNI</ion-label>
+          <ion-item class="mar-top-23">
+            <ion-input
+              type="text"
+              maxlength="10"
+              autocomplete="off"
+              required
+              name="mobileTT"
+              #mobileTT="ngModel"
+              [(ngModel)]="input.ReferralCode"
+            ></ion-input>
+            <ion-row responsive-sm class="mt-70">
+              <ion-col class="text-center"> </ion-col>
+            </ion-row>
+          </ion-item>
+        </div>
+        <div>
+          <ion-label>{{ 'Referral code' | translate }}</ion-label>
+          <ion-item class="mar-top-23">
+            <ion-input
+              type="text"
+              #referralCode="ngModel"
+              autocomplete="off"
+              required
+              name="mobileTT"
+              [(ngModel)]="input.CustomerNumberSponsor"
+              (keyup)="getReferralUser()"
+            ></ion-input>
+          </ion-item>
+          <div *ngIf="referralCodeResponse">
+            <p
+              *ngIf="referralCodeResponse?.StatusCode != 200"
+              ion-text
+              color="danger"
+              padding-left
+              translate
+            >
+              <span class="error-icon"></span
+              ><i class="message">{{
+                referralCodeResponse?.Message | translate
+              }}</i>
+            </p>
+            <p
+              *ngIf="referralCodeResponse?.StatusCode == 200"
+              ion-text
+              padding-left
+              translate
+            >
+              <span class="success-icon"></span
+              ><i class="message success-message">{{
+                referralCodeResponse?.Message | translate
+              }}</i>
+            </p>
+          </div>
+        </div>
+        <ion-row responsive-sm class="mt-70">
+          <ion-col class="text-center">
+            <button
+              ion-button
+              class="w-200 auto-margin linear-bunting-flirt no-transform fs-12"
+              (click)="submit(frm)"
+              translate
+              [disabled]="submitted" 
+            >
+              Tiếp tục đăng ký
+            </button>
+          </ion-col>
+        </ion-row>
+        <ion-row responsive-sm class="mt-10">
+          <ion-col class="text-center">
+            <button
+              ion-button
+              class="w-200 auto-margin linear-bunting-flirt no-transform fs-12"
+              (click)="goTo('signup')"
+            >
+              Quay lại
+            </button>
+          </ion-col>
+        </ion-row>
+      </form>
+    </ion-list>
+  </div>
+</ion-content>

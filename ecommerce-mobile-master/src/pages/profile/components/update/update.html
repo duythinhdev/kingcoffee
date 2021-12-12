@@ -1,0 +1,109 @@
+<app-header title="Hồ sơ của tôi"></app-header>
+
+<div class="aesert"></div>
+<div class="desert"></div>
+<ion-content class="common-bg  bg-transparent animated fadeIn" padding>
+  <div class="position-relative" style="background-color: #FFF; border-radius: 0px;margin: 15px 5px; padding: 0px">
+    <ion-list no-lines>
+      <ion-item style="padding: 30px 15px;">
+        <div class="update-img" style="text-align: center;">
+          <img [src]="avartar || 'https://api-wallet.womencando.com.vn/images/Default_Avatar.png'" style="border-radius: 50%" width="80px" height="80px" (click)="selectMedia()">
+          <!-- <button ion-button color="theme" type="button" (click)="selectMedia()" tappable ><span translate>Upload Photo</span> </button> -->
+        </div>
+      </ion-item>
+      <form style="padding: 30px 15px; border-top: 1px solid #000000; color: black;" (submit)="submit(frm)"
+        #frm="ngForm">
+        <ion-row>
+          <ion-col md-5 color="primary">
+            <label style="text-transform: uppercase;">{{roleName | translate}}</label></ion-col>
+          <ion-col md-7 color="primary" style="text-align: right !important;">
+            <label>{{data_info?.socialInfo?.MemberId}}</label>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col md-5 color="primary">
+            <label>Họ và tên</label>
+          </ion-col>
+          <ion-col  md-7 color="primary" style="text-align: right !important;">
+            <label>{{data_info?.socialInfo?.FullName}}</label>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col md-5 color="primary">
+            <label>Số điện thoại</label>
+          </ion-col>
+          <ion-col md-7 color="primary" style="text-align: right !important;">
+            <label>{{data_info?.socialInfo?.PhoneNumber}}</label>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col md-5 color="primary">
+            <label>Email</label>
+          </ion-col>
+          <ion-col md-7 color="primary" style="text-align: right !important;">
+            <label>{{data_info?.socialInfo?.Email}}</label>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col md-5 color="primary">
+            <label>Thành viên</label>
+          </ion-col>
+          <ion-col md-7 color="primary" style="text-align: right !important;">
+            <ion-icon style="color: green;" *ngIf="isMenber" name="checkbox"></ion-icon>
+            <ion-icon style="color: red;" *ngIf="!isMenber" name="close" style="color: white;background: red;border-radius: 999px;height: 15px;width: 15px;text-align: center;"></ion-icon>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col md-5 color="primary">
+            <label>Ngày sinh</label>
+          </ion-col>
+          <ion-col md-7 color="primary" style="text-align: right !important;">
+            <label>{{data_info?.socialInfo?.BirthDay | date:'dd/MM/yyyy'}}</label>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col md-5 color="primary">CMND/Hộ chiếu</ion-col>
+          <ion-col md-7 color="primary" style="text-align: right !important;">{{data_info?.socialInfo?.IdCard}}
+          </ion-col>
+        </ion-row>
+        <!-- <ion-row *ngIf="data_info?.socialInfo?.DownlineF1Number > 0">
+          <ion-col md-5 color="primary">
+            <label>{{'Community' | translate}}</label>
+          </ion-col>
+          <ion-col md-7 color="primary" style="text-align: right !important;">{{data_info?.socialInfo?.DownlineF1Number}} {{'people' | translate}}</ion-col>
+        </ion-row> -->
+        <!-- <ion-row *ngIf="data_info?.socialInfo?.Level > 0">
+          <ion-col md-5 color="primary">
+            <label>{{'Profile Level' | translate}}</label>
+          </ion-col>
+          <ion-col md-7 color="primary" style="text-align: right !important;">{{data_info?.socialInfo?.Level}}</ion-col>
+        </ion-row> -->
+        <!-- <ion-row responsive-sm>
+        <ion-col>
+          <button ion-button color="primary"  block type="submit" ><span translate>Update</span> </button>
+        </ion-col>
+      </ion-row> -->
+      </form>
+    </ion-list>
+  </div>
+  <div class="position-relative" style="background-color: #FFF; border-radius: 0px;margin: 5px 5px; padding: 0px 15px">
+    <ion-row>
+      <ion-col (click)="goTo('update-profile')">
+        <!-- <a style="color: #000;" translate> -->
+        <label style="vertical-align: middle;"> Cập nhật hồ sơ</label>
+        <ion-icon name="ios-arrow-forward" style="float: right;"></ion-icon>
+        <!-- </a> -->
+      </ion-col>
+    </ion-row>
+  </div>
+  <div class="position-relative" style="background-color: #FFF; border-radius: 0px;margin: 5px 5px; padding: 0px 15px">
+    <ion-row>
+      <ion-col (click)="goTo('changepass')">
+        <!-- <a style="color: #000;" translate> -->
+        <label style="vertical-align: middle;"> Thay đổi mật khẩu</label>
+        <ion-icon name="ios-arrow-forward" style="float: right;"></ion-icon>
+        <!-- </a> -->
+      </ion-col>
+    </ion-row>
+  </div>
+</ion-content>

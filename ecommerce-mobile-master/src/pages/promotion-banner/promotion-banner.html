@@ -1,0 +1,11 @@
+<ion-slides
+  pager="false"
+  [effect]="'Coverflow'"
+  zoom="false"
+  loop="true"
+  *ngIf="banners"
+>
+  <ion-slide *ngFor="let item of banners">
+    <img [src]="item.imageUrl" width="100%" (click)="goTo()" />
+  </ion-slide>
+</ion-slides>

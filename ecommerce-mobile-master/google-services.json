@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "970417478754",
+    "project_id": "womencando-a5eb8",
+    "storage_bucket": "womencando-a5eb8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:970417478754:android:91d9515e37b7996b60c53b",
+        "android_client_info": {
+          "package_name": "com.tniecommerce"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "970417478754-7s60sv7lecfidqkd2gkl3jskhdps0qq8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAd-OgK5zyk9V2-0Al1YiqvhYR-db9ZaWI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "970417478754-7s60sv7lecfidqkd2gkl3jskhdps0qq8.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "970417478754-b6jlr4bk3ogcv1ii6r5i7cftopn2l862.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.tnicommerce",
+                "app_store_id": "1534256364"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

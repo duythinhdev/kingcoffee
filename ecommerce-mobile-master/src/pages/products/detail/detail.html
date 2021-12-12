@@ -1,0 +1,320 @@
+<app-header [title]="product?.name"></app-header>
+<ion-content padding class="animated fadeIn common-bg profile">
+  <div *ngIf="isLoading" class="loading-img">
+    <img src="../../../assets/img/loading-icon.gif" width="60px" />
+  </div>
+
+  <div *ngIf="!isLoading">
+    <div class="product-details" *ngIf="product">
+      <ion-slides zoom="true" loop="true" effect="slides" autoplay="5000" *ngIf="product && product.images.length"
+        style="
+          border-bottom: 1px solid #e6e6e6;
+          background: white;
+          padding: 30px 0px;
+          margin-bottom: 10px;
+        ">
+        <ion-slide *ngFor="let img of product.images">
+          <img [src]="img.thumbUrl" width="100%" #myImage (click)="viewImg(myImage)" />
+        </ion-slide>
+      </ion-slides>
+
+      <div style="padding: 15px">
+        <img src="../../../assets/img/noImage.jpg" width="100%" *ngIf="product && !product.images.length" />
+        <span (click)="selectBase(product)">Mã sản phẩm: {{product?.sap}}</span>
+
+        <h2 (click)="selectBase(product)" style="margin-top: 8px">
+          <b>{{product?.name}}</b>
+        </h2>
+
+        <div class="prod-variants">
+          <div class="price-detail">
+            <!-- <div *ngIf="!isLoggedIn">
+              <span class="salePrice-format">{{price || 0 | number : '1.0-0'}} đ</span>
+            </div> -->
+
+            <!-- <div *ngIf="isLoggedIn"> -->
+            <div *ngIf="!priceDiscount">
+              <span class="salePrice-format-role-new">{{price || 0 | number : '1.0-0'}}
+                <span class="word-underline">đ</span><span class="format-price-sale">(Giá thành
+                  viên)</span></span><br />
+              <span class="salePrice-format-role-new">{{salePrice|| 0 | number : '1.0-0'}}
+                <span class="word-underline">đ</span><span class="format-price-sale">(Giá đại lý)</span></span><br />
+              <div *ngIf="this.roleId === '5'">
+                <p class="upgrade-detail" (click)="changeRole()">Nâng cấp WE Đại Lý để hưởng ưu đãi giá </p>
+              </div>
+            </div>
+            <div *ngIf="priceDiscount">
+              <div *ngIf="this.roleId === '5'">
+                <span class="salePrice-format-role-new">{{price || 0 | number : '1.0-0'}}
+                  <span class="word-underline">đ</span><span class="format-price-sale">(Giá thành
+                    viên)</span></span><br />
+                <span class="salePrice-format-role-new">{{priceDiscount || 0 | number : '1.0-0'}}</span>
+                <span class="word-underline">đ</span>
+                <span class="{{priceDiscount ? 'discountPrice-format' : 'salePrice-format'}}">{{salePrice
+                  || 0 | number : '1.0-0'}}
+                  đ</span>
+                <span *ngIf="percentDiscount != 0" style="
+                        background-color: #18CB95;
+                        border-radius: 5px;
+                        font-size: 16px;
+                        line-height: 19px;
+                        padding: 5px;
+                        color: whitesmoke;
+                      ">-{{percentDiscount}} %</span>
+              </div>
+              <div *ngIf="this.roleId !== '5'">
+                <span class="salePrice-format-role-new">{{salePrice|| 0 | number : '1.0-0'}}
+                  <span class="word-underline">đ</span><span class="format-price-sale">(Giá đại lý)</span></span><br />
+                <span class="salePrice-format-role-new">{{priceDiscount || 0 | number : '1.0-0'}}</span>
+                <span class="word-underline">đ</span>
+                <span class="{{priceDiscount ? 'discountPrice-format' : 'salePrice-format'}}">{{salePrice
+                  || 0 | number : '1.0-0'}}
+                  đ</span>
+                <span *ngIf="percentDiscount != 0" style="
+                        background-color: #18CB95;
+                        border-radius: 5px;
+                        font-size: 16px;
+                        line-height: 19px;
+                        padding: 5px;
+                        color: whitesmoke;
+                      ">-{{percentDiscount}} %</span>
+              </div>
+              <div *ngIf="this.roleId === '5'">
+                <p class="upgrade-detail" (click)="changeRole()">Nâng cấp WE Đại Lý để hưởng ưu đãi giá </p>
+              </div>
+            </div>
+            <!-- </div> -->
+            <span class="freeship-text" *ngIf="product?.freeShip" translate>Free Shipping</span>
+          </div>
+          <ion-grid class="promotion-block" *ngIf="product?.promotions && product?.promotions.length > 0">
+            <ion-row *ngIf="isShowCountdown">
+              <ion-col col-8 class="promotion-list">
+                <ion-label style="color: white;white-space: initial;" *ngFor="let promotion of product?.promotions">
+                  {{promotion?.name}}
+                </ion-label>
+              </ion-col>
+              <ion-col class="count-down-timer-block" col-4>
+                <ion-label style="color: white" translate>End in
+                </ion-label>
+                <ion-label style="color: white">
+                  <span class="timer-el">{{countDownTimer.hour | number : '2.0'}}</span>
+                  <span class="timer-el">{{countDownTimer.minute | number : '2.0'}}</span>
+                  <span class="timer-el">{{countDownTimer.second | number : '2.0'}}</span>
+                </ion-label>
+              </ion-col>
+            </ion-row>
+            <ion-row *ngIf="!isShowCountdown">
+              <ion-col col-12 class="promotion-list">
+                <ion-label style="color: white;white-space: initial;" *ngFor="let promotion of product?.promotions">
+                  {{promotion?.name}}
+                </ion-label>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+          <div class="variant-option" *ngIf="variants.length">
+            <ion-item>
+              <ion-label translate>Variant</ion-label>
+              <ion-select [(ngModel)]="selectedVariant" (ionChange)="selectVariant()" okText="Xác nhận"
+                cancelText="Đóng">
+                <ion-option *ngFor="let vari of variants" [value]="vari">
+                  <span *ngFor="let opt of vari.options">{{opt.displayText || opt.key}} : {{opt.value}}
+                    <span *ngIf="vari.options.length > 1"> - </span></span>
+                </ion-option>
+              </ion-select>
+            </ion-item>
+          </div>
+        </div>
+
+        <div class="mt-10">
+          <span>{{product?.sku}}</span>
+        </div>
+
+        <div class="mt-10">
+          <span>{{product?.shortDescription}}</span>
+        </div>
+
+        <div>
+          <span style="margin-right: 30px">Số lượng:</span>
+
+          <ion-icon name="remove" (click)="changeQuantity(false)" style="
+              padding: 3px 10px;
+              background: #f2f2f2;
+              color: #d11287;
+              text-align: center;
+            ">
+          </ion-icon>
+          <span style="
+              display: inline-block;
+              text-align: center;
+              border: 1px solid #f2f2f2;
+              margin: 0px 3px;
+              width: 50px;
+            ">
+            <ion-input type="number" (keyup)="onKey($event)" [(ngModel)]="quantity" required></ion-input>
+          </span>
+
+          <ion-icon name="add" (click)="changeQuantity(true)" style="
+              padding: 3px 10px;
+              background: #f2f2f2;
+              color: #d11287;
+              text-align: center;
+            ">
+          </ion-icon>
+        </div>
+
+        <div class="button-detail text-center">
+          <ion-row class="mt-20">
+            <ion-col col-4>
+              <button ion-button class="bg-primary" full tappable (click)="addCart(true)">
+                <span translate>Buy now</span>
+              </button>
+            </ion-col>
+
+            <ion-col col-8 class="pl-10">
+              <button ion-button class="bg-primary" full tappable (click)="addCart(false)">
+                <span translate>Add to cart</span>
+              </button>
+            </ion-col>
+          </ion-row>
+        </div>
+
+        <div class="mt-10" style="font-size: 12px; text-align: center">
+          Gọi đặt mua:
+          <span class="color-primary">1900 588 878 - 0964 978 418</span> (8:30 - 18:00)
+        </div>
+
+        <div class="details mt-10">
+          <ion-segment [(ngModel)]="tab">
+            <ion-segment-button value="infomation" (ionSelect)="changeTab('infomation')" translate
+              style="border-top-left-radius: 10px">
+              Thông tin sản phẩm
+            </ion-segment-button>
+            <ion-segment-button value="details" (ionSelect)="changeTab('details')" translate
+              style="border-top-right-radius: 10px">
+              Product detail
+            </ion-segment-button>
+            <!-- <ion-segment-button value="reviews" (ionSelect)="changeTab('reviews')" translate>
+              Reviews
+            </ion-segment-button>
+            <ion-segment-button value="shippingPolicy" (ionSelect)="changeTab('shippingPolicy')" translate
+              style="border-top-right-radius: 10px;">
+              Shipping Policy
+            </ion-segment-button> -->
+          </ion-segment>
+
+          <div [ngSwitch]="tab">
+            <div *ngSwitchCase="'infomation'" class="segment-content">
+              <div [innerHTML]="product?.description"></div>
+              <div *ngIf="!product?.description">
+                <div translate>No description for product!</div>
+              </div>
+            </div>
+            <div *ngSwitchCase="'details'" class="segment-content">
+              <!-- <h5 translate *ngIf="product?.specifications?.length" class="prd-title" translate>Specifications</h5> -->
+              <!-- <table class="table table-responsive mar-top-15" *ngIf="product?.specifications?.length">
+                <tr *ngFor="let spec of product.specifications">
+                  <td width="200">
+                    <strong>{{spec?.key}}</strong>
+                  </td>
+                  <td>{{spec?.value}}</td>
+                </tr>
+              </table> -->
+              <table class="table table-responsive table-product-detail">
+                <tr>
+                  <td><b>Mã sản phẩm</b></td>
+                  <td><b>{{product?.sap}}</b></td>
+                </tr>
+                <tr>
+                  <td>Thương hiệu</td>
+                  <td>{{product?.name}}</td>
+                </tr>
+                <tr>
+                  <td>Loại sản phẩm</td>
+                  <td>{{product?.sku}}</td>
+                </tr>
+                <tr>
+                  <td>Khối lượng tịnh (Kg)</td>
+                  <td>{{product?.weight}} kg</td>
+                </tr>
+                <tr>
+                  <td>Quy cách đóng thùng</td>
+                  <td>{{product?.packingSpecifications}} gói/thùng</td>
+                </tr>
+                <tr>
+                  <td>Thành phần</td>
+                  <td>{{product?.shortDescription}}</td>
+                </tr>
+                <tr>
+                  <td>Nhà sản xuất</td>
+                  <td>{{product?.producer}}</td>
+                </tr>
+                <tr>
+                  <td>Hạn sử dụng</td>
+                  <td>{{product?.expiryDate}} Năm</td>
+                </tr>
+              </table>
+            </div>
+            <div *ngSwitchCase="'reviews'" class="segment-content">
+              <review-list [options]="{productId: product?._id, type: 'product'}"></review-list>
+            </div>
+            <div *ngSwitchCase="'shippingPolicy'" class="segment-content">
+              <div [innerHTML]="product?.shop?.shippingSettings?.shippingPolicy"></div>
+            </div>
+            <div *ngSwitchCase="'refundPolicy'" class="segment-content">
+              <div [innerHTML]="product?.shop?.shippingSettings?.refundPolicy"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- <div *ngIf="product" class="mar-top-15">
+          <h4 translate>Related Goods</h4>
+          <featured-products [options]="{productId: product._id}"></featured-products>
+        </div> -->
+      </div>
+      <div style="padding-left: 8px; padding-right: 8px;">
+        <ion-grid class="recommend-product __product-list" style="padding-left: 0; padding-right: 0">
+          <ion-row class="recommend-title">
+            <ion-col col-8 style="font-size: 17px">Sản phẩm liên quan</ion-col>
+            <ion-col (click)="updateFilter(product.categoryId, 'category')" col-6
+              style="font-size: 11px; text-align: right">Xem tất cả >>></ion-col>
+          </ion-row>
+          <ion-row *ngIf="loadRecommend">
+            <p>Không có sản phẩm nào !</p>
+          </ion-row>
+          <!-- <ion-row
+            *ngIf="listRecommend.length > 0 && !loadRecommend"
+            class="list-recommend-product"
+          >
+            <ion-col
+              col-4
+              class="__product-item"
+              *ngFor="let item of listRecommend"
+            >
+              <product-card [product]="item"></product-card>
+            </ion-col>
+          </ion-row> -->
+          <ion-row *ngIf="list.length > 0 && !loadRecommend" class="list-recommend-product"
+            style="flex-wrap: nowrap;overflow-x: scroll!important;overflow-y: hidden;">
+            <ion-col col-6 class="__product-item" *ngFor="let item of list">
+              <product-card [product]="item"></product-card>
+            </ion-col>
+            <ion-col *ngIf="list && list.length > 0" col-4 class="__product-item">
+              <ion-item>
+                <ion-icon style="display: block;
+                color: #d11287;
+                font-size: 33px;
+                text-align: center;
+                font-weight: bold;
+                margin-right: 22px;
+                margin-top: 65px;" name="ios-arrow-dropright" item-end
+                  (click)="updateFilter(product.categoryId, 'category')">
+                  <span style="display: block; font-size: 15px; text-align: center; margin-top: 6px;">Xem tất cả</span>
+                </ion-icon>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+    </div>
+  </div>
+</ion-content>

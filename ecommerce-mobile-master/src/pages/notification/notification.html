@@ -1,0 +1,80 @@
+<app-header [title]="'Notification'" [isShowLogo]="true"></app-header>
+<ion-content>
+  <div style="margin: 30px 15px 0 15px">
+    <div class="promotions" >
+      <!-- <img src="../../assets/img/gift.png" height="25px" /> -->
+      <!-- <div style=" width: calc(100% - 30px);
+      padding: 2px 0; font-weight: 700; border-bottom: 1px solid #757474;">
+        <span style="font-size: 17px; color: #D11287;font-weight: 700;"
+        >Khuyến mãi</span>
+      </div>
+     <div>
+      <span style="font-size: 17px; color: #D11287; width: calc(100% - 30px); 
+      padding: 2px 0; font-weight: 700; border-bottom: 1px solid #757474;"
+      >Tin tức</span>
+    </div> -->
+    <ion-grid>
+      <ion-row>
+        <ion-col *ngIf="this.tabtnoti" class="ion-col-noti-click-active" (click)="changeTab('new')">
+          <div class="text-noti">Khuyến mãi</div>
+        </ion-col>
+        <ion-col *ngIf="!this.tabtnoti" class="ion-col-noti-click-disable" (click)="changeTab('new')">
+          <div class="text-noti">Khuyến mãi</div>
+        </ion-col>
+        <ion-col *ngIf="tabnew" class="ion-col-new-click-active" (click)="changeTab('noti')">
+          <div class="text-noti">Tin tức</div>
+        </ion-col>
+        <ion-col  *ngIf="!tabnew" class="ion-col-new-click-disable" (click)="changeTab('noti')">
+          <div class="text-noti">Tin tức</div>
+        </ion-col>
+        <ion-col>
+
+        </ion-col>
+
+      </ion-row>
+    </ion-grid>
+     </div>
+     
+     <div *ngIf="this.tabtnoti" >
+    <ion-grid class="ion-grid-noti" >
+      <!-- <div *ngIf="this.tabtnoti"> -->
+        <div *ngIf="total === 0">
+          <span>Hiện tại không có chương trình khuyến mãi nào !</span>
+        </div>
+        <div *ngIf="isLoading" class="loading-img">
+          <img src="../../../assets/img/loading-icon.gif" width="50px">
+        </div>
+      <ion-row (click)="goTo('notification-detail',item._id)" *ngFor="let item of listPromotion" class="item-promotion" [ngClass]="{'isRead' : item.isRead}">
+        <ion-col col-12><span style="font-size:15px; font-weight: 700; color: #D11287">{{item.title}}</span></ion-col>
+        <ion-col col-12><span [innerHTML]="item.body"></span></ion-col>
+        <!-- <ion-col col-12><span>Khuyến mãi đặc biệt tháng 10/2020 Khuyến mãi đặc biệt tháng 10/2020 Khuyến mãi đặc biệt tháng 10/2020 Khuyến mãi đặc biệt tháng 10/2020</span></ion-col> -->
+      </ion-row>
+      <ion-infinite-scroll (ionInfinite)="doInfinitePromotion($event)" *ngIf="listPromotion.length < total">
+        <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="{{'Loading more data...' | translate}}">
+        </ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+    <!-- </div> -->
+    </ion-grid  >
+  </div>
+  <div *ngIf="!this.tabtnoti">
+    <ion-grid class="ion-grid-noti" >
+      <!-- <div *ngIf="!this.tabtnoti"> -->
+        <div *ngIf="this.totalNews === 0">
+          <span>Hiện tại không có tin tức nào !</span>
+        </div>
+        <div *ngIf="isLoading" class="loading-img">
+          <img src="../../../assets/img/loading-icon.gif" width="50px">
+        </div>
+        <ion-row (click)="goTo('notification-new',item._id)" *ngFor="let item of listNew" class="item-promotion" [ngClass]="{'isRead' : item.isRead}">
+          <ion-col col-12><span style="font-size:15px; font-weight: 700; color: #D11287">{{item.title}}</span></ion-col>
+          <ion-col col-12><span [innerHTML]="item.body"></span></ion-col>
+        </ion-row>
+        <ion-infinite-scroll (ionInfinite)="doInfinitePromotionAll($event)" *ngIf="listNew.length < totalNews">
+          <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="{{'Loading more data...' | translate}}">
+          </ion-infinite-scroll-content>
+        </ion-infinite-scroll>
+      <!-- </div> -->
+    </ion-grid>
+  </div>
+  </div>
+</ion-content>

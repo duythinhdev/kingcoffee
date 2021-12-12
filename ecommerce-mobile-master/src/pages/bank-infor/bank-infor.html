@@ -1,0 +1,36 @@
+<!-- Generated template for the BankInforComponent component -->
+<app-header [title]="'Cách nạp tiền'"></app-header>
+<div class="aesert"></div>
+<div class="desert"></div>
+
+<ion-content class="common-bg bg-transparent">
+  <div style="margin: 40px 20px 0px 20px">
+    <b style="font-size: 16px;">
+     Chỉ với 500.000 bạn sẽ trở thành WE Đại Lý, 
+        chính thức tham gia mô hình kinh doanh online hiện đại, sinh lợi nhuận cao, nhập hàng ưu đãi từ KING COFFE.
+        Để nạp tiền kích hoạt WE Đại Lý hoặc nạp tiền mua hàng, vui lòng chuyển khoản theo thông tin sau:
+      </b> 
+    <!-- <p class="color-primary_1">
+      <span class="fw-700">1. Tên tài khoản:</span> CÔNG TY TNHH TNI KING COFFEE – CHI NHÁNH WE
+    </p>
+    <p class="color-primary_1">
+      <span class="fw-700">Ngân hàng:</span> Ngân hàng Đầu Tư và Phát Triển Việt Nam (BIDV) - Chi nhánh Trường Sơn
+    </p>
+    <p class="color-primary_1">
+      <span class="fw-700">Số tài khoản:</span>17710000996666
+    </p>
+    -->
+    <p class="color-primary_1"> 
+      <span class="fw-700">Tên tài khoản:</span> {{bankinfo.AccountHolder}}
+    </p>
+    <p class="color-primary_1">
+      <span class="fw-700">Tên tài khoản:</span> {{bankinfo.BankBranchName}}
+    </p>
+    <p class="color-primary_1">
+      <span class="fw-700">Số tài khoản:</span> {{bankinfo.BankNumber}}
+    </p>
+    <p class="color-primary_1">
+      <span class="fw-700">Hotline:</span> 1900 588 878
+    </p>
+  </div>
+</ion-content>

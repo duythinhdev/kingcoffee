@@ -1,0 +1,30 @@
+<app-header [title]="'Media'"></app-header>
+<div class="aesert"></div>
+<div class="desert"></div>
+<ion-content class="common-bg bg-transparent" padding>
+  <div class="body_register position-relative">
+    <ion-avatar *ngIf="lastImage.data" item-center>
+      <img [src]="lastImage.data" />
+    </ion-avatar>
+    <h3 [hidden]="lastImage.name" class="text-center mt-3" translate>
+      Vui lòng chọn hình!
+    </h3>
+  </div>
+</ion-content>
+<ion-footer class="footer-media">
+  <ion-toolbar color="primary">
+    <ion-buttons class="text-center">
+      <button ion-button icon-left (click)="presentActionSheet()">
+        <ion-icon name="camera"></ion-icon>Chọn hình
+      </button>
+      <button
+        ion-button
+        icon-left
+        (click)="uploadImage()"
+        [disabled]="!lastImage.name"
+      >
+        <ion-icon name="cloud-upload"></ion-icon>Tải hình
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

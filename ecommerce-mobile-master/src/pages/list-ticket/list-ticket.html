@@ -1,0 +1,25 @@
+<!-- Generated template for the ListTicketComponent component -->
+<!-- <div>
+  {{text}}
+</div> -->
+<app-header [title]="'Danh sách mã dự thưởng'"></app-header>
+<div class="aesert"></div>
+<div class="desert"></div>
+<ion-content class="common-bg bg-transparent">
+  <div style="margin: 20px 18px 0px 18px;">
+    <span style="font-size: 18px;color: black;line-height: 18px;">Danh sách mã dự thưởng của bạn:</span><br>
+    <div *ngIf="!isLoading" class="loading-img">
+      <img src="../../../assets/img/loading-icon.gif" width="50px">
+    </div>
+    <div *ngIf="isLoading">
+      <div style="margin-top: 10px;" *ngIf="listCoupon.length >0">
+        <div *ngFor="let item of listCoupon">
+          <span style="font-size: 16px;color: black;margin: 4px 0px 4px 0px"> {{item}} </span>
+        </div>
+      </div>
+      <div style="margin-top: 10px;" *ngIf="listCoupon.length == 0">
+        <span style="font-size: 16px;color: black;margin: 4px 0px 4px 0px">Bạn chưa có mã dự thưởng nào</span>
+      </div>
+    </div>
+  </div>
+</ion-content>

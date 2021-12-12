@@ -1,0 +1,21 @@
+.font-family {
+    font-family: var(--font-family) !important;
+}
+.font-family-bold {
+    font-family: var(--font-family-bold) !important;
+}
+// Font
+@font-face {
+    font-family: 'UTMBryantLGB';
+    src: url("../fonts/UTMBryantLGB.woff2") format("woff2"); /* Modern Browsers */
+    font-weight: 700;
+    font-style: normal;
+    font-size: 13px;
+}
+@font-face {
+    font-family: 'UTMBryantLG';
+    src: url("../fonts/UTMBryantLG.woff2") format("woff2"); /* Modern Browsers */
+    font-weight: normal;
+    font-style: normal;
+    font-size: 13px;
+}

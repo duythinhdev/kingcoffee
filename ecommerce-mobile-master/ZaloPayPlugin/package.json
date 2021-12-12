@@ -1,0 +1,17 @@
+{
+  "name": "zalopayplugin",
+  "version": "0.0.1",
+  "description": "",
+  "cordova": {
+    "id": "zalopayplugin",
+    "platforms": [
+      "ios"
+    ]
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-ios"
+  ],
+  "author": "",
+  "license": "ISC"
+}

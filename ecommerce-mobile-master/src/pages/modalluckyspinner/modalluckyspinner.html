@@ -1,0 +1,108 @@
+<!-- Generated template for the ModalluckyspinnerComponent component -->
+<div class="container" *ngIf="isPopupp">
+  <div class="item-popup" *ngIf="isPopupSuccess == true || isPopuplose == true ||  isPopupover == true">
+    <div class="item-popup-header1" *ngIf="isPopupSuccess == true">
+      <div class="item-popup-header__img">
+        <img src="../../assets/img/spinner/iconresultsuccess.png" />
+      </div>
+    </div>
+    <div class="item-popup-body" *ngIf="isPopupSuccess == true">
+      <div class="item-popup-body__span1">
+        <span>Xin Chúc Mừng!</span>
+      </div>
+      <div class="item-popup-body__span2">
+        <span class="item-popup-body__span2--support">Bạn đã trúng 01 {{gift_name}}. Công ty TNHH TNI KING COFFEE sẽ
+          liên hệ
+          bạn để hướng dẫn thủ tục nhận giải thưởng. Hạn chót nhận giải ngày 31/01/2022.</span>
+        <span class="item-popup-body__span2--support">Hotline hỗ trợ: <b style="color: cornflowerblue;">1900 588
+            878</b></span>
+      </div>
+    </div>
+    <div class="item-popup-header2" *ngIf="isPopuplose == true">
+      <div class="item-popup-header__img">
+        <img src="../../assets/img/spinner/iconloselate.png" />
+      </div>
+    </div>
+    <div class="item-popup-body" *ngIf="isPopuplose == true">
+      <div class="item-popup-body__span1">
+        <span class="item-popup-spanploselate">Chúc bạn may mắn lần sau! Bạn vui lòng mua hàng trên
+          app hoặc quét mã Qrcode trong mỗi sản phẩm King Coffee hay hóa đơn
+          tại hệ thống quán cafe King Coffee để có cơ hội trúng xe ô
+          tô điện VinFast VFe34 và nhiều phần quà hấp dẫn khác.</span>
+      </div>
+    </div>
+    <div class="item-popup-header3" *ngIf="isPopupover == true && !gift_name">
+      <div class="item-popup-header__img">
+        <img src="../../assets/img/spinner/iconpopupover.png" />
+      </div>
+    </div>
+    <div class="item-popup-header1" *ngIf="isPopupover == true && gift_name">
+      <div class="item-popup-header__img">
+        <img src="../../assets/img/spinner/iconresultsuccess.png" />
+      </div>
+    </div>
+    <div class="item-popup-body" *ngIf="isPopupover == true">
+      <div *ngIf="!gift_name" class="item-popup-body__span1">
+        <span class="item-popup-spanploselate">Chúc bạn may mắn lần sau! Bạn vui lòng mua hàng trên
+          app hoặc quét mã Qrcode trong mỗi sản phẩm King Coffee hay hóa đơn
+          tại hệ thống quán cafe King Coffee để có cơ hội trúng xe ô
+          tô điện VinFast VFe34 và nhiều phần quà hấp dẫn khác.</span>
+      </div>
+      <div *ngIf="gift_name">
+        <!-- <span>Xin chúc mừng! Bạn đã trúng 01:</span>
+        <span><b>{{gift_name}}</b></span>
+        <span class="item-popup-body__span2--support" style="margin-top: 10px;" >King Coffee sẽ liên hệ bạn để trao thưởng. Hotline hỗ trợ: <b style="color: cornflowerblue;" >1900 588 878</b></span> -->
+        <!-- <span>Bạn đã trúng 01 {{gift_name}}. Công ty TNHH TNI KING COFFEE sẽ liên hệ bạn để hướng
+           dẫn thủ tục nhận giải thưởng. Hạn chót nhận giải ngày 15/02/2022.</span>
+        <span class="item-popup-body__span2--support">Hotline hỗ trợ: <b style="color: cornflowerblue;" >1900 588 878</b></span> -->
+        <div class="sss" style="margin-top: 15px;">
+          <div class="item-popup-body__span2">
+            <span class="item-popup-body__span2--support">Bạn đã trúng 01 {{gift_name}}. Công ty TNHH TNI KING COFFEE sẽ
+              liên hệ
+              bạn để hướng dẫn thủ tục nhận giải thưởng. Hạn chót nhận giải ngày 31/01/2022.</span>
+            <span class="item-popup-body__span2--support">Hotline hỗ trợ: <b style="color: cornflowerblue;">1900 588
+                878</b></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="item-popup-footer" *ngIf="isNotification == false">
+      <button class="item-popup-footer__button" (click)="clickClosePopup()">Mua Hàng</button>
+    </div>
+  </div>
+  <div class="item-popup4" *ngIf="isNotification == true">
+    <div class="item-popup-header4">
+      <div class="item-popup-header__img">
+        <img src="../../assets/img/spinner/iconpopupover.png" />
+      </div>
+    </div>
+    <div class="item-popup-body4">
+      <div class="item-popup-body__span4">
+        <span class="item-popup-programming">Chương trình vòng quay may mắn sẽ áp dụng từ ngày {{startdate}}</span>
+      </div>
+    </div>
+    <div class="item-popup-footer4">
+      <button class="item-popup-footer__button4" (click)="clickClosePopup()">Mua Hàng</button>
+    </div>
+  </div>
+
+  <div class="item-popup5" *ngIf="isNotificationSpin == true">
+    <div class="item-popup-header4">
+      <div class="item-popup-header__img">
+        <img src="../../assets/img/spinner/iconpopupover.png" />
+      </div>
+    </div>
+    <div class="item-popup-body4">
+      <div class="item-popup-body__span4">
+        <span class="item-popup-programming">Chương trình vòng quay may mắn chỉ áp dụng cho thành viên mới cài app.
+          Bạn vui lòng mua hàng trên app hoặc quét mã Qrcode trong mỗi sản phẩm King Coffee hay hóa đơn tại hệ thống
+          quán cafe King Coffee để có cơ hội trúng xe ô tô điện VinFast VFe34 và nhiều phần quà hấp dẫn khác.</span>
+      </div>
+    </div>
+    <div class="item-popup-footer4">
+      <button class="item-popup-footer__button4" (click)="clickClosePopup()">Mua Hàng</button>
+    </div>
+  </div>
+</div>
+<div *ngIf="!isPopupp">
+</div>

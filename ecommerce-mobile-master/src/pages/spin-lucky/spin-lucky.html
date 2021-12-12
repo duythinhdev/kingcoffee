@@ -1,0 +1,36 @@
+<app-header [title]="'SpinLucky'">
+</app-header>
+<ion-content>
+  <div *ngIf="isLoggedIn" >
+    <div *ngIf="!isLoading" class="loading-img">
+      <img src="../../../assets/img/loading-icon.gif" width="50px">
+    </div>
+    <div *ngIf="isLoading">
+      <div class="background-container" (click)="clickSpinner()" >
+        <div class="item-title">
+          <div class="item-title-img">
+            <img src="../../assets/img/logoking.png" />
+          </div>
+<!--          <div class="item-title-span">-->
+<!--            <span>Vòng Quay May Mắn</span>-->
+<!--          </div>-->
+          <div class="item-spinner">
+            <img src="../../assets/img/spinner/leftright.png" class="item-left-right" />
+            <img src="../../assets/img/spinner/VongQuay_Fix1805_2.svg" id="item-spinner-reward" />
+            <img src="../../assets/img/spinner/group.png" class="item-spinner-circle" />
+            <img src="../../assets/img/spinner/untitled%20(17).png" class="item-spinner-logo" />
+            <img src="../../assets/img/spinner/untitled%20(18).png" class="item-spinner-destinational" />
+            <img src="../../assets/img/spinner/up.png" *ngIf="isUpDown === false" class="item-spinner-up" />
+            <img src="../../assets/img/spinner/down.png" *ngIf="isUpDown === true" class="item-spinner-down" />
+          </div>
+          <!-- <div>
+            <img src="../../assets/img/spinner/Coins_svg.png" class="coin" />
+          </div> -->
+        </div>
+      </div>
+      <div *ngIf="isPopupp">
+        <modalluckyspinner [isPopupp]="ShowResult" [isStt]="status_gift"></modalluckyspinner>
+      </div>
+    </div>
+  </div>
+</ion-content>

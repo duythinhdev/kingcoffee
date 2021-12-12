@@ -1,0 +1,36 @@
+<app-header [title]="'TPL'"></app-header>
+<ion-content class="profile animated fadeIn common-bg" #top (ionScroll)="onScroll($event)">
+    <div *ngIf="isLoading" class="loading-img" style="position: absolute;
+        background: white;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 999;">
+        <img src="../../../assets/img/loading-icon.gif" width="50px" />
+    </div>
+    <ion-item no-lines class="h-full">
+        <ion-label class="text-center no-margin p-15" style="white-space: unset">
+            <img *ngIf="check !== 'vnpay'" src="../../../assets/img/check.png" width="140px" style="opacity: 0.5" />
+            <img *ngIf="check === 'vnpay'" src="../../../assets/img/failed.png" width="140px" style="opacity: 0.5" />
+            <h2 *ngIf="check" class="text-center mt-30 mb-30 fs-24 fw-700 color-primary">
+                CẢM ƠN BẠN ĐÃ ĐẶT HÀNG TẠI Women Can Do
+            </h2>
+            <h2 *ngIf="check == false" class="text-center mt-30 mb-30 fs-24 fw-700 color-primary">
+                Ví của bạn không đủ thanh toán!
+            </h2>
+            <h2 *ngIf="check == null" class="text-center mt-30 mb-30 fs-24 fw-700 color-primary">
+                Thanh toán đã bị huỷ!
+            </h2>
+            <h2 *ngIf="check === 'vnpay'" class="text-center mt-30 mb-30 fs-24 fw-700 color-primary">
+                {{messagePayment}}
+            </h2>
+            <button ion-button class="icon-scroll-top" (click)="scrollTop()" *ngIf="scrollHeight> 10 ">
+        <ion-icon name="arrow-up"></ion-icon>
+      </button>
+            <button ion-button class="w-200 auto-margin linear-bunting-flirt no-transform fs-14 fw-700 color-white" full type="submit" (click)="goto('product')">
+        <span translate>Tiếp tục mua sắm</span>
+      </button>
+        </ion-label>
+    </ion-item>
+</ion-content>

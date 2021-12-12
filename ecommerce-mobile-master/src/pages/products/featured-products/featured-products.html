@@ -1,0 +1,20 @@
+<!-- <div *ngIf="!isLoading">
+  <ion-list class="product-list" *ngFor="let item of items">
+    <product-card [product]="item" [showDeal]="options.showDeal"></product-card>
+  </ion-list>
+</div>
+<div *ngIf="isLoading" class="loading-img">
+  <img src="../../../assets/img/loading-icon.gif" width="50px">
+</div> -->
+
+<ion-grid class="__product-list">
+  <ion-row *ngIf="!isLoading">
+    <ion-col col-4 class="__product-item" *ngFor="let item of items">
+      <product-card [product]="item" [showDeal]="options.showDeal"></product-card>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
+<div *ngIf="isLoading" class="loading-img">
+  <img src="../../../assets/img/loading-icon.gif" width="50px">
+</div>

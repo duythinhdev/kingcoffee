@@ -1,0 +1,167 @@
+<app-header
+  #header
+  [headerTransparent]="true"
+  [isShowLogo]="true"
+  [title]="'Products'"
+  class="products_header"
+></app-header>
+<ion-content
+  class="profile animated fadeIn common-bg products-listing content-home"
+  #top
+  (ionScroll)="onScroll($event)"
+>
+  <app-banner class="banner-slide"></app-banner>
+
+  <div class="p-5">
+    <ion-grid class="__category">
+      <ion-row (click)="changeShow()">
+        <ion-col col>
+          <span class="__category-title">Danh mục</span>
+          <ion-icon
+            *ngIf="!show"
+            class="__category-title-icon"
+            name="ios-arrow-forward"
+          ></ion-icon>
+          <ion-icon
+            *ngIf="show"
+            class="__category-title-icon"
+            name="ios-arrow-down"
+          ></ion-icon>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="show">
+        <ion-col col-12 *ngFor="let category of tree">
+          <ion-list class="__category-menu" no-lines>
+            <ion-item style="margin-bottom: 10px">
+              <a
+                class="__category-menu-title"
+                (click)="changeShow()"
+                [ngClass]="{collapsed: !category.showChildren, 'active': category._id === searchFields.categoryId}"
+                (click)="updateFilter(category._id, 'category')"
+                style="color: #cb1285"
+              >
+                {{category.name}}
+              </a>
+
+              <ion-icon
+                name="add"
+                [hidden]="category.showChildren"
+                *ngIf="category?.children?.length"
+                (click)="category.showChildren = !category.showChildren"
+                item-end
+              ></ion-icon>
+              <ion-icon
+                name="remove"
+                [hidden]="!category.showChildren"
+                *ngIf="category?.children?.length"
+                (click)="category.showChildren = !category.showChildren"
+                item-end
+              ></ion-icon>
+            </ion-item>
+          </ion-list>
+
+          <ion-list
+            *ngIf="category?.children?.length && category.showChildren"
+            [ngClass]="{collapse: !category.showChildren, in: category.showChildren}"
+            class="__category-sub-menu"
+            no-lines
+          >
+            <div
+              *ngFor="let child of category.children"
+              style="margin-bottom: 13px"
+            >
+              <a
+                class="__category-menu-title"
+                [ngClass]="{'active': child._id === searchFields.categoryId}"
+                (click)="changeShow()"
+                (click)="updateFilter(child._id, 'category')"
+                style="color: #cb1285"
+              >
+                {{child.name}}
+              </a>
+
+              <ion-icon
+                style="float: right; padding-right: 15px"
+                name="add"
+                [hidden]="child.showChildren"
+                *ngIf="child?.children?.length"
+                (click)="child.showChildren = !child.showChildren"
+                item-end
+              >
+              </ion-icon>
+              <ion-icon
+                style="float: right; padding-right: 15px"
+                name="remove"
+                [hidden]="!child.showChildren"
+                *ngIf="child?.children?.length"
+                (click)="child.showChildren = !child.showChildren"
+                item-end
+              >
+              </ion-icon>
+
+              <ion-col
+                class="__category-sub-menu-title"
+                *ngIf="child.showChildren"
+              >
+                <div *ngFor="let subchild of child.children">
+                  <a
+                    (click)="changeShow()"
+                    class="__category-sub-menu-title"
+                    style="color: black !important"
+                    [ngClass]="{'active': subchild._id === searchFields.categoryId}"
+                    (click)="updateFilter(subchild._id, 'category')"
+                  >
+                    {{subchild.name }}
+                  </a>
+                </div>
+              </ion-col>
+            </div>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <!-- 
+    <ion-refresher (ionRefresh)="query($event)">
+    </ion-refresher> -->
+
+    <ion-grid class="__product-list">
+      <div *ngIf="isLoading" class="loading-img">
+        <img src="../../../assets/img/loading-icon.gif" width="50px" />
+      </div>
+      <div  *ngIf="items.length>0 ">
+        <a class="show_category">{{items[0].category.name}} </a>
+      </div>
+      <ion-row *ngIf="!isLoading">
+        <ion-col col-6 class="__product-item" *ngFor="let item of items">
+          <product-card [isHome]="false" [product]="item"></product-card>
+        </ion-col>
+
+      </ion-row>
+
+      <ion-row *ngIf="!items.length">
+        <ion-col size="12"> {{'Không tìm thấy sản phẩm' | translate}} </ion-col>
+      </ion-row>
+
+      <ion-infinite-scroll
+        (ionInfinite)="doInfinite($event)"
+        *ngIf="items.length < total"
+      >
+        <ion-infinite-scroll-content
+          loadingSpinner="bubbles"
+          loadingText="{{'Loading more data...' | translate}}"
+        >
+        </ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+    </ion-grid>
+  </div>
+</ion-content>
+
+<button
+  ion-button
+  class="icon-scroll-top"
+  (click)="scrollTop()"
+  *ngIf="scrollHeight > 400"
+>
+  <ion-icon name="arrow-up"></ion-icon>
+</button>

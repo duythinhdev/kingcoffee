@@ -1,0 +1,164 @@
+<ion-header class="header_logo">
+  <ion-navbar class="linear-bunting-flirt bg-transparent text-center">
+    <ion-title>
+      <img src="/assets/img/logo/WELogoWhite.png" class="h-65" />
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<div class="aesert"></div>
+<div class="desert"></div>
+
+<ion-content class="common-bg bg-transparent">
+  <form novalidate (ngSubmit)="updateBank()" [formGroup]="updateBankForm">
+    <h5
+      style="
+        margin-left: 15px;
+        font-size: 16px;
+        color: #d11287;
+        text-transform: uppercase;
+        font-weight: bold;
+      "
+    >
+      <b>Thông tin ngân hàng</b>
+    </h5>
+
+    <div
+      class="position-relative bg-white no-border-radius"
+      style="
+        padding: 0px 5px 10px;
+        margin: 35px 10px 40px;
+        box-shadow: 0px 0px 2px 0px lightgrey;
+        border-radius: 10px;
+        border: 0.1em solid #daa3c5;
+      "
+    >
+      <ion-list style="margin: -1px 0 0px">
+        <div style="padding: 10px 10px 0px 10px">
+          <ion-label>Tên ngân hàng</ion-label>
+          <ion-item style="border-bottom: 1px solid #562263">
+            <ion-select
+              formControlName="BankId"
+              [required]="true"
+              required
+              ngModel
+              placeholder="-- Chọn --"
+              okText="Xác nhận"
+              cancelText="Đóng"
+            >
+              <ion-option *ngFor="let item of banks" [value]="item.Id"
+                >{{item.Name}}</ion-option
+              >
+            </ion-select>
+          </ion-item>
+          <ion-item
+            no-lines
+            *ngIf="updateBankForm.get('BankId').hasError('required') && updateBankForm.get('BankId').touched"
+          >
+            <div class="error">
+              {{'Please choose a bank in list' | translate}}
+            </div>
+          </ion-item>
+        </div>
+
+        <div style="padding: 10px 10px 0px 10px">
+          <ion-label>Chi nhánh</ion-label>
+          <ion-item class="no-padding" style="border-bottom: 1px solid #562263">
+            <ion-input
+              class="h-36"
+              autocomplete="off"
+              required
+              formControlName="BankBranchName"
+            ></ion-input>
+          </ion-item>
+          <ion-item
+            no-lines
+            *ngIf="updateBankForm.get('BankBranchName').hasError('required') && updateBankForm.get('BankBranchName').touched"
+          >
+            <div class="error">
+              {{'Please enter a bank branch name' | translate}}
+            </div>
+          </ion-item>
+        </div>
+
+        <div style="padding: 10px 10px 0px 10px">
+          <ion-label>Chủ tài khoản</ion-label>
+          <ion-item class="no-padding" style="border-bottom: 1px solid #562263">
+            <ion-input
+              class="h-36"
+              autocomplete="off"
+              required
+              formControlName="BankHolderName"
+            ></ion-input>
+          </ion-item>
+          <ion-item
+            no-lines
+            *ngIf="(updateBankForm.get('BankHolderName').hasError('required') || updateBankForm.get('BankHolderName').hasError('pattern')) && updateBankForm.get('BankHolderName').touched"
+          >
+            <div
+              class="error"
+              *ngIf="updateBankForm.get('BankHolderName').hasError('required')"
+            >
+              {{'Please enter a bank holder name' | translate}}
+            </div>
+            <div
+              class="error"
+              *ngIf="updateBankForm.get('BankHolderName').hasError('pattern')"
+            >
+              {{'Bank holder name is invalid' | translate}}
+            </div>
+          </ion-item>
+        </div>
+
+        <div style="padding: 10px 10px 0px 10px">
+          <ion-label>Số tài khoản</ion-label>
+          <ion-item class="no-padding" no-lines>
+            <ion-input
+              class="h-36"
+              type="text"
+              autocomplete="off"
+              required
+              formControlName="BankNumber"
+            ></ion-input>
+          </ion-item>
+          <ion-item
+            no-lines
+            *ngIf="(updateBankForm.get('BankNumber').hasError('required') || updateBankForm.get('BankNumber').hasError('pattern')) && updateBankForm.get('BankNumber').touched"
+          >
+            <div
+              class="error"
+              *ngIf="updateBankForm.get('BankNumber').hasError('required')"
+            >
+              {{'Please enter a bank number' | translate}}
+            </div>
+            <div
+              class="error"
+              *ngIf="updateBankForm.get('BankNumber').hasError('pattern')"
+            >
+              {{'Bank number is invalid' | translate}}
+            </div>
+          </ion-item>
+        </div>
+      </ion-list>
+    </div>
+
+    <div>
+      <ion-row responsive-sm style="margin-top: 40px">
+        <ion-col>
+          <button
+            type="submit"
+            ion-button
+            class="w-200 auto-margin linear-bunting-flirt no-transform fs-14"
+            clear
+            block
+            translate
+            style="color: white; text-transform: uppercase !important"
+            [disabled]="updateBankForm.invalid || updateBankForm.value.BankId == 0"
+          >
+            Lưu
+          </button>
+        </ion-col>
+      </ion-row>
+    </div>
+  </form>
+</ion-content>

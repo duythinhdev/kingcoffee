@@ -1,0 +1,81 @@
+<ion-header class="header_logo">
+  <ion-toolbar class="linear-bunting-flirt bg-transparent text-center">
+    <img src="/assets/img/logo/WELogoWhite.png" class="h-65">
+  </ion-toolbar>
+</ion-header>
+<div class="aesert"></div>
+<div class="desert"></div>
+<ion-content class="register bg-transparent survey" style="margin-top: 0;" *ngIf="!isSuccess">
+  <div class="body_register position-relative">
+    <h2 translate class="fs-30 fw-700 color-primary mb-30 text-center">Đăng ký</h2>
+    <ion-row>
+      <ion-col col-12>
+        <div class="register_step">
+          <ul class="progressbar">
+            <li class="complete fs-12">
+              <span class="icon_register icon-subject"></span>
+              Đối tượng
+            </li>
+            <li class="complete fs-12">
+              <span class="icon_register icon-info"></span>
+              Thông tin
+            </li>
+            <li class="active fs-12">
+              <span class="icon_register icon-survey"></span>
+              Khảo sát
+            </li>
+          </ul>
+        </div>
+      </ion-col>
+    </ion-row>
+    <div>
+      <ion-row class="register_row mt-30">
+        <ion-list class="color-primary fw-700 mt-10" radio-group *ngFor="let item of list_survey, let i = index">
+          {{i+1}}.{{item.Question}}
+          <ion-item no-lines class="pl-30" *ngFor="let x of item.Answer">
+            <ion-radio slot="start" [value]="x.Id" (ionSelect)="select_Anser(item.Id,x.Id)" class="w-full" mode="md" style="left: 10px !important; top: unset !important"></ion-radio>
+            <!-- <ion-radio slot="start" [value]="x.Id" (ionSelect)="select_Anser(item.Id,x.Id)" class="w-full" mode="md"></ion-radio> -->
+            <ion-label class="mt-10">{{x.Answer}}</ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-row>
+      <ion-row responsive-sm class="mt-30">
+        <ion-col>
+          <button ion-button class="w-200 auto-margin linear-bunting-flirt no-transform fs-12" clear block
+            (click)="confirmSurvey()" [disabled]="submitted" translate>Xác nhận</button>
+        </ion-col>
+      </ion-row>
+    </div>
+  </div>
+</ion-content>
+<ion-content class="register bg-transparent survey" style="margin-top: 0;" *ngIf="isSuccess">
+  <div class="body_register position-relative">
+    <h2 translate class="fs-30 fw-700 color-primary mb-30 text-center">Đăng ký</h2>
+    <div class="body_register no-margin" style="text-align: center;">
+      <p class="fs-12 fw-700">Xin chúc mừng! Yêu cầu đăng ký trở thành đại lý của bạn đã được chấp nhận.</p>
+
+      <div class="successPop" style="padding: 10px;">
+        <h2 class="fs-14 fw-700" style="color: black;">
+          {{bankinfo.Description}}
+        </h2>
+        <div style="text-align: left;">
+          <p class="color-primary">
+            <span class="fw-700">Tên công ty:</span> Công ty TNHH TNI KING COFFEE
+          </p>
+          <p class="color-primary">
+            <span class="fw-700">Ngân hàng:</span> {{bankinfo.BankBranchName}}
+          </p>
+          <p class="color-primary">
+            <span class="fw-700">Số tài khoản:</span> {{bankinfo.BankNumber}}
+          </p>
+        </div>
+      </div>
+      <ion-row responsive-sm class="mt-30">
+        <ion-col>
+          <button ion-button class="w-200 auto-margin linear-bunting-flirt no-transform fs-12" clear block
+            (click)="goTo('login')" [disabled]="submitted" translate>Xác nhận</button>
+        </ion-col>
+      </ion-row>
+    </div>
+  </div>
+</ion-content>

@@ -1,0 +1,36 @@
+review-list {
+  .review-list {
+    .no-review {
+      color: #dc3545;
+      text-align: center;
+      font-size: 18px;
+    }
+
+    .avatar {
+      display: inline-block;
+      width: 20%;
+    }
+
+    .content {
+      display: inline-block;
+      width: 80%;
+      float: right;
+    }
+
+    ion-avatar {
+      margin: unset;
+    }
+
+    ion-label {
+      white-space: unset;
+    }
+
+    star-rating {
+      font-size: 13px;
+    }
+
+    span {
+      font-size: 13px;
+    }
+  }
+}

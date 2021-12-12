@@ -1,0 +1,321 @@
+<app-header [title]="'Order Detail'"></app-header>
+<ion-content class="profile animated fadeIn common-bg">
+  <!-- anh -->
+  <ion-list class="my-order?-detail" no-lines>
+    <ion-card>
+      <ion-item style="padding: 15px">
+        <div>
+          <h2
+            style="
+              color: black !important;
+              margin-bottom: 10px;
+              font-weight: bold;
+            "
+          >
+            Mã đơn hàng: {{order?.orderCode}}
+          </h2>
+        </div>
+        <div>
+          <p style="margin-bottom: 5px">
+            Ngày đặt hàng {{order?.createdAt | date: 'HH:mm a dd/MM/yyyy '}}
+          </p>
+        </div>
+        <div>
+          <p style="margin-bottom: 5px">{{statusText}}</p>
+        </div>
+      </ion-item>
+    </ion-card>
+    <ion-card>
+      <ion-item style="padding: 15px">
+        <ion-row>
+          <ion-col col-6>
+            <h2 class="fl-l" size="6" style="font-weight: bold">
+              Theo dõi đơn hàng
+            </h2>
+          </ion-col>
+          <ion-col col-6>
+            <span
+              *ngIf="lastestProgress?.newData != 'failOrdered' && lastestProgress?.newData != 'failDelivered'"
+              class="fl-r"
+              (click)="openOrderTracking(order)"
+              style="color: #bc0073; float: right"
+              >Xem chi tiết</span
+            >
+          </ion-col>
+          <ion-col col-12>
+            <ul class="StepProgress">
+              <li class="StepProgress-item is-done">
+                <h4 class="fl-l">{{OrderStatus[lastestProgress?.newData]}}</h4>
+                <p>
+                  {{lastestProgress?.createdAt | date: 'HH:mm - dd/MM/yyyy '}}
+                </p>
+              </li>
+            </ul>
+          </ion-col>
+        </ion-row>
+      </ion-item>
+    </ion-card>
+    <ion-card>
+      <ion-item style="padding: 15px">
+        <ion-row>
+          <ion-col col-12>
+            <h2 class="fl-l" style="margin-bottom: 10px; font-weight: bold">
+              Địa chỉ người nhận
+            </h2>
+          </ion-col>
+
+          <ion-col col-12>
+            <p style="margin-bottom: 5px; white-space: initial">
+              {{order?.lastName}} {{order?.firstName}}
+            </p>
+            <p style="margin-bottom: 5px; white-space: initial">
+              {{order?.streetAddress}} -
+              {{order?.ward?.name}},{{order?.district?.name}},{{order?.city?.name}}
+            </p>
+            <p style="margin-bottom: 5px">{{order?.phoneNumber}}</p>
+          </ion-col>
+        </ion-row>
+      </ion-item>
+    </ion-card>
+    <ion-card>
+      <ion-item style="padding: 15px">
+        <h2 class="fl-l" style="font-weight: bold">Thông tin kiện hàng</h2>
+        <div class="order?-detail" *ngFor="let item of details">
+          <ion-row>
+            <ion-col col-4>
+              <div>
+                <img
+                  [src]="item.product?.mainImage?.mediumPath"
+                  alt="Sản phẩm"
+                  width="100"
+                  height="100"
+                />
+              </div>
+            </ion-col>
+            <ion-col col-8>
+              <div class="product-content">
+                <p
+                  style="
+                    white-space: initial;
+                    color: black;
+                    margin-bottom: 10px;
+                  "
+                >
+                  <b> {{item.product?.name}} </b>
+                </p>
+                <p style="white-space: normal; color: black">
+                  <b> {{item.product?.sku}} </b>
+                </p>
+                <p style="white-space: normal; padding-top: 10px">
+                  SL: {{item.quantity}} |
+                  <span style="color: red"
+                    >{{item.totalPrice || 0 | number : '1.0-0'}} đ</span
+                  >
+                </p>
+                <p
+                  *ngFor="let promotion of item?.promotions"
+                  style="color: black; white-space: normal; padding-top: 10px"
+                >
+                  <span *ngIf="promotion.discountPercent ? true:false"
+                    >- {{ promotion.discountPercent || 0 | number :
+                    '1.0-0'}}%</span
+                  ><span
+                    style="text-decoration: line-through; margin-left: 20px"
+                    *ngIf="promotion.unitPrice > 0"
+                    >{{item.unitPrice * item.quantity || 0 | number : '1.0-0'}}
+                    đ</span
+                  >
+                </p>
+              </div>
+            </ion-col>
+          </ion-row>
+        </div>
+      </ion-item>
+    </ion-card>
+    <ion-card *ngIf="order?.transportation != ''">
+      <ion-item style="padding: 15px">
+        <div>
+          <h2 class="fl-l" style="margin-bottom: 10px; font-weight: bold">
+            Hình thức giao hàng
+          </h2>
+          <p>{{order?.transportation}}</p>
+        </div>
+      </ion-item>
+    </ion-card>
+    <ion-card>
+      <ion-item style="padding: 15px">
+        <div>
+          <h2 class="fl-l" style="margin-bottom: 10px; font-weight: bold">
+            Hình thức thanh toán
+          </h2>
+          <p>
+            {{order?.transaction?.paymentGateway | paymentGatewayName |
+            translate}}
+          </p>
+        </div>
+      </ion-item>
+    </ion-card>
+    <ion-card>
+      <ion-item class="order-detai-price" style="padding: 15px">
+        <ion-row style="border-bottom: 0.5px solid">
+          <ion-col size="6">
+            <p class="fl-l">Tạm tính:</p>
+          </ion-col>
+          <ion-col size="6">
+            <p class="fl-r" style="float: right">
+              {{ totalPrice || 0 | number : '1.0-0'}} đ
+            </p>
+          </ion-col>
+        </ion-row>
+        <ion-row style="border-bottom: 0.5px solid">
+          <ion-col size="6">
+            <p class="fl-l">Chiết khấu ({{order?.percentDiscount*100}}%):</p>
+          </ion-col>
+          <ion-col size="6">
+            <p class="fl-r" style="float: right">
+              {{order?.totalDiscountPrice || 0 | number : '1.0-0'}} đ
+            </p>
+          </ion-col>
+        </ion-row>
+        <ion-row style="border-bottom: 0.5px solid">
+          <ion-col size="4">
+            <p class="fl-l">Tổng tiền sau chiết khấu:</p>
+          </ion-col>
+          <ion-col size="6">
+            <p class="fl-r" style="float: right">
+              {{(order?.totalPrice - order?.shippingPrice +
+              totalPromotionDiscountPrice + totalExtraProductsPrice) || 0 |
+              number : '1.0-0'}} đ
+            </p>
+          </ion-col>
+        </ion-row>
+        <ion-row
+          *ngFor="let promotion of order?.promotions"
+          [ngStyle]="{'border-bottom': (isShowDiscountPercent) ? '0.5px solid':'none','display': (isShowDiscountPercent) ? 'flex':'none'}"
+        >
+          <ion-col size="8">
+            <p class="fl-l" *ngIf="promotion.discountPercent > 0">
+              {{'Promotion only' | translate}}
+              <span *ngIf="promotion.discountPercent > 0"
+                >({{promotion.discountPercent}}%)</span
+              >
+            </p>
+          </ion-col>
+          <ion-col size="4">
+            <p
+              class="fl-r"
+              *ngIf="promotion.discountPrice > 0 && promotion.promotionOrder.freeShip.shippingPriceDiscount === 0"
+              style="float: right"
+            >
+              {{promotion.discountPrice || 0 | number : '1.0-0'}} đ
+            </p>
+          </ion-col>
+        </ion-row>
+        <ion-row
+          *ngFor="let promotion of order?.promotions"
+          style="border-bottom: 0.5px solid"
+          [ngStyle]="{'border-bottom': (isShowShippingPrice) ? '0.5px solid':'none','display': (isShowShippingPrice) ? 'flex':'none'}"
+        >
+          <ion-col size="8">
+            <p
+              class="fl-l"
+            >
+              {{'Phí vận chuyển:' | translate}}
+            </p>
+          </ion-col>
+          <ion-col size="4">
+            <p
+              class="fl-r"
+              style="float: right"
+            >
+              {{promotion.discountPrice || 0 | number : '1.0-0'}} đ
+            </p>
+          </ion-col>
+        </ion-row>
+        <ion-row
+          *ngIf="order?.shippingPrice > 0"
+          style="border-bottom: 0.5px solid"
+        >
+          <ion-col size="6">
+            <p class="fl-l">Phí vận chuyển:</p>
+          </ion-col>
+          <ion-col size="6">
+            <p class="fl-r" style="float: right">
+              {{order?.shippingPrice || 0 | number : '1.0-0'}} đ
+            </p>
+          </ion-col>
+        </ion-row>
+        <ion-row
+          *ngFor="let promotion of order?.promotions"
+          [ngStyle]="{'border-bottom': (isShowShippingDiscount) ? '0.5px solid':'none', 'display': (isShowShippingDiscount) ? 'flex':'none'}"
+        >
+          <ion-col size="8">
+            <p
+              class="fl-l"
+            >
+              {{'KM chi phí vận chuyển:' | translate}}
+            </p>
+          </ion-col>
+          <ion-col size="4">
+            <p
+              class="fl-r"
+              style="float: right"
+            >
+              {{shippingPrice || 0 |
+              number : '1.0-0'}} đ
+            </p>
+          </ion-col>
+        </ion-row>
+        <ion-row
+          *ngFor="let extraProduct of extraProducts"
+          style="border-bottom: 0.5px solid"
+        >
+          <ion-col size="6">
+            <p class="fl-l" style="color: red">
+              Mua 1
+              <span
+                style="
+                  text-overflow: ellipsis;
+                  max-width: 100px;
+                  display: inline-block;
+                  vertical-align: text-bottom;
+                  overflow: hidden;
+                "
+                >{{extraProduct.product.name}}</span
+              >
+              ưu đãi
+            </p>
+          </ion-col>
+          <ion-col size="6">
+            <p class="fl-r" style="color: red; float: right">
+              {{extraProduct.totalPrice || 0 | number : '1.0-0'}} đ
+            </p>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6">
+            <p class="fl-l" style="font-weight: bold">Thành tiền:</p>
+          </ion-col>
+          <ion-col size="6">
+            <p class="fl-r" style="float: right; color: red">
+              {{order?.totalPrice || 0 | number : '1.0-0'}} đ
+            </p>
+          </ion-col>
+        </ion-row>
+        <p
+          class="fl-r"
+          style="padding-top: 5px; float: right; font-style: italic"
+        >
+          Đã bao gồm VAT nếu có
+        </p>
+      </ion-item>
+    </ion-card>
+
+    <div class="order-detail-button mb-10">
+      <button class="linear-bunting-flirt" (click)="order_again()">
+        Mua lại
+      </button>
+    </div>
+  </ion-list>
+  <!-- anh -->
+</ion-content>

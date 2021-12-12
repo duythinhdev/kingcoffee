@@ -1,0 +1,90 @@
+<div class="card-product">
+  <div *ngIf="discountPercent" class="discount-percent">
+    <span class="percent">{{discountPercent}}%</span>
+    <br>
+    <span class="discount">Giảm</span>
+  </div>
+  <img [src]="product?.mainImage?.thumbUrl | checkPhoto" height="155px" width="100%" style="border-radius: 3px 3px 0 0;"
+    (click)="viewDetail(product)" />
+  <div class="__product-item-detail" translate (click)="viewDetail(product)">
+    <p style="
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 35px;
+    max-height: 35px;
+    color: #000000;
+    font-size: 12px;
+    margin-top: 8px;
+    font-weight: 400;
+    line-height: 1.4;
+    margin-bottom: 0px;
+">{{product?.name}} </p>
+  </div>
+  <div class='__product-item-card-price' >
+    <div class="__product-item-price-card">
+      <p style="max-height: 15px;line-height: 1; margin-top: 0px;margin-bottom: 0px; overflow: hidden; ">
+        <span style="font-style: normal;
+        font-weight: normal;
+        font-size: 11px;
+        line-height: 15px;
+        max-height: 15px;
+        display: inline-block;
+        margin-top: 0px;
+
+        color: #C64290;
+        ">{{this.product?.price|| 0 | number : '1.0-0'}}</span>
+        <span style="font-style: normal;
+        font-weight: normal;
+        font-size: 11px;
+        line-height: 15px;
+        max-height: 15px;
+        color: #C64290;
+        text-decoration-line: underline;"> đ</span>
+        <span style="
+        font-family: Arial;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 11px;
+        color: #000000;
+        max-height: 15px;
+        line-height: 12px;">(Giá thành viên)</span>
+      </p>
+
+    </div>
+    <div class="__product-item-price-card">
+      <p style="max-height: 15px;line-height: 1; margin-top: 0px;margin-bottom: 0px;overflow: hidden;">
+        <span style="font-style: normal;
+        font-weight: normal;
+        font-size: 11px;
+        line-height: 15px;
+        max-height: 15px;
+        color: #C64290;
+       ">{{salePrice || 0 | number : '1.0-0'}}</span> 
+       <span style="font-style: normal;
+        font-weight: normal;
+        font-size: 11px;
+        line-height: 15px;
+        max-height: 15px;
+        color: #C64290;
+        text-decoration-line: underline;">đ</span> <span style="
+        font-family: Arial;
+        font-style: normal;
+        font-weight: normal;
+        max-height: 15px;
+        font-size: 11px;
+        color: #000000;
+        line-height: 12px;">(Giá đại lý)</span>
+        </p>
+    </div>
+  </div>
+
+
+  <div *ngIf="isShowPromotionName" class="show-promotion" translate>
+    <!-- <b style="font-size: 10px;color: blue;"> -->
+    <img height="14px" style="display: inline-block; vertical-align: middle; padding-right: 4px;"
+      src="../../assets/img/gift-new.png">
+    <span style=" vertical-align: middle">{{promotionName}}</span>
+    <!-- </b> -->
+  </div>
+
+</div>

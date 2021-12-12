@@ -1,0 +1,27 @@
+<ion-tabs #tabHome (ionChange)="openTab($event)" (tap)="refreshTab($event)">
+  <ion-tab
+    [root]="tab1Root"
+    tabTitle="{{'Home' | translate}} "
+    tabIcon="home"
+  ></ion-tab>
+  <ion-tab
+    [root]="tab2Root"
+    tabTitle="{{'Quà tặng' | translate}} "
+    tabIcon="gift-tab"
+  ></ion-tab>
+  <ion-tab
+    [root]="tab3Root"
+    tabTitle="{{'QR code' | translate}} "
+    tabIcon="qr-scanner"
+  ></ion-tab>
+  <ion-tab
+    [root]="tab4Root"
+    tabTitle="{{'Sản Phẩm' | translate}} "
+    tabIcon="cube"
+  ></ion-tab>
+  <ion-tab
+    [root]="tab5Root"
+    tabTitle="{{'Khuyến mãi' | translate}} "
+    tabIcon="pricetag"
+  ></ion-tab>
+</ion-tabs>

@@ -1,0 +1,30 @@
+<app-header [title]="'Payment Success'"></app-header>
+<ion-content padding class="animated fadeIn common-bg profile">
+  <div class="text-center">
+    <h1 class="display-3" translate>Thank you!</h1>
+    <p class="lead" translate>Your order has been sent successfully</p>
+    <p class="lead">
+      <strong translate
+        >Please check out your email to verify the information.</strong
+      >
+    </p>
+    <hr />
+    <p>
+      <span translate>Have any problem?</span>&nbsp;<a
+        (click)="goTo('contact')"
+        translate
+        >Please contact with us</a
+      >
+    </p>
+    <p class="lead">
+      <button
+        ion-button
+        color="primary"
+        role="button"
+        (click)="goTo('products')"
+      >
+        <span translate>Continue shopping</span>
+      </button>
+    </p>
+  </div>
+</ion-content>

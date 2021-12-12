@@ -1,0 +1,26 @@
+
+<ion-header (click)="onclickBack()">
+  <ion-navbar class="linear-bunting-flirt bg-transparent text-center">
+    <div >
+      <ion-icon  class='icon-back-scan' name="arrow-back"></ion-icon>
+    </div>
+    <ion-title class="title-head">Scan QR Code</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+</ion-content>
+
+<div *ngIf="qrHeader" class="div-scan">
+  <img src="assets/img/softwarb_qr_scanner_white.png" alt="" class="img-scan">
+  <div class="scanner-object"></div>
+</div>
+<div *ngIf="qrHeader" class="flash-wrap">
+  <button (click)="onLightToggle()" class="flash-button">
+    <ion-icon
+      style="color: white;
+      font-size: 1.5em;"
+      name="flash"></ion-icon>
+  </button>
+</div>

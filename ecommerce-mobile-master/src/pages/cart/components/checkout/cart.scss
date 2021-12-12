@@ -1,0 +1,132 @@
+page-cart {
+  .cart {
+    ion-list {
+      font-size:13px;
+
+      &.cart-summary {
+        margin:10px 0;
+
+        .item {
+          font-size:13px;
+          padding:0;
+
+          .item-inner {
+            padding:0;
+          }
+        }
+
+        ion-label {
+          margin:10px 0;
+          line-height: 1.4;
+        }
+      }
+
+      &.cart-items {
+        margin:10px;
+        width:auto;
+        border-bottom: 1px solid;
+        .item {
+          margin:0 0 10px;
+          padding:5px;
+          font-size:13px;
+
+          ion-avatar {
+            width:50px;
+            margin:0 8px 0 0;
+            padding:3px;
+            box-shadow: 0 3px 2px #cfcfcf;
+
+            img {
+              max-width:100%;
+              max-height:100%;
+              width: 100%;
+              height: 100%;
+              display:block;
+              margin:0 auto;
+              border-radius:0;
+            }
+
+           @media screen and (min-width: 600px) {
+             width:100px;
+           }
+
+          }
+
+
+          .item-inner {
+            padding:0;
+            border: none;
+            ion-label {
+              margin:0;
+            }
+
+            h2 {
+              font-size:13px;
+              margin:0 0 6px;
+
+              @media screen and (min-width: 600px) {
+                font-size:16px;
+              }
+            }
+
+            .quantity {
+              margin-right:5px;
+              display: inline-block;
+              vertical-align: middle;
+
+              input {
+                display:inline-block;
+                width:30px;
+                height:18px;
+                vertical-align:middle;
+                background:#f0f0f0;
+                border:solid 1px #b4b4b4;
+                padding:0;
+                text-align:center;
+                margin-left:5px;
+                border-radius:10px;
+              }
+            }
+            .price {
+              margin-left:5px;
+              font-weight:bold;
+              color: red;
+              display: inline-block;
+              vertical-align: middle;
+            }
+          }
+
+          button {
+            font-size:10px;
+            margin:0;
+            padding:5px 0 0;
+            height:auto;
+            overflow:visible;
+            text-align:center;
+
+            .button-inner {
+              display:block;
+            }
+            ion-icon {
+              display:block;
+              margin:0 auto 5px;
+              font-size:22px;
+              padding:0;
+            }
+
+            @media screen and (min-width: 600px) {
+              font-size:12px;
+
+              ion-icon {
+                font-size:30px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .apply-btn {
+    margin-top: 30px;
+  }
+}

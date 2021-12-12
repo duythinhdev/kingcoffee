@@ -1,0 +1,4 @@
+<div class="popup-promotion">
+  <img [src]="randomPromotion?.media?.fileUrl | checkPhoto" (click)="goTo()" style="height: 100%; width: 100%; overflow: hidden;" />
+  <span class="close-popup"><ion-icon (click)="dismiss()" name="ios-close-circle-outline"></ion-icon></span>
+</div>

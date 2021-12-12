@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "68131103603",
+    "firebase_url": "https://women-can-do-app.firebaseio.com",
+    "project_id": "women-can-do-app",
+    "storage_bucket": "women-can-do-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:68131103603:android:14c0126153405acab51b06",
+        "android_client_info": {
+          "package_name": "com.tniecommerce"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "68131103603-72ij3quqhcpgh758hia48mvlge11t0pt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDv4i3Sj88FOLOx21wPcxlRR0dEFltG8ic"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "68131103603-72ij3quqhcpgh758hia48mvlge11t0pt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "68131103603-dqpfiin6smmo5rdkhiq4k5ivgtdeah8i.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "1534256364"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

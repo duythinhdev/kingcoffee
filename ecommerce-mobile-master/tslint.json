@@ -1,0 +1,16 @@
+{
+  "rules": {
+    "no-duplicate-variable": true,
+    "no-unused-variable": [
+      true
+    ],
+    "no-implicit-dependencies": false,
+    "ordered-imports": false,
+    "no-any": true
+  },
+  "extends": [
+    "tslint-ionic-rules/strict",
+    "tslint-consistent-codestyle",
+    "tslint-config-prettier"
+  ]
+}

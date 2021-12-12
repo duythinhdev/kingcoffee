@@ -1,0 +1,19 @@
+<app-header [title]="'Notification-Detail'" [isShowLogo]="true"></app-header>
+<ion-content>
+    <div style="margin: 30px 15px 0 15px">
+        <div class="promotions" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
+            <img src="../../assets/img/gift.png" height="25px" />
+            <span style="font-size: 17px; color: #D11287; width: calc(100% - 30px); padding: 2px 0; font-weight: 700; border-bottom: 1px solid #757474;">
+                Nội dung tin tức</span>
+        </div>
+        <ion-grid>
+            <ion-row>
+                <ion-col col-12><span style="font-size:15px; font-weight: 700; color: #D11287">{{dataNotification?.title}}</span></ion-col>
+                <ion-col col-12><span [innerHTML]="dataNotification?.body"></span></ion-col>
+                <!-- <ion-col style="margin-top: 20px;" col-12><span>Thành viên áp dụng: {{applyRole}}</span></ion-col> -->
+                <!-- <ion-col col-12><span>Vùng áp dụng: {{areaApply}}</span></ion-col> -->
+            </ion-row>
+        </ion-grid>
+    </div>
+    <button (click)="order()" *ngIf="typePromotion" style="position: absolute; bottom: 60px; right: 20px; height: 40px; width: 125px; border-radius: 40px; font-size: 15px; font-weight: 700; color: #ffffff; background-color: #D11287;" type="button">Mua giỏ hàng</button>
+</ion-content>

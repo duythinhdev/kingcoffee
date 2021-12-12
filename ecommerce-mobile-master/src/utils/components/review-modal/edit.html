@@ -1,0 +1,50 @@
+<ion-content>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title" translate>Update your review</h4>
+    </div>
+    <div class="modal-body">
+      <div class="mar-bot-15">
+        <ngb-rating
+          [(rate)]="review.rating"
+          (hover)="hovered=$event"
+          max="5"
+          class="no-outline"
+        >
+          <ng-template let-fill="fill" let-index="index">
+            <span class="star font-22" [class.filled]="fill === 100"
+              >&#9733;</span
+            >
+          </ng-template>
+        </ngb-rating>
+      </div>
+      <ion-textarea
+        rows="3"
+        [(ngModel)]="review.comment"
+        placeholder="{{'Leave some text here' | translate}}"
+      ></ion-textarea>
+    </div>
+    <div class="modal-footer">
+      <button
+        ion-button
+        icon-start
+        color="secondary"
+        type="button"
+        (click)="submit()"
+        translate
+      >
+        Update
+      </button>
+      <button
+        ion-button
+        icon-end
+        color="danger"
+        type="button"
+        (click)="viewCtrl.dismiss('Close click')"
+        translate
+      >
+        Close
+      </button>
+    </div>
+  </div>
+</ion-content>

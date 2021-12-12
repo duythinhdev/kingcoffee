@@ -1,0 +1,161 @@
+<!-- -->
+<app-header [title]="'Settings'" [isShowLogo]="true"></app-header>
+<div *ngIf="isLoading" class="loading-img">
+  <img src="../../../assets/img/loading-icon.gif" width="50px" />
+</div>
+<div class="aesert"></div>
+<div class="desert"></div>
+<ion-content
+  class="common-bg bg-transparent common-bg_setting"
+  *ngIf="!isLoading"
+>
+  <!-- User settings-->
+  <div class="body_register position-relative" style="padding: 0px" *ngIf="isLoggedIn">
+    <ion-item-group>
+      <ion-item style="padding: 10px 0px">
+        <ion-row style="text-align: center !important">
+          <ion-col width-100
+            ><img
+              [src]="currentUser?.avatarUrl || 'https://api-wallet.womencando.com.vn/images/Default_Avatar.png'"
+              style="border-radius: 30px"
+              width="80px"
+              height="80px"
+          /></ion-col>
+        </ion-row>
+        <ion-row style="text-align: center !important">
+          <ion-col
+            ><a class="name">
+              <label>{{currentUser?.name}} </label>
+              <ion-icon
+                style="color: green"
+                *ngIf="(currentUser?.isMember && currentUser?.isMember!='false')"
+                name="checkbox"
+              ></ion-icon>
+              <ion-icon
+                style="color: red"
+                *ngIf="(!currentUser?.isMember ||currentUser?.isMember=='false')"
+                name="close"
+                style="
+                  color: white;
+                  background: red;
+                  border-radius: 999px;
+                  height: 15px;
+                  width: 15px;
+                "
+              >
+              </ion-icon> </a
+          ></ion-col>
+        </ion-row>
+      </ion-item>
+      <div style="padding: 15px 20px" *ngIf="isLoggedIn && currentUser">
+        <!-- <ion-item>
+        <div class="menu-user">
+          <img [src]="currentUser?.avatarUrl" width="40px" height="60px">
+          <a class="name">{{currentUser?.name}}</a>
+          <br>
+          <img width="40px">
+          <button ion-button color="theme" (click)="goTo('update')" tappable translate>
+            <span translate>Edit Profile</span>
+          </button>
+        </div>
+      </ion-item> -->
+        <ion-item
+          ><a (click)="goTo('profile_detail')" translate mode="ios">
+            <ion-icon name="contact"></ion-icon>
+            <label>Tài khoản</label>
+          </a>
+          <!-- <ion-icon mode="ios" name="ios-arrow-forward" style="float: right;" (click)="goTo('profile_detail')">
+          </ion-icon> -->
+        </ion-item>
+        <ion-item>
+          <a (click)="goTo('card')" translate>
+            <ion-icon name="card"></ion-icon>
+            <label>Nạp tiền</label>
+          </a>
+        </ion-item>
+        <ion-item *ngIf="isShowKPls">
+          <a (click)="goTo('kpi')" translate>
+            <ion-icon name="calculator"></ion-icon>
+            <label style="font-weight: bold">KPIs</label>
+          </a>
+        </ion-item>
+        <ion-item>
+          <a (click)="goTo('orders')" translate>
+            <ion-icon name="list-box"></ion-icon>
+            <label>Lịch sử đơn hàng</label>
+          </a>
+        </ion-item>
+        <ion-item>
+          <a (click)="goTo('paper')" translate>
+            <ion-icon name="paper"></ion-icon>
+            <label>Lịch sử quét Qr code</label>
+          </a>
+          <!-- <ion-icon name="ios-arrow-forward" style="float: right;" (click)="goTo('orders')"></ion-icon> -->
+        </ion-item>
+        <ion-item>
+          <a (click)="goTo('list-box')" translate>
+            <ion-icon name="clipboard"></ion-icon>
+            <label>Danh sách mã dự thưởng</label>
+          </a>
+          <!-- <ion-icon name="ios-arrow-forward" style="float: right;" (click)="goTo('orders')"></ion-icon> -->
+        </ion-item>
+        <ion-item>
+          <label style="color: black">
+            <ion-icon name="cash"></ion-icon> Ví WE4.0
+          </label>
+          <label item-end style="color: black">
+            <b
+              >{{(amountMoney ? amountMoney.amount : 0) || 0 | number :
+              '1.0-0'}} đ</b
+            >
+          </label>
+        </ion-item>
+        <ion-item *ngIf="currentUser.role == 'WE'">
+          <a (click)="goTo('register')" translate>
+            <ion-icon name="home"></ion-icon>
+            <label>Đăng ký trở thành WE HOME</label>
+          </a>
+        </ion-item>
+        <ion-item
+          ><a (click)="logout()" *ngIf="isLoggedIn && currentUser" translate>
+            <ion-icon name="exit"></ion-icon>
+            <label>Đăng xuất</label>
+          </a></ion-item
+        >
+      </div>
+    </ion-item-group>
+
+    <!-- App settings-->
+    <!-- <ion-item-group class="itemStatic">
+      <ion-item-divider color="secondary" class="bold"><span translate>App Settings</span> </ion-item-divider>
+      <ion-item>
+        <ion-label class="color-black" translate>Language</ion-label>
+        <ion-select [(ngModel)]="userLang" (ionChange)="changeLang()" cancelText="Cancel" okText="OK">
+          <ion-option *ngFor="let lang of languages" value="{{lang?.key}}" selected="true">
+            {{lang?.name}}
+          </ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-item-group> -->
+    <ion-item-group class="itemStatic" *ngFor="let item of pages">
+      <ion-item
+        *ngIf="item?.title == 'Terms of Use' || item?.title == 'Privacy Policy' || item?.title == 'About us' || item?.title == 'Help' || item?.title == 'FAQs'"
+      >
+        <a
+          class="list-page-item"
+          [navPush]="staticPage"
+          [navParams]="{alias: item.alias}"
+          translate
+          >{{item?.title}}</a
+        >
+      </ion-item>
+    </ion-item-group>
+    <div > <a href="{{url}}">
+      <img  style="max-width:40%" src="../../../assets/img/ThongBaoBoCongThuong.png"  />
+    </a>
+    </div>
+    <!--sign out button-->
+    <!-- <button ion-button color="primary" full tappable (click)="logout()" *ngIf="isLoggedIn && currentUser"><span
+      translate>LOG OUT</span></button> -->
+  </div>
+</ion-content>

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="88" height="88" viewBox="0 0 88 88">
+  <g id="Group_187" data-name="Group 187" transform="translate(-804 -377)">
+    <g id="Ellipse_2" data-name="Ellipse 2" transform="translate(804 377)" fill="none" stroke="#6f6f6f" stroke-width="3">
+      <circle cx="44" cy="44" r="44" stroke="none"/>
+      <circle cx="44" cy="44" r="42.5" fill="none"/>
+    </g>
+    <g id="Ellipse_3" data-name="Ellipse 3" transform="translate(804 377)" fill="none" stroke="#6f6f6f" stroke-width="3">
+      <circle cx="44" cy="44" r="44" stroke="none"/>
+      <circle cx="44" cy="44" r="42.5" fill="none"/>
+    </g>
+    <g id="Group_125" data-name="Group 125" transform="translate(-1119.118 338.691) rotate(12.007)">
+      <path id="Path_97" data-name="Path 97" d="M1952.99-319.04l-15.535,3.6-4.318-15.351,9.347-15.793a11.535,11.535,0,0,1,15.8-4.051h0a11.535,11.535,0,0,1,4.051,15.8Z" transform="translate(-4.509)" fill="none" stroke="#6f6f6f" stroke-miterlimit="10" stroke-width="3"/>
+      <line id="Line_2" data-name="Line 2" x1="19.897" y2="33.616" transform="translate(1927.066 -339.129)" fill="none" stroke="#6f6f6f" stroke-miterlimit="10" stroke-width="3"/>
+      <line id="Line_3" data-name="Line 3" x1="16.27" y2="4.841" transform="translate(1937.015 -327.162)" fill="none" stroke="#6f6f6f" stroke-miterlimit="10" stroke-width="3"/>
+    </g>
+  </g>
+</svg>

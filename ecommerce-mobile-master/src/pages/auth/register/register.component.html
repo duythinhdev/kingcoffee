@@ -1,0 +1,272 @@
+<style>
+  .body_register_object{
+    top: center;
+    z-index: 100;
+    margin: 0px 30px;
+    background: rgb(255 255 255 / 0.7);
+    border-radius: 20px;
+    padding: 0px 20px;
+    text-align: center;
+  }
+</style>
+
+<ion-header class="header_logo">
+  <ion-navbar class="linear-bunting-flirt bg-transparent text-center">
+    <ion-title>
+      <img src="/assets/img/logo/WELogoWhite.png" class="h-65" />
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<div class="aesert"></div>
+<div class="desert"></div>
+
+<ion-content class="register bg-transparent" *ngIf="isNew">
+  <div
+    class="body_register_object position-relative"
+    style="margin-bottom: 0px !important"
+  >
+    <h2 translate class="fs-30 fw-700 color-primary mb-10 text-center mt-10">
+      Đăng ký
+    </h2>
+    <ion-list no-lines class="position-relative no-margin">
+      <ion-row>
+        <ion-col col-12>
+          <div class="register_step">
+            <ul class="progressbar">
+              <li class="active fs-12">
+                <span class="icon_register icon-subject"></span>
+                Đối tượng
+              </li>
+              <li class="fs-12">
+                <span class="icon_register icon-info"></span>
+                Thông tin
+              </li>
+              <li class="fs-12">
+                <span class="icon_register icon-survey"></span>
+                Khảo sát
+              </li>
+            </ul>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-2> </ion-col>
+        <ion-col col-10 class="mt-10">
+          <p class="fs-12">Vui lòng chọn hình thức kinh doanh</p>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-2> </ion-col>
+        <ion-col col-10 style="text-align: left;" class="mt-10">
+          <span class="fs-15">WE THÀNH VIÊN</span>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-2>
+          <ion-checkbox
+            [(ngModel)]="input.ischeck_WEConsumer"
+            #ischeck_WEConsumer="ngModel"
+            required
+            name="ischeck_WEConsumer"
+            (click)="selectWEconsumer()"
+          ></ion-checkbox>
+        </ion-col>
+        <ion-col style="text-align: left;" col-10>
+          <span class="fs-12"
+            >Là cá nhân, tổ chức mua hàng với giá ưu đãi. Đăng ký MIỄN PHÍ.</span>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-2> </ion-col>
+        <ion-col col-10 style="text-align: left;" class="mt-10">
+          <span class="fs-15">WE ĐẠI LÝ</span>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-2>
+          <ion-checkbox
+            [(ngModel)]="input.ischeck_WE"
+            #ischeck_WE="ngModel"
+            required
+            name="ischeck_WE"
+            (click)="selectWE()"
+          ></ion-checkbox>
+        </ion-col>
+        <ion-col style="text-align: left;" col-10>
+          <span class="fs-12"
+            >Là cá nhân, tổ chức tham gia Hệ thống kinh doanh trên nền tảng WE4.0. Phí kích hoạt: 500.000đ/ trọn đời</span
+          >
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-2> </ion-col>
+        <ion-col col-10 style="text-align: left;" class="mt-10">
+          <span class="fs-15">WE HOME Café & Foods</span>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-2>
+          <ion-checkbox
+            [(ngModel)]="input.ischeck_WECF"
+            #ischeck_WECF="ngModel"
+            required
+            name="ischeck_WECF"
+            (click)="selectWEHOME()"
+          ></ion-checkbox>
+        </ion-col>
+        <ion-col style="text-align: left;" col-10>
+          <span class="fs-12"
+            >Là mô hình nhượng quyền 33,500,000 đồng cho xe WE HOME. Vui lòng bấm chọn cả hai WE ĐẠI LÝ và WE HOME nếu đăng ký WE HOME.</span
+          >
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col style="text-align: left;" col-12>
+          <p class="fs-12 color-black">Vui lòng chọn loại kinh doanh</p>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-12>
+          <ion-select
+            okText="Xác nhận"
+            cancelText="Đóng"
+            [(ngModel)]="input.companyType"
+            #companyType="ngModel"
+            required
+            name="companyType"
+            placeholder="Cá nhân"
+            [selectOptions]="selectOptions"
+          >
+            <ion-option value="0">Cá nhân</ion-option>
+            <ion-option value="1">Công ty</ion-option>
+          </ion-select>
+        </ion-col>
+      </ion-row>
+      <ion-row responsive-sm class="mt-10">
+        <ion-col>
+          <button
+            class="w-200 auto-margin linear-bunting-flirt no-transform"
+            ion-button
+            block
+            (click)="nextStep()"
+            translate
+          >
+            Tiếp tục đăng ký
+          </button>
+        </ion-col>
+      </ion-row>
+      <ion-row responsive-sm class="mt-10">
+        <ion-col>
+          <button
+            ion-button
+            class="w-200 auto-margin linear-bunting-flirt no-transform fs-12"
+            clear
+            block
+            (click)="goTo('login')"
+          >
+            Quay lại
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-list>
+  </div>
+</ion-content>
+
+<ion-content class="register bg-transparent" *ngIf="!isNew">
+  <div class="body_register position-relative">
+    <h2 translate class="fs-30 fw-700 color-primary mb-30">
+      Đăng ký trở thành <br />
+      WE HOME
+    </h2>
+    <ion-list no-lines class="position-relative no-margin">
+      <!-- <ion-row>
+        <ion-col col-12>
+          <div class="register_step">
+            <ul class="progressbar">
+              <li class="active fs-12">
+                <span class="icon icon-subject"></span>
+                Đối tượng
+              </li>
+              <li class="fs-12">
+                <span class="icon icon-info"></span>
+                Thông tin
+              </li>
+              <li class="fs-12">
+                <span class="icon icon-account"></span>
+                Tài khoản
+              </li>
+              <li class="fs-12">
+                <span class="icon icon-survey"></span>
+                Khảo sát
+              </li>
+            </ul>
+          </div>
+        </ion-col>
+      </ion-row> -->
+      <!-- <ion-row>
+        <ion-col col-2>
+        </ion-col>
+        <ion-col col-10 class="mt-50">
+          <p class="fs-12">Vui lòng chọn hình thức kinh doanh</p>
+        </ion-col>
+      </ion-row> -->
+      <ion-row>
+        <ion-col col-2> </ion-col>
+        <ion-col col-10 class="mt-10">
+          <span class="fs-15"> WE HOME CAFE</span>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-2>
+          <ion-checkbox
+            [(ngModel)]="input.ischeck_WECF"
+            #ischeck_WECF="ngModel"
+            required
+            name="ischeck_WECF"
+          >
+          </ion-checkbox>
+        </ion-col>
+        <ion-col col-10>
+          <span class="fs-12"
+            >WE HOME - là mô hình nhượng quyền café tiện lợi của King Coffee
+            có thiết kế nổi bật. Vốn đầu tư trọn gói chỉ 33,500,000 đồng. Vui
+            lòng bấm chọn cả hai WE (đại lý) & WE HOME</span
+          >
+        </ion-col>
+      </ion-row>
+      <ion-row responsive-sm class="mt-10">
+        <ion-col>
+          <button
+            ion-button
+            class="w-200 auto-margin linear-bunting-flirt no-transform"
+            clear
+            block
+            (click)="changeRole()"
+            translate
+          >
+            Đăng ký
+          </button>
+        </ion-col>
+      </ion-row>
+      <ion-row responsive-sm class="mt-10">
+        <ion-col>
+          <button
+            ion-button
+            class="w-200 auto-margin linear-bunting-flirt no-transform fs-12"
+            clear
+            block
+            navPop
+          >
+            Quay lại
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-list>
+  </div>
+</ion-content>
+
+<!-- <ion-footer class="footer_logo">
+  <ion-toolbar class="linear-bunting-flirt bg-transparent text-center">
+  </ion-toolbar>
+</ion-footer> -->

@@ -1,0 +1,321 @@
+<app-header [(title)]="Title"></app-header>
+<ion-content class="cart" no-scroll>
+  <form #frm="ngForm" class="p-15" (submit)="submit(frm)" *ngIf="!isLoading">
+    <div class="order-info">
+      <ion-grid class="address_update_insert">
+        <ion-row>
+          <ion-col col-5>
+            <ion-label color="primary" class="required" translate
+              >First Name</ion-label
+            >
+          </ion-col>
+          <ion-col col-7>
+            <ion-item
+              [ngClass]="{'red-border-class': firstName.errors && (firstName?.dirty || firstName?.touched || isSubmitted)}"
+            >
+              <ion-input
+                [(ngModel)]="firstNameText"
+                [autocomplete]="on"
+                name="firstName"
+                required
+                ngModel
+                #firstName="ngModel"
+              ></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <div
+          *ngIf="firstName.errors && (firstName?.dirty || firstName?.touched || isSubmitted)"
+        >
+          <p
+            class="no-margin"
+            [hidden]="!firstName?.errors.required"
+            ion-text
+            color="danger"
+            padding-left
+            translate
+          >
+            Please enter your first name!
+          </p>
+        </div>
+        <ion-row>
+          <ion-col col-5>
+            <ion-label color="primary" class="required" translate
+              >Last Name</ion-label
+            >
+          </ion-col>
+          <ion-col col-7>
+            <ion-item
+              [ngClass]="{'red-border-class': lastName.errors && (lastName.dirty || lastName.touched || isSubmitted)}"
+            >
+              <ion-input
+                [(ngModel)]="lastNameText"
+                [autocomplete]="on"
+                name="lastName"
+                required
+                ngModel
+                #lastName="ngModel"
+              ></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <div
+          *ngIf="lastName.errors && (lastName.dirty || lastName.touched || isSubmitted)"
+        >
+          <p
+            class="no-margin"
+            [hidden]="!lastName.errors.required"
+            ion-text
+            color="danger"
+            padding-left
+            translate
+          >
+            Please enter your last name!
+          </p>
+        </div>
+        <ion-row>
+          <ion-col col-5>
+            <ion-label color="primary" class="required" translate
+              >Phone Number</ion-label
+            >
+          </ion-col>
+          <ion-col col-7>
+            <ion-item
+              [ngClass]="{'red-border-class': phoneNumber.errors && (phoneNumber.dirty || phoneNumber.touched || isSubmitted)}"
+            >
+              <ion-input
+                required
+                [(ngModel)]="phoneNumberText"
+                [autocomplete]="on"
+                name="phoneNumber"
+                ngModel
+                #phoneNumber="ngModel"
+                pattern="[0-9]{10}"
+              ></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <div
+          *ngIf="phoneNumber.errors && (phoneNumber.dirty || phoneNumber.touched || isSubmitted)"
+        >
+          <p
+            class="no-margin"
+            [hidden]="!phoneNumber.errors.required"
+            ion-text
+            color="danger"
+            padding-left
+            translate
+          >
+            Please enter your phone number
+          </p>
+          <p
+            class="no-margin"
+            [hidden]="!phoneNumber.errors.pattern"
+            ion-text
+            color="danger"
+            padding-left
+            translate
+          >
+            Vui lòng nhập 10 số
+          </p>
+        </div>
+        <ion-row>
+          <ion-col col-5>
+            <ion-label color="primary" class="required" translate
+              >Shipping Address</ion-label
+            >
+          </ion-col>
+          <ion-col col-7>
+            <ion-item
+              [ngClass]="{'red-border-class': shippingAddress.errors && (shippingAddress.dirty || shippingAddress.touched || isSubmitted)}"
+            >
+              <ion-input
+                [(ngModel)]="shippingAddressText"
+                [autocomplete]="on"
+                name="shippingAddress"
+                required
+                ngModel
+                #shippingAddress="ngModel"
+              ></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <div
+          *ngIf="shippingAddress.errors && (shippingAddress.dirty || shippingAddress.touched || isSubmitted)"
+        >
+          <p
+            class="no-margin"
+            [hidden]="!shippingAddress.errors.required"
+            ion-text
+            color="danger"
+            padding-left
+            translate
+          >
+            Please enter shipping address!
+          </p>
+        </div>
+        <ion-row>
+          <ion-col col-5>
+            <ion-label color="primary" class="required" translate
+              >Tỉnh/Thành</ion-label
+            >
+          </ion-col>
+          <ion-col col-7>
+            <ion-item
+              [ngClass]="{'red-border-class': !fromProvinceId && (city.dirty || city.touched || isSubmitted)}"
+            >
+              <ion-select
+                [(ngModel)]="fromProvinceId"
+                [required]="true"
+                name="city"
+                required
+                ngModel
+                #city="ngModel"
+                (ionChange)="loadDistrict(fromProvinceId)"
+                okText="Xác nhận"
+                cancelText="Đóng"
+              >
+                <ion-option *ngFor="let item of provinces" [value]="item.Id"
+                  >{{item.Name}}</ion-option
+                >
+              </ion-select>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <div
+          *ngIf="!fromProvinceId && (city.dirty || city.touched || isSubmitted)"
+        >
+          <p
+            [hidden]="fromProvinceId"
+            ion-text
+            color="danger"
+            padding-left
+            translate
+          >
+            Please enter your city
+          </p>
+        </div>
+        <ion-row>
+          <ion-col col-5>
+            <ion-label color="primary" class="required" translate
+              >Quận/Huyện</ion-label
+            >
+          </ion-col>
+          <ion-col col-7>
+            <ion-item
+              [ngClass]="{'red-border-class': !fromDistrictId && (district.dirty || district.touched || isSubmitted)}"
+            >
+              <ion-select
+                [(ngModel)]="fromDistrictId"
+                [required]="true"
+                name="district"
+                required
+                ngModel
+                #district="ngModel"
+                (ionChange)="loadWard(fromDistrictId)"
+                okText="Xác nhận"
+                cancelText="Đóng"
+              >
+                <ion-option *ngFor="let item of districts" [value]="item.Id"
+                  >{{item.Name}}</ion-option
+                >
+              </ion-select>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <div
+          *ngIf="!fromDistrictId && (district.dirty || district.touched || isSubmitted)"
+        >
+          <p
+            [hidden]="fromDistrictId"
+            ion-text
+            color="danger"
+            padding-left
+            translate
+          >
+            Please enter your district
+          </p>
+        </div>
+        <ion-row>
+          <ion-col col-5>
+            <ion-label color="primary" class="required" translate
+              >Phường/Xã</ion-label
+            >
+          </ion-col>
+          <ion-col col-7>
+            <ion-item
+              [ngClass]="{'red-border-class': !fromWardId && (state.dirty || state.touched || isSubmitted)}"
+            >
+              <ion-select
+                [(ngModel)]="fromWardId"
+                [required]="true"
+                name="state"
+                required
+                ngModel
+                #state="ngModel"
+                okText="Xác nhận"
+                cancelText="Đóng"
+                (ionChange)="selectedWard(fromWardId)"
+              >
+                <ion-option *ngFor="let item of wards" [value]="item.Id"
+                  >{{item.Name}}</ion-option
+                >
+              </ion-select>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <div
+          *ngIf="!fromWardId && (state.dirty || state.touched || isSubmitted)"
+        >
+          <p
+            [hidden]="fromWardId"
+            ion-text
+            color="danger"
+            padding-left
+            translate
+          >
+            Please enter ward!
+          </p>
+        </div>
+        <!-- <ion-row hidden>
+          <ion-col col-5>
+            <ion-label color="primary" class="required" translate>Zip Code</ion-label>
+          </ion-col>
+          <ion-col col-7>
+            <ion-item [ngClass]="{'red-border-class': zipCode.errors}"> 
+              <ion-input  [(ngModel)]="selected_Zipcode" required name="zipCode" required ngModel #zipCode="ngModel">
+              </ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <div hidden *ngIf="zipCode.errors && (zipCode.dirty || zipCode.touched || isSubmitted)">
+          <p [hidden]="!zipCode.errors.required" ion-text color="danger" padding-left><span translate>Please enter zip
+              code!</span> </p>
+        </div> -->
+        <ion-row>
+          <ion-col col-5>
+            <ion-label color="primary" translate>Default address</ion-label>
+          </ion-col>
+          <ion-col col-7>
+            <ion-checkbox
+              [(ngModel)]="isdefaultchk"
+              name="isdefault"
+              ngModel
+              #isdefault="ngModel"
+              color="secondary"
+            >
+            </ion-checkbox>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+    <button
+      ion-button
+      class="auto-margin linear-bunting-flirt no-transform fs-14 fw-700 color-white mt-30"
+      full
+      type="submit"
+    >
+      <span translate>{{Title}}</span>
+    </button>
+  </form>
+</ion-content>

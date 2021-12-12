@@ -1,0 +1,39 @@
+<app-header [title]="'Payment'"></app-header>
+<ion-content
+  class="profile animated fadeIn common-bg"
+  #top
+  (ionScroll)="onScroll($event)"
+>
+  <div class="p-15 payment">
+    <h2 class="fs-15 fw-700 color-black">Hình thức thanh toán:</h2>
+    <ion-list radio-group class="list" mode="md" >
+      <ion-item no-lines mode="md"  *ngFor="let paymentMethod of paymentMethods">
+        <ion-radio
+          [value]="paymentMethod.value"
+          (ionSelect)="select_TPL(paymentMethod.value)"
+          [checked]="radioChecked(paymentMethod.value)"
+          mode="md"
+        ></ion-radio>
+        <ion-label translate (click)="select_TPL(paymentMethod.value)" ><img [src]="paymentMethod?.icon" width="25"/> {{paymentMethod.name}} </ion-label>
+      </ion-item>
+    </ion-list>
+
+    <button
+      ion-button
+      class="icon-scroll-top"
+      (click)="scrollTop()"
+      *ngIf="scrollHeight> 10 "
+    >
+      <ion-icon name="arrow-up"></ion-icon>
+    </button>
+    <button
+      ion-button
+      class="auto-margin linear-bunting-flirt no-transform fs-14 fw-700 color-white mt-30"
+      full
+      type="submit"
+      (click)="insertUpdate()"
+    >
+      <span translate>Tiếp tục</span>
+    </button>
+  </div>
+</ion-content>

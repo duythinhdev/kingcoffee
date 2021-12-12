@@ -1,0 +1,102 @@
+<ion-header class="header_logo">
+  <ion-navbar class="linear-bunting-flirt bg-transparent text-center">
+    <ion-title>Địa chỉ nhận hàng</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content
+  class="profile animated fadeIn common-bg"
+  #top
+  (ionScroll)="onScroll($event)"
+>
+  <div class="p-15">
+    <h2 class="fs-15 fw-700 color-black">
+      <b>Địa chỉ hiện có:</b>
+    </h2>
+    <ion-item
+      no-lines
+      class="mt-10 position-relative"
+      *ngFor="let item of items"
+    >
+      <ion-label
+        class="no-margin p-15"
+        style="border-radius: 10px; background-color: #f2f2f2"
+      >
+        <ion-row>
+          <ion-col
+            class="color-black"
+            col-12
+            text-right
+            style="top: 0; right: 1em; position: absolute"
+          >
+            <h5>
+              <span class="order-status" *ngIf="item?.default == true" translate
+                >Default address</span
+              >
+            </h5>
+          </ion-col>
+          <ion-col class="color-black mt-10" col-12>
+            <div class="break-line">
+              Tên khách hàng: {{item?.lastName}} {{item?.firstName}}
+            </div>
+          </ion-col>
+          <ion-col class="color-black" col-12>
+            <div class="break-line">
+              Địa chỉ: {{item?.address}}, {{item?.ward.name}},
+              {{item?.district.name}}, {{item?.city.name}}
+            </div>
+            <div class="break-line">SĐT: {{item?.phoneNumber}}</div>
+          </ion-col>
+          <ion-col class="text-right">
+            <button
+              ion-button
+              class="auto-margin linear-bunting-flirt no-transform fs-14 fw-700 color-white"
+              type="submit"
+              (click)="getDataAddress(item._id)"
+            >
+              <span translate>Update</span>
+            </button>
+            <button
+              ion-button
+              class="auto-margin linear-bunting-flirt no-transform fs-14 fw-700 color-white"
+              type="submit"
+              (click)="delete(item._id)"
+              *ngIf="item?.isProfile == false  && item?.default == false"
+              translate
+            >
+              <span translate>Delete</span>
+            </button>
+            <button
+              [hidden]="Change"
+              ion-button
+              class="auto-margin linear-bunting-flirt no-transform fs-14 fw-700 color-white"
+              type="submit"
+              (click)="shipToThisAddress(item._id)"
+              translate
+            >
+              <span translate>Ship to this address</span>
+            </button>
+          </ion-col>
+        </ion-row>
+      </ion-label>
+    </ion-item>
+
+    <button
+      ion-button
+      class="icon-scroll-top"
+      (click)="scrollTop()"
+      *ngIf="scrollHeight> 10 "
+    >
+      <ion-icon name="arrow-up"></ion-icon>
+    </button>
+    <button
+      ion-button
+      class="auto-margin linear-bunting-flirt no-transform fs-14 fw-700 color-white"
+      full
+      type="submit"
+      (click)="insertUpdate()"
+    >
+      <span translate>Add new address</span>
+    </button>
+  </div>
+</ion-content>

@@ -1,0 +1,169 @@
+.order-title {
+    color: black;
+    font-size: 14px;
+    padding-bottom: 10px;
+}
+.order-detail {
+    display: flex;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.product-img {
+    width: 30%;
+}
+.product-content {
+    padding-left: 15px;
+    width: 70%;
+}
+.order-button{
+    padding-top: 20px;
+   
+}
+.order-button button{
+    padding: 0;
+    border-radius: 25px;
+    width: 49%;
+    height: 35px;
+    color: white;
+}
+.my-order {
+    background-color: #f6f0f0;
+}
+
+.my-order ion-item{
+    margin-bottom: 10px;
+    background-color: white;
+}
+.my-order .segment{
+    background: white;
+}
+.my-order .segment-button ion-icon {
+    font-size: 14px;
+}
+.my-order .segment-button  {
+    font-size: 14px;
+    border-color:#f6f0f0 !important;
+}
+.my-order .segment .segment-activated ion-icon {
+    color: #bc0073;
+}
+
+ /* order-detail */
+.my-order-detail {
+    background-color: #f6f0f0;
+}
+.my-order-detail ion-item{
+    margin-bottom: 10px;
+    background-color: white;
+}
+.order-detail-button button {
+    padding: 0;
+    border-radius: 25px;
+    width: 50%;
+    height: 35px;
+    color: white;
+}
+.order-detail-button {
+    text-align:center !important;
+}
+
+.my-order-detail .fl-r {
+    float: right;
+}
+
+.my-order-detail .fl-l {
+    color: black;
+    font-weight: bold;
+}
+
+.my-order-detail ion-col{
+    padding: 0px;
+}
+
+.my-order-detail .order-detai-price ion-row {
+    border-bottom: 1px solid #e2e8e7 !important;
+    padding: 7px 0 7px 0 !important;
+}
+
+
+.bold{font-weight:bold;}
+.time{position:absolute; left:-110px;}
+.timeline-wrapper {
+padding-left:80px;
+min-width: 400px;
+font-family: 'Helvetica';
+font-size: 14px;
+/*border: 1px solid #CCC;*/
+}
+.StepProgress {
+position: relative;
+padding-left: 45px;
+list-style: none;
+}
+.StepProgress::before {
+display: inline-block;
+content: '';
+position: absolute;
+top: 0;
+left: 15px;
+width: 10px;
+height: 100%;
+border-left: 2px solid #CCC;
+}
+.StepProgress-item {
+position: relative;
+counter-increment: list;
+}
+.StepProgress-item:not(:last-child) {
+padding-bottom: 20px;
+}
+.StepProgress-item::before {
+display: inline-block;
+content: '';
+position: absolute;
+left: -30px;
+height: 100%;
+width: 10px;
+}
+.StepProgress-item::after {
+content: '';
+display: inline-block;
+position: absolute;
+top: 0;
+left: -37px;
+width: 12px;
+height: 12px;
+border: 2px solid #CCC;
+border-radius: 50%;
+background-color: #FFF;
+}
+.StepProgress-item.is-done::before {
+border-left: 2px solid #bc0073 ;
+}
+.StepProgress-item.is-done::after {
+/*content: "?";*/
+font-size: 10px;
+color: #FFF;
+text-align: center;
+border: 2px solid #bc0073 ;
+background-color: #bc0073 ;
+}
+/*.StepProgress-item.current::before { 
+border-left: 2px solid green;
+}
+.StepProgress-item.current::after {
+content: counter(list);
+padding-top: 1px;
+width: 19px;
+height: 18px;
+top: -4px;
+left: -40px;
+font-size: 14px;
+text-align: center;
+color: green;
+border: 2px solid green;
+background-color: white;
+}*/
+.StepProgress strong {
+display: block;
+}

@@ -1,0 +1,86 @@
+<ion-header class="header_logo">
+  <ion-navbar class="linear-bunting-flirt bg-transparent text-center">
+    <ion-title class="title-head">Điều khoản WE4.0</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="profile animated fadeIn common-bg">
+  <div class="p-15">
+    <ion-item-group>
+      <ion-item style="border-bottom: 1px solid #ccc;">
+        <a (click)="presentModal('general-policy')" translate mode="ios">
+          <label>Chính sách chung</label>
+          <ion-icon
+            mode="ios"
+            name="ios-arrow-forward"
+            style="float: right"
+          ></ion-icon>
+        </a>
+      </ion-item>
+      <ion-item style="border-bottom: 1px solid #ccc;">
+        <a (click)="presentModal('privacy-policy')" translate>
+          <label>Chính sách bảo mật</label>
+          <ion-icon name="ios-arrow-forward" style="float: right"></ion-icon>
+        </a>
+      </ion-item>
+      <ion-item style="border-bottom: 1px solid #ccc;">
+        <a (click)="presentModal('terms-of-use')" translate>
+          <label>Điều khoản sử dụng</label>
+          <ion-icon name="ios-arrow-forward" style="float: right"></ion-icon>
+        </a>
+      </ion-item>
+      <ion-item style="border-bottom: 1px solid #ccc;">
+        <a (click)="presentModal('membership-registration-process')" translate mode="ios">
+          <label>Quy trình đăng ký thành viên</label>
+          <ion-icon
+            mode="ios"
+            name="ios-arrow-forward"
+            style="float: right"
+          ></ion-icon>
+        </a>
+      </ion-item>
+      <ion-item style="border-bottom: 1px solid #ccc;">
+        <a (click)="presentModal('refund-refund-process')" translate>
+          <label>Quy trình đổi trả hoàn tiền</label>
+          <ion-icon name="ios-arrow-forward" style="float: right"></ion-icon>
+        </a>
+      </ion-item>
+      <ion-item style="border-bottom: 1px solid #ccc;">
+        <a (click)="presentModal('delivery-process')" translate>
+          <label>Quy trình giao nhận</label>
+          <ion-icon name="ios-arrow-forward" style="float: right"></ion-icon>
+        </a>
+      </ion-item>
+      <ion-item style="border-bottom: 1px solid #ccc;">
+        <a (click)="presentModal('purchase-process')" translate>
+          <label>Quy trình mua hàng</label>
+          <ion-icon name="ios-arrow-forward" style="float: right"></ion-icon>
+        </a>
+      </ion-item>
+      <ion-item style="border-bottom: 1px solid #ccc;">
+        <a (click)="presentModal('payment-policy')" translate mode="ios">
+          <label>Chính sách thanh toán</label>
+          <ion-icon
+            mode="ios"
+            name="ios-arrow-forward"
+            style="float: right"
+          ></ion-icon>
+        </a>
+      </ion-item>
+      <ion-item style="border-bottom: 1px solid #ccc;">
+        <a (click)="presentModal('return-policy')" translate>
+          <label>Chính sách đổi trả</label>
+          <ion-icon name="ios-arrow-forward" style="float: right"></ion-icon>
+        </a>
+      </ion-item>
+      <ion-item style="border-bottom: 1px solid #ccc;">
+        <a (click)="presentModal('other-policies')" translate>
+          <label>Chính sách khác</label>
+          <ion-icon name="ios-arrow-forward" style="float: right"></ion-icon>
+        </a>
+      </ion-item>
+    </ion-item-group>
+  </div>
+  <!-- <object type="text/html" data="https://womencando.com.vn/assets/files/html/chinh-sach-bao-mat.html" ></object> -->
+  <!-- <div [innerHtml]="KisshtHtml"></div> -->
+</ion-content>

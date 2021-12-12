@@ -1,0 +1,163 @@
+<!-- -->
+<app-header [title]="'Settings'"></app-header>
+<div *ngIf="isLoading" class="loading-img">
+  <img src="../../../assets/img/loading-icon.gif" width="50px" />
+</div>
+<div class="aesert"></div>
+<div class="desert"></div>
+<ion-content class="common-bg bg-transparent" *ngIf="!isLoading">
+  <!-- User settings-->
+  <div
+    class="body_register position-relative"
+    style="background-color: #fff; padding: 15px 20px"
+  >
+    <ion-item-group>
+      <ion-item style="border-bottom: 1px outset">
+        <label style="color: slategrey; font-size: 15px">Tài khoản</label>
+      </ion-item>
+      <ion-item
+        ><a (click)="goTo('update')" translate mode="ios">
+          <label>Hồ sơ của tôi</label>
+          <ion-icon
+            mode="ios"
+            name="ios-arrow-forward"
+            style="float: right"
+          ></ion-icon>
+        </a>
+      </ion-item>
+      <ion-item
+        ><a (click)="goTo('address')" translate>
+          <label>Quản lý địa chỉ</label>
+          <ion-icon name="ios-arrow-forward" style="float: right"></ion-icon>
+        </a>
+      </ion-item>
+      <ion-item
+        ><a (click)="goTo('listbank')" translate>
+          <label>Ngân hàng</label>
+          <ion-icon name="ios-arrow-forward" style="float: right"></ion-icon>
+        </a>
+      </ion-item>
+    </ion-item-group>
+  </div>
+  <div
+    class="body_register position-relative"
+    style="background-color: #fff; padding: 15px 20px"
+    *ngIf="isMember"
+  >
+    <ion-item-group>
+      <ion-item style="border-bottom: 1px outset">
+        <label style="color: slategrey; font-size: 15px"
+          >Giới thiệu WE4.0</label
+        >
+      </ion-item>
+      <ion-item
+        ><a (click)="goTo('referral')" translate mode="ios">
+          <label style="display: inline-block; margin-top: 7px;">Mã của bạn: {{memberId}}</label>
+          <ion-icon
+            ios="ios-share"
+            (click)="shareSocial()"
+            md="md-share"
+            style="font-size: 18px;
+            color: white;
+            float: right;
+            vertical-align: middle;
+            padding: 5px 7px;
+            border-radius: 28px;
+            background: #d22fb5;"
+          ></ion-icon>
+        </a>
+      </ion-item>
+    </ion-item-group>
+  </div>
+  <div
+    class="body_register position-relative"
+    style="background-color: #fff; padding: 15px 20px"
+  >
+    <ion-item-group>
+      <ion-item style="border-bottom: 1px outset">
+        <label style="color: slategrey; font-size: 15px">Hỗ trợ</label>
+      </ion-item>
+      <ion-item
+        ><a (click)="showPopup()" translate mode="ios">
+          <label>Đào tạo</label>
+          <ion-icon
+            mode="ios"
+            name="ios-arrow-forward"
+            style="float: right"
+          ></ion-icon>
+        </a>
+      </ion-item>
+      <ion-item
+        ><a (click)="goTo('aboutReferral')" translate mode="ios">
+          <label>Hướng dẫn dùng link giới thiệu</label>
+          <ion-icon
+            mode="ios"
+            name="ios-arrow-forward"
+            style="float: right"
+          ></ion-icon>
+        </a>
+      </ion-item>
+      <ion-item
+        ><a (click)="goTo('term')" translate mode="ios">
+          <label>Điều khoản WE4.0</label>
+          <ion-icon
+            mode="ios"
+            name="ios-arrow-forward"
+            style="float: right"
+          ></ion-icon>
+        </a>
+      </ion-item>
+    </ion-item-group>
+  </div>
+  <ng-container *ngIf="isShowPopup">
+    <div class="modal-training"></div>
+    <div class="modal-open-training">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div
+            class="modal-header"
+            style="border-bottom: 1px solid #ccc; position: relative"
+          >
+            <h4
+              class="modal-title"
+              style="font-size: 15px; font-weight: bold; padding: 15px 10px"
+            >
+              Bạn muốn xem đào tạo bằng hình thứ nào?
+            </h4>
+          </div>
+          <div class="modal-body" style="margin-top: 20px; padding: 10px 20px">
+            <button class="btn-youtube" (click)="goToYoutube()">
+              <span style="justify-content: center; display: flex">
+                <ion-icon
+                  name="logo-youtube"
+                  style="padding-right: 15px"
+                ></ion-icon
+                ><span style="font-size: 14px; padding-top: 3px">Youtube</span>
+              </span>
+            </button>
+            <button class="btn-website" (click)="goToWeb()">
+              <span style="justify-content: center; display: flex">
+                <ion-icon
+                  name="logo-dribbble"
+                  style="padding-right: 15px; padding-left: 10px"
+                ></ion-icon
+                ><span style="font-size: 14px">Trang web</span>
+              </span>
+            </button>
+            <button
+              style="height: 30px; border-radius: 5px; width: 60px"
+              ion-button
+              class="auto-margin linear-bunting-flirt no-transform fs-14 fw-700 color-white"
+              clear
+              block
+              (click)="close()"
+              translate
+            >
+              Đóng
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</ion-content>

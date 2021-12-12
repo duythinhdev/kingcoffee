@@ -1,0 +1,15 @@
+<ion-item>
+  <ion-label color="primary" floating translate>Dial Code</ion-label>
+  <ion-select
+    [(ngModel)]="dialCode"
+    (ionChange)="selectDial()"
+    [selectOptions]="selectOptions"
+    [selectedText]="dialCode"
+    okText="Xác nhận"
+    cancelText="Đóng"
+  >
+    <ion-option *ngFor="let item of dialCodes" [value]="item.dialCode"
+      >{{item.dialCode}}</ion-option
+    >
+  </ion-select>
+</ion-item>

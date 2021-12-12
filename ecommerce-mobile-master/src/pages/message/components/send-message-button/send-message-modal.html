@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>
+      <strong translate>Message</strong>
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <div class="modal-header">
+    <h4 class="modal-title" translate>Send message to shop</h4>
+  </div>
+  <div class="modal-body">
+    <form #frm="ngForm" (submit)="submit(frm)">
+      <div class="form-group">
+        <ion-textarea rows="3" class="form-control" name="content" placeholder="{{'Leave comment here' | translate}}"[(ngModel)]="message.text" #text="ngModel"></ion-textarea>
+        <div *ngIf="text.errors && (text.dirty || text.touched || submitted)">
+          <p [hidden]="!text.errors.required" class="error" translate>
+            Message is required
+          </p>
+        </div>
+      </div>
+      <div class="form-group">
+        <button  ion-button color="secondary" type="submit" > <span translate>Send</span> </button>&nbsp;
+        <button  ion-button  color="secondary" (click)="viewCtrl.dismiss('Cancel')" type="button" >
+         <span translate>Hủy</span> </button>
+      </div>
+    </form>
+  </div>
+</ion-content>

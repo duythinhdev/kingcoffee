@@ -1,0 +1,86 @@
+<h4 class="cate-title" translate>Filters</h4>
+<div class="list-filter">
+  <ion-item>
+    <ion-label translate>All</ion-label>
+    <ion-checkbox
+      [(ngModel)]="filterAll"
+      (ionChange)="filter('all', filterAll)"
+      name="filterAll"
+      color="dark"
+    ></ion-checkbox>
+  </ion-item>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-6>
+        <ion-item>
+          <ion-label translate>Featured</ion-label>
+          <ion-checkbox
+            [checked]="filterAll"
+            color="dark"
+            [disabled]="filterAll"
+            [(ngModel)]="searchFields.featured"
+            (ionChange)="filter('featured', searchFields.featured)"
+            name="feat"
+          ></ion-checkbox>
+        </ion-item>
+        <ion-item>
+          <ion-label translate>Hottest</ion-label>
+          <ion-checkbox
+            [checked]="filterAll"
+            [disabled]="filterAll"
+            [(ngModel)]="searchFields.hot"
+            (ionChange)="filter('hot', searchFields.hot)"
+            name="hot"
+            color="dark"
+          ></ion-checkbox>
+        </ion-item>
+        <ion-item>
+          <ion-label translate>Best Sell</ion-label>
+          <ion-checkbox
+            [checked]="filterAll"
+            [disabled]="filterAll"
+            [(ngModel)]="searchFields.bestSell"
+            (ionChange)="filter('bestSell', searchFields.bestSell)"
+            name="bestSell"
+            color="dark"
+          ></ion-checkbox>
+        </ion-item>
+      </ion-col>
+      <ion-col col-6>
+        <ion-item>
+          <ion-label translate>Daily Deal</ion-label>
+          <ion-checkbox
+            [checked]="filterAll"
+            [disabled]="filterAll"
+            [(ngModel)]="searchFields.dailyDeal"
+            (ionChange)="filter('dailyDeal', searchFields.dailyDeal)"
+            name="dailyDeal"
+            color="dark"
+          ></ion-checkbox>
+        </ion-item>
+        <ion-item>
+          <ion-label translate>Discounted</ion-label>
+          <ion-checkbox
+            [checked]="filterAll"
+            [disabled]="filterAll"
+            [(ngModel)]="searchFields.discounted"
+            (ionChange)="filter('discounted', searchFields.discounted)"
+            name="discounted"
+            color="dark"
+          ></ion-checkbox>
+        </ion-item>
+        <ion-item>
+          <ion-label translate>Sold Out</ion-label>
+          <ion-checkbox
+            [checked]="filterAll"
+            [disabled]="filterAll"
+            [(ngModel)]="searchFields.soldOut"
+            (ionChange)="filter('soldOut', searchFields.soldOut)"
+            name="soldOut"
+            color="dark"
+          ></ion-checkbox>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</div>

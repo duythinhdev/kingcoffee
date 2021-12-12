@@ -1,0 +1,150 @@
+<app-header [title]="'QR code scanner'"></app-header>
+<ion-content>
+  <div style="height: 30px;">
+    <p style="
+    text-align: center; 
+    font-style: normal;
+    color: #AC2371;
+    font-weight: 500;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 28px;">KẾT QUẢ</p>
+  </div>
+  <div *ngIf="!isLoading" class="loading-img">
+    <img src="../../../assets/img/loading-icon.gif" width="50px">
+  </div>
+  <div *ngIf="isLoading && isSuccess">
+    <div style="height: 150px;">
+      <img style=" display: block; margin-left: auto; margin-right: auto;height: 150px;" [src]="img" />
+    </div>
+    <div style="margin-left: 16px;">
+      <p style="font-family: Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 23px;
+    
+    color: #000000;">{{productName}}</p>
+      <p style="
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 28px;
+    color: #C64290;">{{price}} <span style="
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 28px;
+    color: #C64290; text-decoration-line: underline;">đ</span></p>
+      <p style="
+    font-style: normal;
+    font-weight: normal;
+    font-size: 13px;
+    line-height: 15px;
+    color: #18CB95;">Mã dự thưởng: {{coupon_code}}</p>
+      <p style="
+    font-style: normal;
+    font-weight: normal;
+    font-size: 13px;
+    line-height: 15px;
+    color: #18CB95;">Bạn còn thiếu: <span style="color: red;">{{this.missprice}} đ̲ </span>để nhận thêm 1 mã dự thưởng, hãy tiếp tục 
+  mua sắm để có nhiều cơ hội trúng xe máy điện và nhiều phần quà hấp dẫn khác.</p>
+      <p *ngIf="status == 1" style="
+    font-style: normal;
+    font-weight: normal;
+    font-size: 13px;
+    line-height: 15px;
+    color: #C64290;">Bạn đã quét sản phẩm này rồi</p>
+    </div>
+    <div style="margin-left: 16px;">
+      <hr>
+    </div>
+    <div style="margin-left: 16px;">
+      <p style="font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 19px;
+    /* identical to box height */
+    color: #000000;">Thông tin sản phẩm</p>
+      <ion-row>
+        <ion-col style="
+      font-style: normal;
+      font-weight: normal;
+      font-size: 13px;
+      line-height: 15px;
+      color: #000000;
+      opacity: 0.4;">
+          ID sản phẩm
+        </ion-col>
+        <ion-col style="
+      font-style: normal;
+      font-weight: normal;
+      font-size: 13px;
+      line-height: 15px;
+      color: #000000;">
+          {{idProduct}}
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col style="
+      font-style: normal;
+      font-weight: normal;
+      font-size: 13px;
+      line-height: 15px;
+      color: #000000;
+      opacity: 0.4;">
+          Tên sản phẩm
+        </ion-col>
+        <ion-col style="
+      font-style: normal;
+      font-weight: normal;
+      font-size: 13px;
+      line-height: 15px;
+      color: #000000;">
+          {{productName}}
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col style="
+      font-style: normal;
+      font-weight: normal;
+      font-size: 13px;
+      line-height: 15px;
+      color: #000000;
+      opacity: 0.4;">
+          Danh mục
+        </ion-col>
+        <ion-col style="
+      font-style: normal;
+      font-weight: normal;
+      font-size: 13px;
+      line-height: 15px;
+      color: #000000;">
+          {{category}}
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col style="
+      font-style: normal;
+      font-weight: normal;
+      font-size: 13px;
+      line-height: 15px;
+      color: #000000;
+      opacity: 0.4;">
+          Mã SKU
+        </ion-col>
+        <ion-col style="
+      font-style: normal;
+      font-weight: normal;
+      font-size: 13px;
+      line-height: 15px;
+      color: #000000;">
+          {{sku}}
+        </ion-col>
+      </ion-row>
+    </div>
+  </div>
+  <div *ngIf="isLoading && !isSuccess">
+    <p style="color:red;margin-left: 14px;">{{errorMessage}}</p>
+  </div>
+</ion-content>

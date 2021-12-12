@@ -1,0 +1,25 @@
+<app-header [title]="'Refund Request History'"></app-header>
+<ion-content class="profile animated fadeIn common-bg" #top (ionScroll)="onScroll($event)">
+  <div *ngIf="!total && !isLoading">
+    <p translate>There is no refund request yet.</p>
+  </div>
+  <div class="order-card" *ngFor="let item of items" [hidden]="total === 0">
+    <h4><span translate>Product: </span> {{item?.orderDetail?.productDetails?.name}}</h4>
+    <h4><span translate>Shop: </span> {{item?.shop?.name}}</h4>
+    <h5><span translate>OrderId: </span> {{item?.orderId}}</h5>
+    <h5><span translate>Created at: </span> {{item?.createdAt | date: 'short'}}
+    </h5>
+    <p><span translate>Reason: </span> {{item?.reason}}</p>
+  </div>
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)" *ngIf="items.length < total">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="{{'Loading more data...' | translate}}">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+  <ion-infinite-scroll (ionInfinite)="loading($event)" *ngIf="items.length >= total">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="{{'No more orders found.' | translate}}">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>
+<button ion-button class="icon-scroll-top" (click)="scrollTop()" *ngIf="scrollHeight > 400">
+  <ion-icon name="arrow-up"></ion-icon>
+</button>

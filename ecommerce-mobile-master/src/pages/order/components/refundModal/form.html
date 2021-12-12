@@ -1,0 +1,8 @@
+<ion-content padding class="animated fadeIn common-bg profile">
+  <h4 class="modal-title" ><span translate>Request Refund</span> </h4>
+  <div class="modal-body">
+    <ion-textarea [(ngModel)]="reason" name="reason" placeholder="{{'Reason for refund' | translate}}" rows="3"></ion-textarea>
+    <button ion-button (click)="send()" ><span translate>Send</span></button>&nbsp;
+    <button ion-button color="primary" (click)="viewCtrl.dismiss('Cancel')" ><span translate>Hủy</span></button>
+  </div>
+</ion-content>

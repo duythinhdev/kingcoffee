@@ -1,0 +1,147 @@
+<app-header [title]="'KPI'" [isShowLogo]="true"></app-header>
+<ion-content style="background-color: #ffffff">
+  <ion-grid class="kpi-grid">
+    <ion-row>
+      <ion-col>
+        <p
+          style="
+            color: #cb1285;
+            font-size: 20px;
+            font-weight: bold;
+            margin: 10px 0;
+          "
+        >
+          KPIs
+        </p>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-6>
+        <div class="body_kpi position-relative">
+          <circle-progress
+            [percent]="currentKPI?.kpiPercent"
+            [titleColor]="'#3d3c3c'"
+            [subtitleColor]="'#d11287'"
+            subtitle="{{currentKPI?.kpiPercent}}%"
+            [subtitleFontSize]="25"
+            [titleFontSize]="10"
+          >
+          </circle-progress>
+        </div>
+      </ion-col>
+      <ion-col col-6>
+        <div class="body_kpi position-relative">
+          <p style="color: #cb1285; font-size: 14px; font-weight: bold">
+            KPIs hiện tại
+          </p>
+          <ul class="kpi-list">
+            <li>
+              <p class="p-kpi-title">Mức chi tiêu</p>
+              <span
+                >{{currentKPI?.totalPriceMonth || 0 | number : '1.0-0'}} đ</span
+              >
+            </li>
+            <li>
+              <p class="p-kpi-title">Mức chiết khấu(%)</p>
+              <span>{{currentKPI?.valuePercent || 0 }}</span>
+            </li>
+            <li>
+              <p class="p-kpi-title">Dự kiến thưởng</p>
+              <span>{{currentKPI?.kpiMonth || 0 | number : '1.0-0' }} đ</span>
+            </li>
+          </ul>
+        </div>
+      </ion-col>
+    </ion-row>
+    <div class="body_kpi position-relative">
+      <ion-row>
+        <ion-col>
+          <p
+            class="p-kpi-title"
+            style="color: #cb1285; font-size: 20px; font-weight: bold"
+          >
+            Lịch sử
+          </p>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-4>
+          <p class="p-kpi-title" style="margin-top: 2px">Mã đại lý</p>
+          <p class="p-kpi-title" style="margin-top: 15px">Tháng</p>
+          <p class="p-kpi-title" style="margin-top: 23px">Tổng thưởng tháng</p>
+          <p class="p-kpi-title" style="margin-top: 0px">Tổng thưởng 3 tháng</p>
+        </ion-col>
+        <ion-col col-8>
+            <ion-searchbar
+              [(ngModel)]="idMember"
+              placeholder="Tìm mã đại lý"
+              (ionChange)="onSearch()"
+              type="text"
+            ></ion-searchbar>
+          <p>
+            <ion-item style="height: 29px;margin-left: 4px;">
+              <ion-datetime
+                displayFormat="MM-YYYY"
+                placeholder="MM-YYYY"
+                (ionChange)="onSearch()"
+                [(ngModel)]="mydate"
+              ></ion-datetime>
+            </ion-item>
+          </p>
+          <p style="margin-left: 4px;">{{totalKpiMonth || 0 | number : '1.0-0' }} đ</p>
+          <p style="margin-left: 4px;margin-top: 22px;">{{totalKpiReward || 0 | number : '1.0-0' }} đ</p>
+        </ion-col>
+      </ion-row>
+      <ion-item *ngIf="items && items.length > 0">
+        <ion-card class="card-kpi" *ngFor="let k of items">
+          <ion-row>
+            <ion-col col-6> Thời gian </ion-col>
+            <ion-col col-6>
+              <p>{{k?.month | changeDate}}</p>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-6> Mã Đại Lý </ion-col>
+            <ion-col col-6>
+              <p>{{k?.user?.memberId}}</p>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-6> Tên Đại Lý </ion-col>
+            <ion-col col-6>
+              <p>{{k?.user?.name}}</p>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-6> Mức Chi Tiêu / Tháng </ion-col>
+            <ion-col col-6>
+              <p>{{k?.totalPriceMonth || 0 | number : '1.0-0'}} đ</p>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-6> Tổng Thưởng Tháng </ion-col>
+            <ion-col col-6>
+              <p>{{k?.kpiMonth || 0 | number : '1.0-0'}} đ</p>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-6> Tổng Thưởng 3 Tháng </ion-col>
+            <ion-col col-6>
+              <p>{{k?.kpiReward || 0 | number : '1.0-0'}} đ</p>
+            </ion-col>
+          </ion-row>
+        </ion-card>
+      </ion-item>
+      <ion-infinite-scroll
+        (ionInfinite)="query($event)"
+        *ngIf="items?.length < total"
+      >
+        <ion-infinite-scroll-content
+          loadingSpinner="bubbles"
+          loadingText="{{'Loading more data...' | translate}}"
+        >
+        </ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+    </div>
+  </ion-grid>
+</ion-content>

@@ -1,0 +1,255 @@
+<div class="card-product">
+  <div *ngIf="discountPercent" class="discount-percent">
+    <span class="percent">{{discountPercent}}%</span>
+    <br>
+    <span class="discount">Giảm</span>
+  </div>
+  <img [src]="product?.mainImage?.thumbPath | checkPhoto" height="155px" width="100%"
+    style="border-radius: 3px 3px 0 0;" (click)="viewDetail(product)" />
+
+  <div class="__product-item-detail" translate (click)="viewDetail(product)">
+    <p class="__promotion-card-detail">{{product?.name}} </p>
+  </div>
+
+
+  <div class="__product-item-card-price" >
+    <div *ngIf="!discountPercent">
+      <div class="__product-item-price">
+        <span style="font-style: normal;
+        font-weight: normal;
+        font-size: 11px;
+        line-height: 15px;
+        max-height: 15px;
+        height:0px;
+        display: inline-block;
+        color: #C64290;">
+          {{this.product?.price|| 0 | number : '1.0-0'}}</span> <span style="font-style: normal;
+        font-weight: normal;
+        font-size: 11px;
+        line-height: 15px;
+        max-height: 15px;
+        height:0px;
+        display: inline-block;
+        color: #C64290;
+        text-decoration-line: underline;"> đ</span>
+        <span style="
+         font-family: Arial;
+         font-style: normal;
+         font-weight: normal;
+         font-size: 11px;
+         color: #000000;
+         max-height: 15px;
+         height:0px;
+        display: inline-block;
+         line-height: 12px;">(Giá thành viên)</span>
+      </div>
+      <div class="__product-item-price">
+        <span style="font-style: normal;
+          font-weight: normal;
+          font-size: 11px;
+          line-height: 15px;
+          max-height: 15px;
+          height:0px;
+            display: inline-block;
+          color: #C64290;">{{this.salePrice|| 0 | number : '1.0-0'}}</span> <span style="font-style: normal;
+          font-weight: normal;
+          font-size: 11px;
+          line-height: 15px;
+          max-height: 15px;
+          color: #C64290;
+          text-decoration-line: underline;">đ</span> <span style="
+          font-family: Arial;
+          font-style: normal;
+          font-weight: normal;
+          max-height: 15px;
+          font-size: 11px;
+          height:0px;
+            display: inline-block;
+          color: #000000;
+          line-height: 12px;"> (Giá đại lý)</span>
+      </div>
+
+    </div>
+    <div *ngIf="discountPercent">
+      <div *ngIf="isRole=='1'">
+        <div class="__product-item-price">
+          <span style="font-style: normal;
+        font-weight: normal;
+        font-size: 11px;
+        line-height: 15px;
+        max-height: 15px;
+        height:0px;
+        display: inline-block;
+        color: #C64290;">
+            {{this.pre_salePrice|| 0 | number : '1.0-0'}}</span> <span style="font-style: normal;
+        font-weight: normal;
+        font-size: 11px;
+        line-height: 15px;
+        max-height: 15px;
+        height:0px;
+        display: inline-block;
+        color: #C64290;
+        text-decoration-line: underline;"> đ</span>
+          <span style="
+        font-family: Arial;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 11px;
+        color: #000000;
+        max-height: 15px;
+        height:0px;
+          display: inline-block;
+        line-height: 12px;">(Giá đại lý)</span>
+        </div>
+        <div class="__product-item-price">
+          <span style="font-style: normal;
+       font-weight: normal;
+       font-size: 11px;
+       line-height: 15px;
+       max-height: 15px;
+       height:0px;
+         display: inline-block;
+       color: #C64290;">
+            {{this.salePrice|| 0 | number : '1.0-0'}}</span> <span style="font-style: normal;
+       font-weight: normal;
+       font-size: 11px;
+       line-height: 15px;
+       max-height: 15px;
+       height:0px;
+         display: inline-block;
+       color: #C64290;
+       text-decoration-line: underline;">đ</span> <span style="
+       font-family: Arial;
+       font-style: normal;
+       font-weight: normal;
+       max-height: 15px;
+       font-size: 11px;
+       height:0px;
+         display: inline-block;
+       color: #18882A;
+       line-height: 12px;">- {{discountPercent}} %</span>
+        </div>
+      </div>
+      <div *ngIf="isRole!=='1'">
+        <div class="__product-item-price">
+          <span style="font-style: normal;
+        font-weight: normal;
+        font-size: 11px;
+        line-height: 15px;
+        max-height: 15px;
+        height:0px;
+        display: inline-block;
+        color: #C64290;">
+            {{this.pre_price|| 0 | number : '1.0-0'}}</span> <span style="font-style: normal;
+        font-weight: normal;
+        font-size: 11px;
+        line-height: 15px;
+        max-height: 15px;
+        height:0px;
+        display: inline-block;
+        color: #C64290;
+        text-decoration-line: underline;"> đ</span>
+          <span style="
+        font-family: Arial;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 11px;
+        color: #000000;
+        max-height: 15px;
+        height:0px;
+          display: inline-block;
+        line-height: 12px;">(Giá thành viên)</span>
+        </div>
+        <div class="__product-item-price">
+          <span style="font-style: normal;
+       font-weight: normal;
+       font-size: 11px;
+       line-height: 15px;
+       max-height: 15px;
+       height:0px;
+         display: inline-block;
+       color: #C64290;">
+            {{this.price|| 0 | number : '1.0-0'}}</span> <span style="font-style: normal;
+       font-weight: normal;
+       font-size: 11px;
+       line-height: 15px;
+       max-height: 15px;
+       height:0px;
+         display: inline-block;
+       color: #C64290;
+       text-decoration-line: underline;">đ</span> <span style="
+       font-family: Arial;
+       font-style: normal;
+       font-weight: normal;
+       max-height: 15px;
+       font-size: 11px;
+       height:0px;
+         display: inline-block;
+       color: #18882A;
+       line-height: 12px;">- {{discountPercent}} %</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div *ngIf="!discountPercent" class="__product-item-price"> <span style="font-style: normal;
+      font-weight: normal;
+      font-size: 11px;
+      line-height: 15px;
+      max-height: 15px;
+      height:0px;
+        display: inline-block;
+      color: #C64290;">
+        {{this.product?.price|| 0 | number : '1.0-0'}}</span> <span style="font-style: normal;
+      font-weight: normal;
+      font-size: 11px;
+      line-height: 15px;
+      max-height: 15px;
+      color: #C64290;
+      text-decoration-line: underline;">đ</span> <span style="
+      font-family: Arial;
+      font-style: normal;
+      font-weight: normal;
+      max-height: 15px;
+      font-size: 11px;
+      height:0px;
+        display: inline-block;
+      color: #000000;
+      line-height: 12px;"> (Giá đại lý)</span> </div>
+    <div *ngIf="discountPercent" class="__product-item-price"> <span style="font-style: normal;
+      font-weight: normal;
+      font-size: 11px;
+      line-height: 15px;
+      max-height: 15px;
+      height:0px;
+        display: inline-block;
+      color: #C64290;">
+        {{this.product?.price|| 0 | number : '1.0-0'}}</span> <span style="font-style: normal;
+      font-weight: normal;
+      font-size: 11px;
+      line-height: 15px;
+      max-height: 15px;
+      height:0px;
+        display: inline-block;
+      color: #C64290;
+      text-decoration-line: underline;">đ</span> <span style="
+      font-family: Arial;
+      font-style: normal;
+      font-weight: normal;
+      max-height: 15px;
+      font-size: 11px;
+      height:0px;
+        display: inline-block;
+      color: #18882A;
+      line-height: 12px;">- {{discountPercent}} %</span></div> -->
+
+  </div>
+
+  <div *ngIf="isShowPromotionName" class="show-promotion" translate>
+    <!-- <b style="font-size: 10px;color: blue;"> -->
+    <img height="14px" style="display: inline-block; vertical-align: middle; padding-right: 4px;"
+      src="../../assets/img/gift-new.png">
+    <span style=" vertical-align: middle">{{promotionName}}</span>
+    <!-- </b> -->
+  </div>
+
+</div>

@@ -1,0 +1,128 @@
+page-register {
+  .register {
+    background: white;
+    color: black;
+    .editImage{      
+        width: 250px !important;
+        height: 50px !important;
+    }
+    .mar-top-23 {
+      margin-top: 23px;
+    }
+    ion-select {
+      background: white;
+      border:1px solid black;
+      border-radius: 5px;
+      text-align: center;
+      color: #999;
+      max-width: 100% !important;
+      button{
+        position: unset !important;
+
+      }
+      .select-text{
+        min-width: 80%;
+      }
+    }
+    ion-label {
+      font-size: 12px;
+      color: #999!important;
+      text-align: center;
+    }
+    h2 {
+      margin:0 0 5px;
+      color:black;
+      font-size:22px;
+      text-align:center;
+    }
+
+    .signup-logo {
+     text-align: center;
+     margin-bottom: 20px;
+    }
+
+    ion-list {
+      margin:0 50px;
+
+      @media screen and (min-width: 600px) {
+        width:50%;
+        margin:0 auto;
+      }
+
+      ion-item {
+        background:none;
+        padding:0;
+
+        .item-inner {
+          padding:0px;
+        }
+
+        &.item-input.input-has-focus .item-inner {
+          border:0;
+          box-shadow:none;
+        }
+
+        ion-input {
+          padding:2px;
+          border:solid 1px #ffdbdb;
+          border-radius:19px;
+          height:38px;
+
+          .text-input {
+            background:#ffdbdb;
+            border-radius:16px;
+            height:32px;
+            text-align:center;
+            margin:0;
+            width:100% !important;
+
+            &:focus {
+              background:#ffdbdb !important;
+              width:100% !important;
+            }
+          }
+
+          &.input-has-focus {
+            .text-input {
+              background:#ffdbdb !important;
+              width:100% !important;
+            }
+          }
+
+        }
+
+      }
+
+      .button {
+        font-size:20px;
+        background-color: #1ea3ff;
+        color: white;
+      }
+
+      ion-grid,
+        ion-col {
+          padding:0;
+
+          a {
+            color:#FFF;
+            text-decoration:underline;
+            font-size:12px;
+            white-space:nowrap;
+            margin:0 10px;
+          }
+        }
+    }
+
+    .social-connect {
+      position:relative;
+      bottom:0px;
+      width:100%;
+      left:0;
+    }
+    .body_register{
+      top: center;      
+    }
+  }
+
+
+}

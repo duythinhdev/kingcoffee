@@ -1,0 +1,40 @@
+<ion-header class="header_logo">
+  <ion-toolbar class="linear-bunting-flirt bg-transparent text-center">
+    <img src="/assets/img/logo/WELogoWhite.png" class="h-65">
+  </ion-toolbar>
+</ion-header>
+<div class="aesert"></div>
+<div class="desert"></div>
+<ion-content class="register bg-transparent">
+  <div class="body_register position-relative" >
+    <!-- <h2 translate class="fs-15 fw-700 color-primary mb-30 text-center">ĐIỀU KIỆN ĐIỀU KHOẢN</h2>
+    <ion-row>
+        <ion-col col-4>
+          <img src="/assets/img/logo/WELogo.png" class="h-65">
+        </ion-col>
+        <ion-col col-8 class="text-center">
+            <p class="fs-10 fw-700 color-black" style="margin: 0;">CÔNG TY TNHH MTV TNI</p>
+            <span class="fs-10 color-black">161 Võ Văn Tần, Phường 6, Quận 3, <br>TP. Hồ Chí Minh</span>
+        </ion-col>
+    </ion-row>  -->
+    <ion-list no-lines>
+      <ion-row style="text-align: left;">
+        <div [innerHTML]="term"></div>
+      </ion-row>
+      <ion-row responsive-sm class="mt-100">
+        <ion-col>
+          <button ion-button class="w-full auto-margin linear-bunting-flirt no-transform" clear block (click)="goTo('confirmOTP')" translate>Tôi đồng ý với điều kiện và điều khoản</button>
+        </ion-col>
+      </ion-row>
+      <ion-row responsive-sm class="mt-10">
+        <ion-col>
+          <button ion-button class="w-full auto-margin linear-bunting-flirt no-transform" clear block (click)="goTo('signup')" translate>Đóng</button>
+        </ion-col>
+      </ion-row>
+    </ion-list>
+  </div>
+</ion-content>
+<ion-footer class="footer_logo">
+  <ion-toolbar class="linear-bunting-flirt bg-transparent text-center">
+  </ion-toolbar>
+</ion-footer>

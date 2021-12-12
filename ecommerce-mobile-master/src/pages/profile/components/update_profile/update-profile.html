@@ -1,0 +1,246 @@
+<ion-header class="header_logo">
+  <ion-navbar class="linear-bunting-flirt bg-transparent text-center">
+    <ion-title>
+      <img src="/assets/img/logo/WELogoWhite.png" class="h-65">
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<div class="aesert"></div>
+<div class="desert"></div>
+
+<ion-content class="common-bg bg-transparent">
+  <form novalidate (ngSubmit)="updateProfile()" [formGroup]="updateProfilefileForm">
+    <h5 style="margin-left: 15px; font-size: 16px; color: #D11287; text-transform: uppercase; font-weight: bold;"><b>Cập
+        nhật tài khoản</b></h5>
+    <div class="position-relative bg-white no-border-radius" style="padding: 0px 5px 10px; margin: 35px 10px 40px; box-shadow: 0px 0px 2px 0px lightgrey;
+      border-radius: 10px; border: 0.1em solid #daa3c5;">
+      <ion-list style="margin: -1px 0 0px;">
+        <div *ngIf="CompanyType === 1" style="padding: 10px 10px 0px 10px;">
+          <ion-label>Tên công ty (*)</ion-label>
+          <ion-item class="no-padding" style="border-bottom: 1px solid #562263;">
+            <ion-input formControlName="CompanyName" class="h-36" autocomplete="off" required>
+            </ion-input>
+          </ion-item>
+          <ion-item no-lines
+            *ngIf="updateProfilefileForm.get('Name').hasError('required') && updateProfilefileForm.get('CompanyName').touched">
+            <div class="error">
+              Vui lòng nhập tên công ty!
+            </div>
+          </ion-item>
+        </div>
+        <div *ngIf="CompanyType === 1" style="padding: 10px 10px 0px 10px;">
+          <ion-label>Mã số thuế (*)</ion-label>
+          <ion-item class="no-padding" style="border-bottom: 1px solid #562263;">
+            <ion-input minlength="10" maxlength="14" formControlName="TaxCode"  class="h-36" autocomplete="off" required>
+            </ion-input>
+          </ion-item>
+          <ion-item no-lines
+            *ngIf="updateProfilefileForm.get('Name').hasError('required') && updateProfilefileForm.get('TaxCode').touched">
+            <div class="error">
+              Vui lòng nhập mã số thuế!
+            </div>
+          </ion-item>
+        </div>
+        <div style="padding: 10px 10px 0px 10px;">
+          <ion-label>Họ và tên (*)</ion-label>
+          <ion-item class="no-padding" style="border-bottom: 1px solid #562263;">
+            <ion-input formControlName="Name" name="name" minlength="5" class="h-36" autocomplete="off" required>
+            </ion-input>
+          </ion-item>
+          <ion-item no-lines
+            *ngIf="updateProfilefileForm.get('Name').hasError('required') && updateProfilefileForm.get('Name').touched">
+            <div class="error">
+              Vui lòng nhập họ và tên!
+            </div>
+          </ion-item>
+          <ion-item no-lines
+            *ngIf="updateProfilefileForm.get('Name').hasError('minlength') && updateProfilefileForm.get('Name').touched">
+            <div class="error">
+              Độ dài tối thiểu là 5 kí tự!
+            </div>
+          </ion-item>
+        </div>
+        <div style="padding: 10px 10px 0px 10px;">
+          <ion-label>Số điện thoại</ion-label>
+          <ion-item class="no-padding" style="border-bottom: 1px solid #562263;">
+            <ion-input disabled type="number" formControlName="PhoneNumber" class="h-36" autocomplete="off" required>
+            </ion-input>
+          </ion-item>
+        </div>
+        <div style="padding: 10px 10px 0px 10px;">
+          <ion-label>Ngày sinh(*)</ion-label>
+          <ion-item class="no-padding" style="border-bottom: 1px solid #562263;">
+            <ion-input (click)="openBirthday()" formControlName="BirthDayInput" class="h-36" autocomplete="off" required>
+            </ion-input>
+            <ion-datetime #dateTime formControlName="BirthDay" style="display:none" (ionBlur)="checkOld()" displayFormat="DD/MM/YYYY" name="birthdayt"
+              required cancelText="Đóng" doneText="Xác nhận">
+            </ion-datetime>
+          </ion-item>
+          <ion-img src="/assets/img/u39.svg" class="datetime-ico-update"></ion-img>
+          <ion-item no-lines
+            *ngIf="updateProfilefileForm.get('BirthDay').hasError('required') && updateProfilefileForm.get('BirthDay').touched">
+            <div class="error">
+              Vui lòng nhập ngày sinh!
+            </div>
+          </ion-item>
+          <ion-item no-lines *ngIf="!checkT && updateProfilefileForm.get('BirthDay').touched">
+            <div class="error">
+              Bạn phải đủ 18 tuổi để thỏa mãn điều kiện đăng ký!
+            </div>
+          </ion-item>
+        </div>
+        <div style="padding: 10px 10px 0px 10px;">
+          <ion-label>CMND/ Hộ chiếu</ion-label>
+          <ion-item class="no-padding" style="border-bottom: 1px solid #562263;">
+            <ion-input formControlName="CMND" class="h-36" autocomplete="off"></ion-input>
+          </ion-item>
+        </div>
+        <div style="padding: 10px 10px 0px 10px;">
+          <ion-label>Email</ion-label>
+          <ion-item class="no-padding" style="border-bottom: 1px solid #562263;">
+            <ion-input email type="email" formControlName="Email" class="h-36" autocomplete="off"></ion-input>
+          </ion-item>
+          <ion-item no-lines
+            *ngIf="updateProfilefileForm.get('Email').touched && updateProfilefileForm.get('Email').hasError('email')">
+            <div class="error">
+              Dường như đây không phải là địa chỉ email!
+            </div>
+          </ion-item>
+        </div>
+        <div style="padding: 10px 10px 0px 10px;">
+          <ion-label>Giới tính(*)</ion-label>
+          <ion-item style="border-bottom: 1px solid #562263;">
+            <ion-select formControlName="Sex" required placeholder="-- Chọn --" okText="Xác nhận" cancelText="Đóng">
+              <ion-option value=false>Nữ</ion-option>
+              <ion-option value=true>Nam</ion-option>
+            </ion-select>
+          </ion-item>
+          <ion-item no-lines
+            *ngIf="updateProfilefileForm.get('Sex').touched && updateProfilefileForm.get('Sex').hasError('required')">
+            <div class="error">
+              Vui lòng chọn giới tính!
+            </div>
+          </ion-item>
+        </div>
+        <div style="padding: 10px 10px 0px 10px;">
+          <ion-label>Tình trạng hôn nhân</ion-label>
+          <ion-item style="border-bottom: 1px solid #562263;">
+            <ion-select formControlName="Married" required placeholder="-- Chọn --" okText="Xác nhận" cancelText="Đóng">
+              <ion-option value=false>Độc thân</ion-option>
+              <ion-option value=true>Đã kết hôn</ion-option>
+            </ion-select>
+          </ion-item>
+        </div>
+        <div *ngIf="CompanyType !== 1" style="padding: 10px 10px 0px 10px;">
+          <ion-label>Nghề nghiệp</ion-label>
+          <ion-item class="no-padding" style="border-bottom: 1px solid #562263;">
+            <ion-input formControlName="Job" type="text" class="h-36" autocomplete="off"></ion-input>
+          </ion-item>
+        </div>
+        <div *ngIf="CompanyType !== 1" style="padding: 10px 10px 0px 10px;">
+          <ion-label>Trình độ học vấn</ion-label>
+          <ion-item style="border-bottom: 1px solid #562263;">
+            <ion-select formControlName="AcademicLevel" required placeholder="-- Chọn --" okText="Xác nhận"
+              cancelText="Đóng">
+              <ion-option *ngFor="let item of acedimiclevels" [value]="item.id">{{item.name}}</ion-option>
+            </ion-select>
+          </ion-item>
+        </div>
+        <div style="padding: 10px 10px 0px 10px;">
+          <ion-label>Bạn biết tới chương trình từ đâu</ion-label>
+          <ion-item class="no-padding" style="border-bottom: 1px solid #562263;">
+            <ion-select formControlName="KnowFrom" placeholder="-- Chọn --" okText="Xác nhận" cancelText="Đóng">
+              <ion-option *ngFor="let item of knows" [value]="item.id">{{item.name}}</ion-option>
+            </ion-select>
+          </ion-item>
+        </div>
+        <div *ngIf="updateProfilefileForm.value.KnowFrom === 1" style="padding: 10px 10px 0px 10px;">
+          <ion-label>Mã nhân viên TNI(*)</ion-label>
+          <ion-item class="no-padding" style="border-bottom: 1px solid #562263;">
+            <ion-input type="text" formControlName="ReferralCode" class="h-36" autocomplete="off" required></ion-input>
+          </ion-item>
+          <ion-item no-lines
+            *ngIf="updateProfilefileForm.get('ReferralCode').touched && updateProfilefileForm.get('ReferralCode').hasError('required')">
+            <div class="error">
+              Nhập mã nhân viên TNI
+            </div>
+          </ion-item>
+        </div>
+        <div style="padding: 10px 10px 0px 10px;">
+          <ion-label>Tỉnh/ Thành phố(*)</ion-label>
+          <ion-item style="border-bottom: 1px solid #562263;">
+            <ion-select formControlName="ProvinceId" (ionChange)="loadDistrict(updateProfilefileForm.value.ProvinceId)"
+              required placeholder="-- Chọn --" okText="Xác nhận" cancelText="Đóng">
+              <ion-option *ngFor="let item of provinces" [value]="item.Id">{{item.Name}}</ion-option>
+            </ion-select>
+          </ion-item>
+          <ion-item no-lines
+            *ngIf="updateProfilefileForm.get('ProvinceId').touched && updateProfilefileForm.get('ProvinceId').hasError('required')">
+            <div class="error">
+              Vui lòng chọn tỉnh / thành phố!
+            </div>
+          </ion-item>
+        </div>
+        <div style="padding: 10px 10px 0px 10px;">
+          <ion-label>Quận/ Huyện(*)</ion-label>
+          <ion-item style="border-bottom: 1px solid #562263;">
+            <ion-select formControlName="DistrictId" (ionChange)="loadWard(updateProfilefileForm.value.DistrictId)"
+              required placeholder="-- Chọn --" okText="Xác nhận" cancelText="Đóng">
+              <ion-option *ngFor="let item of districts" [value]="item.Id">{{item.Name}}</ion-option>
+            </ion-select>
+          </ion-item>
+          <ion-item no-lines
+            *ngIf="updateProfilefileForm.get('DistrictId').touched && updateProfilefileForm.get('DistrictId').hasError('required')">
+            <div class="error">
+              Vui lòng chọn quận huyện!
+            </div>
+          </ion-item>
+        </div>
+        <div style="padding: 10px 10px 0px 10px;">
+          <ion-label>Phường / xã(*)</ion-label>
+          <ion-item style="border-bottom: 1px solid #562263;">
+            <ion-select formControlName="WardId" (ionChange)="selectedWard(updateProfilefileForm.value.WardId)" required
+              placeholder="-- Chọn --" okText="Xác nhận" cancelText="Đóng">
+              <ion-option *ngFor="let item of wards" [value]="item.Id">{{item.Name}}</ion-option>
+            </ion-select>
+          </ion-item>
+          <ion-item no-lines
+            *ngIf="updateProfilefileForm.get('WardId').touched && updateProfilefileForm.get('WardId').hasError('required')">
+            <div class="error">
+              Vui lòng chọn phường xã
+            </div>
+          </ion-item>
+        </div>
+        <div style="padding: 10px 10px 0px 10px;">
+          <ion-label>Địa chỉ(*)</ion-label>
+          <ion-item class="no-padding" style="border-bottom: 1px solid #562263;">
+            <ion-input formControlName="Address" type="text" class="h-36" autocomplete="off" required></ion-input>
+          </ion-item>
+          <ion-item no-lines
+            *ngIf="updateProfilefileForm.get('Address').touched && updateProfilefileForm.get('Address').hasError('required')">
+            <div class="error">
+              Vui lòng nhập địa chỉ
+            </div>
+          </ion-item>
+        </div>
+        <div style="padding: 10px 10px 0px 10px;">
+          <ion-label>Người giới thiệu</ion-label>
+          <ion-item class="no-padding" style="border-bottom: 1px solid #562263;">
+            <ion-input disabled formControlName="CustomerNameSponsor" class="h-36" autocomplete="off"></ion-input>
+          </ion-item>
+        </div>
+      </ion-list>
+    </div>
+
+    <div>
+      <ion-row responsive-sm style="margin-top: 40px;">
+        <ion-col>
+          <button type="submit" ion-button class="w-200 auto-margin linear-bunting-flirt no-transform fs-14" clear block
+            translate style="color: white; text-transform: uppercase !important;"
+            [disabled]="!checkT || updateProfilefileForm.value.ReferralCode ==='' && updateProfilefileForm.value.KnowFrom === 1 || CompanyType === 1 && updateProfilefileForm.get('CompanyName').hasError('required') && updateProfilefileForm.get('TaxCode').hasError('required') ">Lưu</button>
+        </ion-col>
+      </ion-row>
+    </div>
+  </form>
+</ion-content>

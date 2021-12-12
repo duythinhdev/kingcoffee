@@ -1,0 +1,418 @@
+<ion-header class="header_logo">
+  <ion-toolbar class="linear-bunting-flirt bg-transparent text-center">
+    <img src="/assets/img/logo/WELogoWhite.png" class="h-65" />
+  </ion-toolbar>
+</ion-header>
+<div class="aesert"></div>
+<div class="desert"></div>
+<ion-content class="register bg-transparent" style="margin-top: 0">
+  <div class="body_register position-relative">
+    <h2 translate class="fs-30 fw-700 color-primary mb-30 text-center">
+      Đăng ký
+    </h2>
+    <ion-list no-lines class="position-relative no-margin">
+      <ion-row>
+        <ion-col col-12>
+          <div class="register_step">
+            <ul class="progressbar">
+              <li class="complete fs-12">
+                <span class="icon_register icon-subject"></span>
+                Đối tượng
+              </li>
+              <li class="active fs-12">
+                <span class="icon_register icon-info"></span>
+                Thông tin
+              </li>
+              <li class="fs-12">
+                <span class="icon_register icon-survey"></span>
+                Khảo sát
+              </li>
+            </ul>
+          </div>
+        </ion-col>
+      </ion-row>
+      <form #frm="ngForm" class="mt-30">
+        <div *ngIf="dataInfo.isCompany.toString() === '1'">
+          <ion-label>Tên công ty (*)</ion-label>
+          <ion-item #input0>
+            <ion-input 
+            (ionFocus)="scroll(input0)"
+            [ngClass]="{
+                error:
+                  companyName.errors &&
+                  (companyName.dirty || companyName.touched || submitted)
+              }" type="text" autocomplete="off" #companyName="ngModel" name="companyName" required
+              [(ngModel)]="input.CompanyName"></ion-input>
+          </ion-item>
+          <div *ngIf="
+              companyName.errors &&
+              (companyName.dirty || companyName.touched || submitted)
+            " class="font-err">
+            <p [hidden]="!companyName.errors.required" ion-text color="danger" padding-left translate>
+              Vui lòng nhập tên công ty!
+            </p>
+          </div>
+        </div>
+        <div *ngIf="dataInfo.isCompany.toString() === '1'">
+          <ion-label >Mã số thuế (*)</ion-label>
+          <ion-item #input1>
+            <ion-input (ionFocus)="scroll(input1)" [maxlength]="14" [minlength]="10" (ionChange)="checkvalidTax()" [ngClass]="{
+                error:
+                  (taxCode.errors &&
+                    (taxCode.dirty || taxCode.touched || submitted)) ||
+                  !checkFormTaxcode
+              }" type="text" autocomplete="off" #taxCode="ngModel" name="taxCode" required [(ngModel)]="input.TaxCode">
+            </ion-input>
+          </ion-item>
+          <div *ngIf="
+              taxCode.errors && (taxCode.dirty || taxCode.touched || submitted)
+            " class="font-err">
+            <p [hidden]="!taxCode.errors.required" ion-text color="danger" padding-left translate>
+              Vui lòng nhập mã số thuế!
+            </p>
+            <p [hidden]="!taxCode.errors.minlength" ion-text color="danger" padding-left translate>
+              Tối thiểu 10 kí tự!
+            </p>
+            <p [hidden]="!taxCode.errors.maxlength" ion-text color="danger" padding-left translate>
+              Tối đa 14 ký tự
+            </p>
+            <!--  <p [hidden]="!taxCode.errors.pattern " ion-text color="danger" padding-left translate>
+                  _Vui lòng nhập ký tự chữ và 1 ký tự - !_
+                  </p>
+            </div> -->
+            <!-- <div *ngIf="!checkFormTaxcode" class="font-err">
+              <p ion-text color="danger" padding-left translate>
+                Mã số thuế đã tồn tại!
+              </p>-->
+          </div>
+          <div *ngIf="!this.checkValid && !taxCode.errors">
+            <p ion-text color="danger" padding-left translate>
+              Bao gồm số và một kí tự " - "!
+            </p>
+          </div>
+        </div>
+
+        <div>
+          <ion-label >Họ và tên (*)</ion-label>
+          <ion-item #input2>
+            <ion-input (ionFocus)="scroll(input2)" [minlength]="5" [ngClass]="{
+                error: name.errors && (name.dirty || name.touched || submitted)
+              }" type="text" autocomplete="off" #name="ngModel" name="name" required [(ngModel)]="input.Name">
+            </ion-input>
+          </ion-item>
+          <div *ngIf="name.errors && (name.dirty || name.touched || submitted)" class="font-err">
+            <p [hidden]="!name.errors.required" ion-text color="danger" padding-left translate>
+              Vui lòng nhập họ và tên!
+            </p>
+            <p [hidden]="name.errors.required && !name.errors.minlength" ion-text color="danger" padding-left translate>
+              Độ dài tối thiểu là 5 kí tự
+            </p>
+          </div>
+        </div>
+        <div>
+          <ion-label>Ngày sinh (*)</ion-label>
+          <div class="position-relative">
+            <ion-item #input3 id="datetime">
+              <ion-datetime (ionFocus)="scroll(input3)" displayFormat="DD/MM/YYYY" [(ngModel)]="input.Birthday" #birthdayt="ngModel"
+                name="birthdayt" required (ionBlur)="checkOld()" [ngClass]="{ error: !input.Birthday || !checkT }"
+                cancelText="Đóng" doneText="Xác nhận"></ion-datetime>
+              <!-- <ion-input  type="text" autocomplete="off" #lastName="ngModel" name="lastName" required [(ngModel)]="input.lastName"></ion-input> -->
+            </ion-item>
+            <ion-img src="/assets/img/u39.svg" class="datetime-ico"></ion-img>
+          </div>
+          <div *ngIf="
+              birthdayt.errors &&
+              (birthdayt.dirty || birthdayt.touched || submitted)
+            " class="font-err">
+            <p [hidden]="input.Birthday" ion-text color="danger" padding-left translate>
+              Vui lòng nhập ngày sinh!
+            </p>
+          </div>
+          <div *ngIf="!checkT" class="font-err">
+            <p ion-text color="danger" padding-left translate>
+              Bạn phải đủ 18 tuổi để thỏa mãn điều kiện đăng ký!
+            </p>
+          </div>
+        </div>
+        <div>
+          <ion-label >CMND/Hộ chiếu (*)</ion-label>
+          <ion-item #input4>
+            <ion-input (ionFocus)="scroll(input4)" [ngClass]="{
+                error: CMND.errors && (CMND.dirty || CMND.touched || submitted)
+              }" type="text" [maxlength]="500" [minlength]="0" autocomplete="off" #CMND="ngModel" name="CMND" required
+              [(ngModel)]="input.CMND"></ion-input>
+          </ion-item>
+          <div *ngIf="CMND.errors && (CMND.dirty || CMND.touched || submitted)" class="font-err">
+            <p [hidden]="!CMND.errors.required" ion-text color="danger" padding-left translate>
+              Vui lòng nhập CMND/Hộ chiếu!
+            </p>
+            <!-- <p [hidden]="CMND.errors.required && !CMND.errors.pattern" ion-text color="danger" padding-left translate>
+              Vui lòng nhập CMND/Hộ chiếu đều là chữ số!
+            </p>
+            <p [hidden]="CMND.errors.required && CMND.errors.pattern && !CMND.errors.minlength" ion-text color="danger" padding-left translate>
+              Vui lòng nhập CMND/Hộ chiếu ít nhất 9 ký tự!
+            </p> -->
+          </div>
+          <div *ngIf="!checkCMND" class="font-err">
+            <p ion-text color="danger" padding-left translate>
+              CMND/Hộ chiếu đã tồn tại!
+            </p>
+          </div>
+        </div>
+        <div>
+          <ion-label>Tỉnh/Thành phố (*)</ion-label>
+          <ion-item #input5>
+            <ion-select (ionFocus)="scroll(input5)" [(ngModel)]="input.ProvinceId" [required]="true" name="city" required ngModel #city="ngModel"
+              placeholder="-- Chọn --" (ionChange)="loadDistrict(input.ProvinceId)" okText="Xác nhận" cancelText="Đóng">
+              <ion-option *ngIf="provinces.length == 0" value="">-- Chọn --</ion-option>
+              <ion-option *ngFor="let item of provinces" [value]="item.Id">{{
+                item.Name
+              }}</ion-option>
+            </ion-select>
+          </ion-item>
+          <div *ngIf="
+              !input.ProvinceId && (city.dirty || city.touched || submitted)
+            " class="font-err">
+            <p [hidden]="input.ProvinceId" ion-text color="danger" padding-left translate>
+              Vui lòng chọn Tỉnh/Thành phố!
+            </p>
+          </div>
+        </div>
+        <div>
+          <ion-label >Quận/Huyện (*)</ion-label>
+          <ion-item #input6>
+            <ion-select (ionFocus)="scroll(input6)" [(ngModel)]="input.DistrictId" [required]="true" name="district" required ngModel
+              #district="ngModel" placeholder="-- Chọn --" (ionChange)="loadWard(input.DistrictId)" okText="Xác nhận"
+              cancelText="Đóng">
+              <ion-option *ngIf="provinces.length == 0" value="">-- Chọn --</ion-option>
+              <ion-option *ngFor="let item of districts" [value]="item.Id">{{
+                item.Name
+              }}</ion-option>
+            </ion-select>
+          </ion-item>
+          <div *ngIf="
+              !input.DistrictId &&
+              (district.dirty || district.touched || submitted)
+            " class="font-err">
+            <p [hidden]="input.DistrictId" ion-text color="danger" padding-left translate>
+              Vui lòng chọn Quận/Huyện!
+            </p>
+          </div>
+        </div>
+        <div>
+          <ion-label >Phường/Xã (*)</ion-label>
+          <ion-item #input7>
+            <ion-select (ionFocus)="scroll(input7)" [(ngModel)]="input.WardId" [required]="true" name="state" required ngModel #state="ngModel"
+              placeholder="-- Chọn --" (ionChange)="selectedWard(input.WardId)" okText="Xác nhận" cancelText="Đóng">
+              <ion-option *ngIf="provinces.length == 0" value="">-- Chọn --</ion-option>
+              <ion-option *ngFor="let item of wards" [value]="item.Id">{{
+                item.Name
+              }}</ion-option>
+            </ion-select>
+          </ion-item>
+          <div *ngIf="!input.WardId && (state.dirty || state.touched || submitted)" class="font-err">
+            <p [hidden]="input.WardId" ion-text color="danger" padding-left translate>
+              Vui lòng chọn Phường/Xã!
+            </p>
+          </div>
+        </div>
+        <div>
+          <ion-label >Địa chỉ (*)</ion-label>
+          <ion-item #input8>
+            <ion-input (ionFocus)="scroll(input8)" type="text" [ngClass]="{
+                error:
+                  address.errors &&
+                  (address.dirty || address.touched || submitted)
+              }" autocomplete="off" #address="ngModel" name="address" required [(ngModel)]="input.Address"></ion-input>
+          </ion-item>
+          <div *ngIf="
+              address.errors && (address.dirty || address.touched || submitted)
+            " class="font-err">
+            <p [hidden]="!address.errors.required" ion-text color="danger" padding-left translate>
+              Vui lòng nhập địa chỉ!
+            </p>
+          </div>
+        </div>
+        <div>
+          <ion-label>Điện thoại (*)</ion-label>
+          <ion-item #input9>
+            <ion-input (ionFocus)="scroll(input9)" type="text" [maxlength]="10" [minlength]="10" [ngClass]="{
+                error:
+                  mobile.errors && (mobile.dirty || mobile.touched || submitted)
+              }" autocomplete="off" required name="mobile" #mobile="ngModel" [(ngModel)]="input.Mobile"
+              pattern="[0-9]{10}" (ionChange)="onchangeMobile()"></ion-input>
+          </ion-item>
+          <div *ngIf="
+              mobile.errors && (mobile.dirty || mobile.touched || submitted)
+            ">
+            <p *ngIf="mobile.errors.pattern || mobile.errors.minlength" ion-text color="danger" padding-left translate>
+              Điện thoại không đúng định dạng!
+            </p>
+            <p [hidden]="!mobile.errors.required" ion-text color="danger" padding-left translate>
+              Vui lòng nhập Điện thoại!
+            </p>
+          </div>
+          <p *ngIf="checkMobile" ion-text color="danger" padding-left translate>
+            {{checkMobile}}!
+          </p>
+          <p *ngIf="checkFirstLetterMobile" ion-text color="danger" padding-left translate>
+            {{checkFirstLetterMobile}}!
+          </p>
+        </div>
+        <div>
+          <ion-label>Mật khẩu (*) </ion-label>
+          <ion-item #input10 class="position-relative">
+            <ion-input (ionFocus)="scroll(input10)" [type]="password_type" [ngClass]="{
+                error:
+                  password.errors &&
+                  (password.dirty || password.touched || submitted)
+              }" (ionChange)="checkvalidPass()" autocomplete="off" #password="ngModel" required name="password"
+              [(ngModel)]="input.PassWord" clearOnEdit="false"></ion-input>
+            <button ion-button clear type="button" item-right (click)="togglePasswordMode()" style="
+                position: absolute;
+                right: -10px;
+                top: 1px;
+                background: transparent;
+              ">
+              <ion-icon clear [name]="eye_type" slot="end" style="height: 25px; color: #000; margin-right: 5px">
+              </ion-icon>
+            </button>
+          </ion-item>
+          <div *ngIf="
+              password.errors &&
+              (password.dirty || password.touched || submitted)
+            ">
+            <p [hidden]="!password.errors.required" ion-text color="danger" padding-left translate>
+              Vui lòng nhập mật khẩu
+            </p>
+          </div>
+          <div *ngIf="!this.checkValidPass">
+            <p ion-text color="danger" padding-left translate>
+              Mật khẩu phải dài ít nhất 8 ký tự, chứa chữ hoa, chữ thường và chữ
+              số
+            </p>
+          </div>
+        </div>
+
+        <div>
+          <ion-label>Xác nhận mật khẩu (*)</ion-label>
+          <ion-item #input11 class="position-relative">
+            <ion-input (ionFocus)="scroll(input11)" [type]="password_type" autocomplete="off" required [ngClass]="{
+                error:
+                  rePassword.errors &&
+                  (rePassword.dirty || rePassword.touched || submitted)
+              }" #rePassword="ngModel" required name="rePassword" [(ngModel)]="input.ConfirmPassword"
+              clearOnEdit="false">
+            </ion-input>
+            <button ion-button clear type="button" item-right (click)="togglePasswordMode()" style="
+                position: absolute;
+                right: -10px;
+                top: 1px;
+                background: transparent;
+              ">
+              <ion-icon clear [name]="eye_type" slot="end" style="height: 25px; color: #000; margin-right: 5px">
+              </ion-icon>
+            </button>
+          </ion-item>
+          <div *ngIf="
+              rePassword.errors &&
+              (rePassword.dirty || rePassword.touched || submitted)
+            ">
+            <p [hidden]="!rePassword.errors.required" ion-text color="danger" padding-left translate>
+              Vui lòng nhập xác nhận mật khẩu
+            </p>
+          </div>
+          <div *ngIf="
+              input.PassWord != input.ConfirmPassword &&
+              (rePassword.dirty || rePassword.touched || submitted)
+            ">
+            <p ion-text color="danger" padding-left translate>
+              Mật khẩu không trùng khớp!
+            </p>
+          </div>
+        </div>
+        <div>
+          <ion-label>Bạn biết tới chương trình từ đâu (*)</ion-label>
+          <ion-item #input12>
+            <ion-select (ionFocus)="scroll(input12)" [(ngModel)]="input.KnowFrom" [required]="true" name="know" required ngModel #know="ngModel"
+              okText="Xác nhận" cancelText="Đóng" placeholder="-- Chọn --">
+              <ion-option *ngFor="let item of knows" [value]="item.id">{{
+                item.name
+              }}</ion-option>
+            </ion-select>
+          </ion-item>
+          <div *ngIf="
+          !input.KnowFrom &&
+          (know.dirty || know.touched || submitted)
+        " class="font-err">
+        <p [hidden]="input.KnowFrom" ion-text color="danger" padding-left translate>
+          Vui lòng chọn Bạn biết tới chương trình từ đâu!
+        </p>
+      </div>
+        </div>
+        <div *ngIf="input.KnowFrom === 1">
+          <ion-label style="white-space: break-spaces;">Mã nhân viên TNI(*) (Chỉ dành cho nhân viên TNI)</ion-label>
+          <ion-item #input13 class="mar-top-23">
+            <ion-input (ionFocus)="scroll(input13)" type="text" maxlength="10" autocomplete="off" required name="mobileTT" #mobileTT="ngModel"
+              [(ngModel)]="input.ReferralCode"></ion-input>
+            <ion-row responsive-sm class="mt-70">
+              <ion-col class="text-center"> </ion-col>
+            </ion-row>
+          </ion-item>
+        </div>
+        <div>
+          <ion-label >Giới tính (*)</ion-label>
+          <ion-list #input14 (ionFocus)="scroll(input14)" radio-group [(ngModel)]="isSex" name="Sex" ngModel #Sex="ngModel" (ionChange)="changeSex()">
+            <ion-row>
+              <ion-col col-6>
+                <ion-item>
+                  <!-- <ion-radio [(ngModel)]="isMan" checked="isMan" name="Man" ngModel #Man="ngModel"
+                    (click)="changeSexMan()" color="secondary"></ion-radio>
+                  <ion-label color="primary" translate>Nam</ion-label> -->
+                  <ion-radio value="1" color="secondary" item-start style="margin: 11px 12px 10px 4px;"></ion-radio>
+                  <ion-label color="primary" translate>Nam</ion-label>
+                </ion-item>
+              </ion-col>
+              <ion-col col-6>
+                <ion-item>
+                  <ion-radio value="0" color="secondary" item-start style="margin: 11px 12px 10px 4px;"></ion-radio>
+                  <ion-label color="primary" translate>Nữ</ion-label>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </ion-list>
+        </div>
+        <div>
+          <ion-label>Mã giới thiệu</ion-label>
+          <ion-item #input15>
+            <ion-input (ionFocus)="scroll(input15)" (keyup)="getReferralUser()" type="text" autocomplete="off" required name="referralCode" #referralCode="ngModel" [(ngModel)]="input.CustomerNumberSponsor" d></ion-input>
+          </ion-item>
+          <div *ngIf="referralCodeResponse">
+            <p *ngIf="referralCodeResponse?.StatusCode != 200" ion-text color="danger" padding-left translate>
+              <span class="error-icon"></span><i class="message">{{referralCodeResponse?.Message | translate}}</i>
+            </p>
+            <p *ngIf="referralCodeResponse?.StatusCode == 200" ion-text padding-left translate>
+              <span class="success-icon"></span><i class="message success-message">{{referralCodeResponse?.Message | translate}}</i>
+            </p>
+          </div>
+        </div> 
+        <ion-row responsive-sm class="mt-30">
+          <ion-col>
+            <button ion-button class="w-200 auto-margin linear-bunting-flirt no-transform fs-12" clear block
+              (click)="submit(frm)" [disabled]="submitted" translate>
+              Tiếp tục đăng ký
+            </button>
+          </ion-col>
+        </ion-row>
+        <ion-row responsive-sm class="mt-10">
+          <ion-col>
+            <button ion-button class="w-200 auto-margin linear-bunting-flirt no-transform fs-12" clear block
+              (click)="goTo('register')">
+              Quay lại
+            </button>
+          </ion-col>
+        </ion-row>
+      </form>
+    </ion-list>
+  </div>
+</ion-content>

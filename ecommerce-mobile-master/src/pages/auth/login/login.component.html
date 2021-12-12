@@ -1,0 +1,220 @@
+<style>
+  .text-input::placeholder {
+    font-style: italic !important;
+  }
+</style>
+<ion-header class="header_logo">
+  <ion-navbar class="linear-bunting-flirt bg-transparent text-center">
+    <ion-title>
+      <img src="/assets/img/logo/WELogoWhite.png" class="h-65" />
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<div class="aesert"></div>
+<div class="desert"></div>
+
+<ion-content class="login bg-transparent">
+
+  <div class="body_register position-relative">
+    <div *ngIf="!loginSocial">
+      <h2 translate="">Đăng nhập</h2>
+      <ion-list no-lines class="no-margin">
+        <form (submit)="login(frm)" #frm="ngForm">
+          <div>
+            <ion-label>Điện thoại</ion-label>
+            <ion-item class="no-padding" #usernameInput>
+              <ion-input (ionFocus)="scroll(usernameInput, false)" type="number" ng-pattern="[0-9*]" autocomplete="off"
+                required name="username" #username="ngModel" [(ngModel)]="credentials.username"
+                (ionChange)='onChangeInput($event)' placeholder="Nhập số điện thoại của bạn"></ion-input>
+            </ion-item>
+            <div *ngIf="
+              username.errors
+              && submitted
+            ">
+              <p [hidden]="!username.errors.required" ion-text color="danger" padding-left translate>
+                Số điện thoại không được để trống!
+              </p>
+
+            </div>
+          </div>
+
+
+          <div style="position: relative">
+            <ion-label>Mật khẩu</ion-label>
+            <ion-item class="no-padding">
+              <ion-input (ionFocus)="scroll(usernameInput, true)" required clear [type]="password_type"
+                autocomplete="off" name="pw" #password="ngModel" [(ngModel)]="credentials.password" clearOnEdit="false"
+                placeholder="Nhập mật khẩu của bạn" (ionChange)='onChangeInput($event)'>
+              </ion-input>
+              <button ion-button type="button" item-right (click)="togglePasswordMode()" style="
+                position: absolute;
+                right: 0;
+                bottom: 0;
+                background: transparent;
+                color: #000000;
+              ">
+                <ion-icon clear [name]="eye_type" slot="end"></ion-icon>
+              </button>
+            </ion-item>
+          </div>
+
+          <div *ngIf="
+            password.errors
+            && submitted
+          ">
+            <p [hidden]="!password.errors.required" ion-text color="danger" padding-left translate>
+              Mật khẩu không được để trống!
+            </p>
+          </div>
+
+          <div text-right class="mt-10">
+            <a (click)="goTo('forgot')" translate style="
+              color: #bc0073;
+              font-weight: bold;
+              text-decoration: underline;
+            ">Quên mật khẩu</a>
+          </div>
+          <ion-row responsive-sm class="mt-30">
+            <ion-col class="text-center">
+              <button ion-button color="bg" type="submit" translate style="width: 100%; font-weight: bold">
+                <span translate>Đăng nhập</span>
+              </button>
+            </ion-col>
+          </ion-row>
+
+          <ion-grid>
+            <ion-row>
+              <ion-col>Hoặc đăng nhập bằng:</ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <button ion-button icon-start type="button" style="
+                background: #30437D;
+                text-transform: none;
+                width: 100%;
+                padding-left: 5px" (click)="facebookLogin()">
+                  <img src="../../../assets/img/social/facebook_botton_small.svg" style="
+                  width: 20px;
+                  height: 20px" />
+                  Facebook
+                </button>
+              </ion-col>
+              <ion-col>
+                <button ion-button icon-start type="button" style="
+                background: #FFFFFF;
+                text-transform: none;
+                color: #000000;
+                width: 100%;
+                box-shadow: 1px 6px 8px -10px" (click)="googleLogin()">
+                  <img src="../../../assets/img/social/google_button_smal.svg" style="
+                  width: 20px;
+                  height: 20px;
+                  margin-right: 3px" />
+                  Google
+                </button>
+              </ion-col>
+              <ion-col *ngIf="platform.is('ios')">
+                <button ion-button icon-start type="button" style="
+                background: #FFFFFF;
+                text-transform: none;
+                color: #000000;
+                width: 100%;
+                box-shadow: 1px 6px 8px -10px" (click)="appleLogin()">
+                  <img src="../../../assets/img/social/apple_button.svg" style="
+                  width: 20px;
+                  height: 20px;
+                  margin-right: 3px" />
+                  Apple ID
+                </button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+
+          <ion-grid class="link-login">
+            <ion-row>
+              <ion-col style="text-align: left !important;display: contents;">
+                <span style="font-weight: bold; color: black">Bạn chưa có tài khoản?</span>
+              </ion-col>
+              <ion-col style="text-align: right !important">
+
+                <a (click)="goTo('register')" translate style="
+                  color: #bc0073;
+                  font-weight: bold;
+                  text-decoration: underline;
+                  margin: 0;
+                  font-size: 14px;
+                ">Đăng ký ngay</a>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </form>
+      </ion-list>
+    </div>
+    <div *ngIf="loginSocial">
+      <h2 translate="">Thông tin</h2>
+      <ion-list no-lines class="no-margin">
+        <form (submit)="update_infor(frm)" #frm="ngForm">
+          <div *ngIf="!isEmail">
+            <ion-label>Điện thoại</ion-label>
+            <ion-item class="no-padding" #usernameInput>
+              <ion-input (ionFocus)="scroll(usernameInput, false)" type="number" ng-pattern="[0-9*]" autocomplete="off"
+                required name="username" #username="ngModel" [(ngModel)]="infor_update.phone_number"
+                (ionChange)='onChangeInput($event)' placeholder="Nhập số điện thoại của bạn"></ion-input>
+            </ion-item>
+            <div *ngIf="
+                username.errors
+                && submitted
+              ">
+              <p [hidden]="!username.errors.required" ion-text color="danger" padding-left translate>
+                Số điện thoại không được để trống!
+              </p>
+
+            </div>
+          </div>
+          <div *ngIf="!isPhoneNumber">
+            <ion-label>Email</ion-label>
+            <ion-item>
+              <ion-input type="text" [ngClass]="{
+                  error:
+                    email.errors && (email.dirty || email.touched )
+                }" autocomplete="off" #email="ngModel" pattern="[A-Za-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                name="email" required [(ngModel)]="infor_update.email" placeholder="Nhập email của bạn"></ion-input>
+            </ion-item>
+            <div *ngIf="email.errors && (email.dirty || email.touched || submitted)">
+              <p [hidden]="!email.errors.pattern" ion-text color="danger" padding-left translate>
+                Định dạng email không đúng!
+              </p>
+
+            </div>
+            <div *ngIf="
+            email.errors
+            && submitted
+          ">
+              <p [hidden]="!email.errors.required" ion-text color="danger" padding-left translate>
+                Email không được để trống
+              </p>
+
+            </div>
+          </div>
+
+          <ion-row>
+            <ion-col class="text-center">
+              <button ion-button color="bg" type="submit" translate style="width: 100%; font-weight: bold">
+                <span translate>Cập nhập</span>
+              </button>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <button ion-button color="bg" translate style="width: 100%; font-weight: bold" (click)="backbtn()">
+                <span translate>Quay lại</span>
+              </button>
+            </ion-col>
+          </ion-row>
+
+        </form>
+      </ion-list>
+    </div>
+  </div>
+</ion-content>

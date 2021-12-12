@@ -1,0 +1,249 @@
+<ion-header class="header_logo">
+  <ion-toolbar class="linear-bunting-flirt bg-transparent text-center">
+    <img src="/assets/img/logo/WELogoWhite.png" class="h-65" />
+  </ion-toolbar>
+</ion-header>
+<div class="aesert"></div>
+<div class="desert"></div>
+<ion-content class="register confirmOTP bg-transparent" *ngIf="!isSuccess">
+  <div class="body_register position-relative">
+    <h2 translate class="fs-15 fw-700 color-primary mb-30 text-center">
+      Đăng ký
+    </h2>
+    <ion-row>
+      <ion-col col-12>
+        <div class="register_step">
+          <ul class="progressbar">
+            <li class="complete fs-12">
+              <span class="icon_register icon-subject"></span>
+              Đối tượng
+            </li>
+            <li class="complete fs-12">
+              <span class="icon_register icon-info"></span>
+              Thông tin
+            </li>
+            <li class="fs-12">
+              <span class="icon_register icon-survey"></span>
+              Khảo sát
+            </li>
+          </ul>
+        </div>
+      </ion-col>
+    </ion-row>
+    <h2 translate class="fs-15 color-primary mt-30 text-center">
+      Nhập mã OTP được gửi qua điện thoại
+    </h2>
+    <h2 translat class="fs-15 fw-700 color-primary mb-30 text-center">
+      XÁC NHẬN SỐ ĐIỆN THOẠI
+    </h2>
+    <div>
+      <ion-row class="row_otp">
+        <ion-col>
+          <ion-item>
+            <ion-input
+              #otp1
+              no-lines
+              type="number"
+              pattern="\d*"
+              [minlength]="1"
+              [maxlength]="1"
+              #otpCode1="ngModel"
+              class="textOTP"
+              name="otpCode1"
+              required
+              [(ngModel)]="info.otpCode1"
+              (keydown)="kd_ChangeOTP($event, info.otpCode1)"
+              (keyup)="changeOTP($event, null, otp2)"
+            >
+            </ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-input
+              #otp2
+              no-lines
+              type="number"
+              pattern="\d*"
+              [minlength]="1"
+              [maxlength]="1"
+              #otpCode2="ngModel"
+              class="textOTP"
+              name="otpCode2"
+              required
+              [(ngModel)]="info.otpCode2"
+              (keydown)="kd_ChangeOTP($event, info.otpCode2)"
+              (keyup)="changeOTP($event, otp1, otp3)"
+            >
+            </ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-input
+              #otp3
+              no-lines
+              type="number"
+              pattern="\d*"
+              [minlength]="1"
+              [maxlength]="1"
+              #otpCode3="ngModel"
+              class="textOTP"
+              name="otpCode3"
+              required
+              [(ngModel)]="info.otpCode3"
+              (keydown)="kd_ChangeOTP($event, info.otpCode3)"
+              (keyup)="changeOTP($event, otp2, otp4)"
+            >
+            </ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-input
+              #otp4
+              no-lines
+              type="number"
+              pattern="\d*"
+              [minlength]="1"
+              [maxlength]="1"
+              #otpCode4="ngModel"
+              class="textOTP"
+              name="otpCode4"
+              required
+              [(ngModel)]="info.otpCode4"
+              (keydown)="kd_ChangeOTP($event, info.otpCode4)"
+              (keyup)="changeOTP($event, otp3, null)"
+            >
+            </ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <div
+        style="color: red"
+        *ngIf="
+          otpCode1.errors &&
+          (otpCode1.dirty || otpCode1.touched || submitted) &&
+          otpCode2.errors &&
+            (otpCode2.dirty || otpCode2.touched || submitted) &&
+          otpCode3.errors &&
+            (otpCode3.dirty || otpCode3.touched || submitted) &&
+          otpCode4.errors && (otpCode4.dirty || otpCode4.touched || submitted)
+        "
+      >
+        <p
+          ion-text
+          color="danger"
+          padding-left
+          translate
+          class="no-margin no-padding mt-10 mb-10"
+          [hidden]="
+            !otpCode1.errors.required &&
+            !otpCode2.errors.required &&
+            !otpCode3.errors.required &&
+            !otpCode4.errors.required
+          "
+        >
+          Vui lòng nhập mã OTP!
+        </p>
+      </div>
+
+      <p class="no-margin mt-10 mb-10 fs-12 text-center">
+        Còn lại {{ miniDown }}:{{ secondDown == 0 ? '00' : secondDown }}
+      </p>
+      <br />
+      <p class="no-margin mt-10 mb-10 fs-12 text-center">
+        Bạn chưa nhận được mã OTP?
+        <a class="color-light-bule fw-700" (click)="getOTP()">Gửi lại mã OTP</a>
+      </p>
+      <!-- <button ion-button color="light" clear block (click)="confirmOTP(info.otpCode)" translate>Xác nhận</button><br> -->
+      <ion-row responsive-sm class="mt-30">
+        <ion-col>
+          <button
+            ion-button
+            class="w-full auto-margin linear-bunting-flirt no-transform fs-12"
+            clear
+            block
+            (click)="confirmOTP(info)"
+            translate
+            [disabled]="submitted"
+          >
+            Xác nhận
+          </button>
+        </ion-col>
+      </ion-row>
+      <div *ngIf="!isReturn">
+        <ion-row responsive-sm class="mt-10">
+          <ion-col>
+            <button
+              ion-button
+              class="w-full auto-margin linear-bunting-flirt no-transform fs-12"
+              clear
+              block
+              (click)="goTo('signup')"
+              translate
+              [disabled]="submitted" 
+            >
+              Quay lại
+            </button>
+          </ion-col>
+        </ion-row>
+      </div>
+      <div *ngIf="isReturn">
+        <ion-row responsive-sm class="mt-10">
+          <ion-col>
+            <button
+              ion-button
+              class="w-full auto-margin linear-bunting-flirt no-transform fs-12"
+              clear
+              block
+              (click)="goTo('signup_wefree')"
+              translate
+              [disabled]="submitted" 
+            >
+              Quay lại
+            </button>
+          </ion-col>
+        </ion-row>
+      </div>
+
+    </div>
+    <!-- <ion-row responsive-sm>
+      <ion-col>
+        <button ion-button color="light" clear block (click)="confirmOTP()" translate>Tiếp tục đăng ký</button>
+      </ion-col>
+    </ion-row>    -->
+  </div>
+</ion-content>
+<ion-content class="register bg-transparent survey" style="margin-top: 0;" *ngIf="isSuccess">
+  <div class="body_register position-relative">
+    <h2 translate class="fs-30 fw-700 color-primary mb-30 text-center">Đăng ký</h2>
+    <div class="body_register no-margin" style="text-align: center;">
+      <p class="fs-12 fw-700">Xin chúc mừng! Bạn đã đăng ký thành công WE Thành Viên. Chúc bạn có những trải nghiệm mua sắm với những ưu đãi tuyệt vời cùng WE4.0 </p>
+
+      <!-- <div class="successPop" style="padding: 10px;">
+        <h2 class="fs-14 fw-700" style="color: black;">
+          {{bankinfo.Description}}
+        </h2>
+        <div style="text-align: left;">
+          <p class="color-primary">
+            <span class="fw-700">Tên công ty:</span> Công ty TNHH TNI KING COFFEE
+          </p>
+          <p class="color-primary">
+            <span class="fw-700">Ngân hàng:</span> {{bankinfo.BankBranchName}}
+          </p>
+          <p class="color-primary">
+            <span class="fw-700">Số tài khoản:</span> {{bankinfo.BankNumber}}
+          </p>
+        </div>
+      </div> -->
+      <ion-row responsive-sm class="mt-30">
+        <ion-col>
+          <button ion-button class="w-200 auto-margin linear-bunting-flirt no-transform fs-12" clear block
+            (click)="goTo('login')" [disabled]="submitted" translate>Xác nhận</button>
+        </ion-col>
+      </ion-row>
+    </div>
+  </div>
+</ion-content>

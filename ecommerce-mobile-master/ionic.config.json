@@ -1,0 +1,11 @@
+{
+  "name": "tni-ecommerce-app",
+  "integrations": {
+    "cordova": {},
+    "capacitor": {
+      "enabled": false
+    }
+  },
+  "type": "ionic-angular",
+  "id": "d95006e5"
+}

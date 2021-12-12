@@ -1,0 +1,61 @@
+<div class="review-card">
+  <form (submit)="submit(frm)" #frm="ngForm">
+    <div>
+      <textarea
+        [(ngModel)]="review.comment"
+        name="comment"
+        rows="3"
+        placeholder="{{'Leave comment here' | translate}}"
+        [disabled]="!isLoggedin || !canReview || checkReview"
+        required
+        #text="ngModel"
+      ></textarea>
+      <p *ngIf="!isLoggedin">Please login to review..</p>
+      <p *ngIf="isLoggedin && !canReview" translate>
+        Please purchase shop product before leaving a review!
+      </p>
+      <p *ngIf="checkReview">
+        <span *ngIf="options.type === 'product'" translate
+          >You have reviewed this product, you can not review this product
+          anymore</span
+        >
+        <span *ngIf="options.type === 'shop'" translate
+          >You have reviewed this shop, you can not review this shop
+          anymore</span
+        >
+      </p>
+    </div>
+    <ion-grid>
+      <ion-row>
+        <ion-col col-6 translate>Your rating</ion-col>
+        <ion-col class="text-right" col-6>
+          <ngb-rating
+            [(rate)]="review.rating"
+            (hover)="hovered=$event"
+            max="5"
+            class="no-outline"
+          >
+            <ng-template let-fill="fill" let-index="index">
+              <span
+                class="star"
+                [class.filled]="fill === 100"
+                [class.bad]="index < 2"
+                >&#9733;</span
+              >
+            </ng-template>
+          </ngb-rating>
+        </ion-col>
+        <ion-col class="text-right" col-12>
+          <button
+            ion-button
+            color="secondary"
+            type="submit"
+            [hidden]="!isLoggedin || !canReview || checkReview"
+          >
+            <span translate>Submit</span>
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</div>

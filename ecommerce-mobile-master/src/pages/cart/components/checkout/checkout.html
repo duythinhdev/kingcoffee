@@ -1,0 +1,252 @@
+<ion-header style="text-align: center" class="cart_header">
+  <ion-navbar class="header-block pr-15" hideBackButton>
+    <ion-buttons left>
+      <button ion-button icon-only (click)="goTo('home')">
+        <ion-icon ios="ios-arrow-back" md="md-arrow-back" style="font-size: 25px"></ion-icon>
+      </button>
+    </ion-buttons>
+
+    <ion-title>
+      <strong translate>Cart</strong><br />
+      <span>({{quantityProduct}} sản phẩm)</span>
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content class="cart" no-scroll style="background: white !important">
+  <div *ngIf="isLoading" class="loading-img">
+    <img src="../../../assets/img/loading-icon.gif" width="50px" />
+  </div>
+  <ion-item no-lines *ngIf="!cart?.products?.length" class="h-full">
+    <ion-label class="text-center no-margin p-15" style="white-space: unset">
+      <img src="../../../assets/img/cart-emty.png" width="140px" />
+      <p class="text-center mt-10 mb-10 fs-24 color-gray" style="color: #ccc; padding: 20px 15px" translate>
+        Chưa có sản phẩm nào trong giỏ hàng.
+      </p>
+      <button ion-button class="w-200 auto-margin linear-bunting-flirt no-transform fs-14 fw-700 color-white" clear
+        block (click)="goTo('product')" translate>
+        Tiếp tục mua sắm
+      </button>
+    </ion-label>
+  </ion-item>
+  <form #frm="ngForm" *ngIf="!isLoading && cart?.products?.length" class="p-15">
+    <div class="cart-items">
+      <ion-item no-lines *ngFor="let item of cart.products; let i = index">
+        <ion-row>
+          <ion-col col-3>
+            <img [src]="item?.product?.mainImage?.mediumUrl" width="75" />
+          </ion-col>
+          <ion-col col-8>
+            <p style="white-space: initial; font-size: 13px; color: black">
+              <b>{{item?.product?.name}}</b>
+            </p>
+            <div style="color: red">
+              <span translate>Total</span>
+              {{item.calculatedData?.total || 0 | number : '1.0-0'}} đ
+            </div>
+            <ng-container *ngFor="let i of listProductChange">
+              <div *ngIf="i?.id == item.productId">
+                <span style="
+                    font-size: 12px;
+                    color: #000000;
+                    text-decoration: line-through;
+                  ">{{item.unitPrice * item.quantity | number : '1.0-0'}}đ</span>
+              </div>
+            </ng-container>
+
+            <ng-container *ngFor="let i of listQuantity">
+              <div *ngIf="i?.id == item.productId">
+                <span style="font-size: 12px; color: #000000">{{i?.discount}}% </span>|
+                <span style="
+                    font-size: 12px;
+                    color: #000000;
+                    text-decoration: line-through;
+                  ">{{item.unitPrice * item.quantity | number : '1.0-0'}}đ</span>
+              </div>
+            </ng-container>
+            <span class="quantity" translate>
+              <p *ngIf="!item.error">
+                <ion-icon name="ios-remove-circle-outline" (click)="changeQuantity(i,false)"
+                  style="padding: 5px 10px; width: 30px"></ion-icon>
+                <input type="number" (keyup)="onKey($event, i)" [value]="item.quantity === 0 ? 1 : item.quantity" style="width: 40px; text-align: center; border: 1px solid #d6cece;"/>
+                <ion-icon name="ios-add-circle-outline" (click)="changeQuantity(i,true)"
+                  style="padding: 5px 10px; width: 30px"></ion-icon>
+              </p>
+              <p *ngIf="item.error">
+                <span class="label label-error" translate>Out of stock</span>
+                <span translate>Please remove this product from the cart!</span>
+              </p>
+            </span>
+          </ion-col>
+          <ion-col col-1>
+            <button [disabled]="isSubmit" ion-button item-right class="no-padding" clear color="dark" type="button" (click)="remove(i)" large>
+              <ion-icon name="ios-close-outline"></ion-icon>
+            </button>
+          </ion-col>
+        </ion-row>
+      </ion-item>
+    </div>
+    <div class="cart-items">
+      <ion-item no-lines>
+        <ion-label class="no-margin p-15" style="border-radius: 10px; background-color: #f2f2f2">
+          <ion-row>
+            <ion-col width-50 text-left>
+              <div translate>Tạm tính :</div>
+              <div translate>Chiết khấu ({{discount}}%):</div>
+              <div><strong translate>Tổng sau chiết khấu:</strong></div>
+              <div class="mt-10" *ngFor="let dis of discountOrderPercent">
+                <p style="font-size: 12px; color: #f11c1c; font-weight: normal" translate>
+                  Khuyến mãi ({{dis}}%):
+                </p>
+              </div>
+              <div class="mt-10" *ngFor="let dis of discountOrderNumber">
+                <p style="font-size: 12px; color: #f11c1c; font-weight: normal" translate>
+                  Khuyến mãi:
+                </p>
+              </div>
+              <div class="mt-10" *ngFor="let disF of discountOrderFirst">
+                <p style="font-size: 12px; color: #f11c1c; font-weight: normal" translate>
+                  Khuyến mãi ({{disF}}%): 
+                </p>
+              </div>
+              <div class="mt-30"><strong translate>Thành tiền:</strong></div>
+            </ion-col>
+            <ion-col width-50 text-right>
+              <div>{{totalPrice || 0 | number : '1.0-0'}} đ</div>
+              <div>
+                {{(discount / 100 * totalPrice) || 0 | number : '1.0-0'}} đ
+              </div>
+              <div>
+                <strong>{{(totalPrice - ((discount/100)*totalPrice)) || 0 | number :
+                  '1.0-0'}} đ</strong>
+              </div>
+              <div *ngFor="let i of discountOrderPercent" class="mt-10">
+                <p style="font-size: 12px; color: #f11c1c; font-weight: normal" translate>
+                  {{(totalPrice - totalPrice*discount/100)*i/100 | number:
+                  '1.0-0'}} đ
+                </p>
+              </div>
+              <div *ngFor="let i of discountOrderNumber" class="mt-10">
+                <p style="font-size: 12px; color: #f11c1c; font-weight: normal" translate>
+                  {{ i | number: '1.0-0'}} đ
+                </p>
+              </div>
+              <div *ngFor="let i of totalAfterpercentFirst" class="mt-10">
+                <p style="font-size: 12px; color: #f11c1c; font-weight: normal" translate>
+                  {{ i | number: '1.0-0'}} đ
+                </p>
+              </div>
+              <div class="mt-30">
+                <strong style="color: #ff0000">{{checkDiscount(totalPrice) || 0 | number : '1.0-0'}}
+                  đ</strong>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-label>
+      </ion-item>
+      <ion-row *ngIf="cart.products && cart.products.length"> </ion-row>
+    </div>
+    <!-- promotion -->
+    <div class="cart-items mt-20">
+      <ion-item no-lines *ngFor="let giftCheckout of listGiftCheckout">
+        <ion-label
+          class="no-margin p-15"
+          style="border-radius: 10px; background-color: #f2f2f2"
+        >
+          <ion-row>
+            <ion-col col-12 text-left>
+              <div>
+                <p
+                  style="font-size: 10px; color: #f11c1c; font-weight: bold"
+                  translate
+                >
+                  Sản phẩm khuyến mãi giỏ hàng:
+                </p>
+              </div>
+            </ion-col>
+            <ion-col col-3>
+              <img [src]="giftCheckout.gift.mainImage?.mediumPath" width="75" />
+              <!-- <img [src]="item?.product?.mainImage?.thumbUrl | checkPhoto"> -->
+            </ion-col>
+            <ion-col col-9>
+              <p
+                style="font-size: 10px; color: #f11c1c; font-weight: normal;white-space: initial;"
+                translate
+              >
+                Tặng {{giftCheckout.quantityGift}} {{giftCheckout.gift.unitSalePrice | translate}} {{giftCheckout.gift.name}}
+              </p>
+            </ion-col>
+          </ion-row>
+        </ion-label>
+      </ion-item>
+      <ion-item no-lines *ngFor="let giftCheckout of listGiftBonusProduct" style="margin-bottom:10px;">
+        <ion-label
+          class="no-margin p-15"
+          style="border-radius: 10px; background-color: #f2f2f2"
+        >
+          <ion-row>
+            <ion-col col-12 text-left>
+              <div>
+                <p
+                  style="font-size: 10px; color: #f11c1c; font-weight: bold"
+                  translate
+                >
+                  Sản phẩm khuyến mãi giỏ hàng:
+                </p>
+              </div>
+            </ion-col>
+            <ion-col col-3>
+              <img [src]="giftCheckout.gift.mainImage?.mediumPath" width="75" />
+              <!-- <img [src]="item?.product?.mainImage?.thumbUrl | checkPhoto"> -->
+            </ion-col>
+            <ion-col col-9>
+              <p
+                style="font-size: 10px; color: #f11c1c; font-weight: normal;white-space: initial;"
+                translate
+              >
+                Tặng {{giftCheckout.quantityGift}} {{giftCheckout.gift.unitSalePrice | translate}} {{giftCheckout.gift.name}}
+              </p>
+            </ion-col>
+          </ion-row>
+        </ion-label>
+      </ion-item>
+      <ion-item no-lines *ngFor="let item of listGiftForNewbee">
+        <ion-label class="no-margin p-15" style="border-radius: 10px; background-color: #f2f2f2">
+          <ion-row>
+            <ion-col col-12 text-left>
+              <div>
+                <p style="font-size: 12px; color: #f11c1c; font-weight: bold" translate>
+                  Sản phẩm khuyến mãi giỏ hàng:
+                </p>
+              </div>
+            </ion-col>
+            <ion-col col-3>
+              <img *ngIf="!item?.mainImage?.thumbPath"
+                src="http://vsftp.tni.dev.nichietsuvn.com/tni-ecom/20201003/1601694179476-zRHtG8Y_download--1-_600x600.png"
+                width="75" />
+              <img *ngIf="item?.mainImage?.thumbPath" [src]="item?.mainImage?.thumbPath | checkPhoto" />
+            </ion-col>
+            <ion-col col-9>
+              <p style="font-size: 12px; color: #f11c1c; font-weight: normal" translate>
+                Tặng {{item.quantity}} {{item.unitSalePrice}} {{item.name}}
+              </p>
+            </ion-col>
+          </ion-row>
+        </ion-label>
+      </ion-item>
+      <ion-row *ngIf="cart.products && cart.products.length"> </ion-row>
+    </div>
+    <div>
+      <!-- end fromotion -->
+      <ion-item no-lines>
+        <ion-row>
+          <ion-col width-50>
+            <button ion-button class="linear-bunting-flirt color-white fw-700 fs-14" [disabled]="isSubmit" full type="button"
+              (click)="submit(frm)" *ngIf="cart?.products">
+              <span translate>Tiến hành đặt hàng</span>
+            </button>
+          </ion-col>
+        </ion-row>
+      </ion-item>
+    </div>
+  </form>
+</ion-content>

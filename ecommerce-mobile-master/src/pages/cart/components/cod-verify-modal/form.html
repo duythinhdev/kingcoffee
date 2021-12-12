@@ -1,0 +1,27 @@
+<ion-content padding class="animated fadeIn common-bg profile">
+  <div translate>Verify your phone number</div>
+  <ion-list>
+    <ion-item>
+      <ion-label color="primary" floating translate>Verify code</ion-label>
+      <ion-input
+        type="tel"
+        name="verifyCode"
+        [(ngModel)]="verifyCode"
+      ></ion-input>
+    </ion-item>
+    <p class="help help-block" translate>
+      A verify code has been sent to your phone number. Please enter it exactly
+      to the box.
+    </p>
+  </ion-list>
+
+  <button ion-button color="secondary" (click)="confirm()">
+    <span translate>Confirm</span>
+  </button>
+  <button ion-button color="secondary" (click)="resend()">
+    <span translate>Resend code</span>
+  </button>
+  <button ion-button color="secondary" (click)="viewCtrl.dismiss('cancel')">
+    <span translate>Hủy</span>
+  </button>
+</ion-content>

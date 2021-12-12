@@ -1,0 +1,101 @@
+page-forgot {
+  .forgot {
+    background: color($colors, theme);
+
+    h2 {
+      margin:0 0 5px;
+      color:#FFF;
+      font-size:22px;
+      text-align:center;
+    }
+
+    .forgot-logo {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    ion-list {
+      margin:0 50px;
+
+      @media screen and (min-width: 600px) {
+        width:50%;
+        margin:0 auto;
+      }
+
+      ion-item {
+        background:none;
+        padding:0;
+
+        .item-inner {
+          padding:0px;
+        }
+
+        &.item-input.input-has-focus .item-inner {
+          border:0;
+          box-shadow:none;
+        }
+
+        ion-input {
+          padding:2px;
+          border:solid 1px #ffdbdb;
+          border-radius:19px;
+          height:38px;
+
+          .text-input {
+            background:#ffdbdb;
+            border-radius:16px;
+            height:32px;
+            text-align:center;
+            margin:0;
+            width:100% !important;
+
+            &:focus {
+              background:#ffdbdb !important;
+              width:100% !important;
+            }
+          }
+
+          &.input-has-focus {
+            .text-input {
+              background:#ffdbdb !important;
+              width:100% !important;
+            }
+          }
+
+        }
+
+      }
+
+      .button {
+        font-size:20px;
+      }
+
+      ion-grid,
+        ion-col {
+          padding:0;
+          div {
+            margin-right: 10px;
+            a {
+              color:#FFF;
+              text-decoration:underline;
+              font-size:12px;
+              white-space:nowrap;
+            }
+            small {
+              color:#FFF;
+              font-size:11px;
+              white-space:nowrap;
+            }
+          }
+        }
+    }
+
+    .social-connect {
+      position:relative;
+      bottom:0px;
+      width:100%;
+      left:0;
+    }
+  }
+
+}

@@ -1,0 +1,60 @@
+<ion-header style="text-align: center" class="cart_header">
+  <ion-navbar class="header-block pr-15" hideBackButton>
+    <ion-buttons left>
+      <button ion-button icon-only (click)="onBack()">
+        <ion-icon
+          ios="ios-arrow-back"
+          md="md-arrow-back"
+          style="font-size: 25px"
+        ></ion-icon>
+      </button>
+    </ion-buttons>
+
+    <ion-title>
+      <strong translate>{{'Chọn sản phẩm tặng'}}</strong><br />
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content class="cart" no-scroll class="cart_content">
+  <ion-grid style="padding: 20px">
+    <ion-row>
+      <ion-col
+        tappable
+        *ngFor="let product of listProduct"
+        text-center
+        col-4
+        (click)="active(product)"
+      >
+        <img [src]="product.gift.mainImage?.mediumPath" width="75" />
+        <p text-left style="font-size: 10px; height: 40px;margin-bottom: 50px;">{{product.gift.name}}</p>
+        <p text-left style="font-size: 12px; height: 40px" translate>
+          Số lượng {{product.quantityGift}}
+        </p>
+        <div>
+          <span
+            [class.active]="product.gift._id === selectItemId"
+            style="
+              height: 30px;
+              width: 30px;
+              border-radius: 50%;
+              background-color: #978c8c;
+              display: inline-block;
+            "
+          ></span>
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="mt-30" col-12 text-center>
+        <button
+          (click)="goTo()"
+          style="width: 85px; height: 25px; border-radius: 3px"
+          class="btn btn-primary"
+          translate
+        >
+          {{'Xác nhận'}}
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

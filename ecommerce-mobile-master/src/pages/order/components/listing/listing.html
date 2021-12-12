@@ -1,0 +1,150 @@
+<app-header [title]="'Orders History'"></app-header>
+<ion-content
+  class="profile animated fadeIn common-bg p-15"
+  #top
+  (ionScroll)="onScroll($event)"
+  style="background: #f6f0f0"
+>
+  <ion-input
+    placeholder="Tìm kiếm đơn hàng..."
+    [(ngModel)]="orderCode"
+    (ionChange)="searchOrder()"
+  >
+  </ion-input>
+  <ion-list class="my-order" no-lines>
+    <ion-segment color="secondary" class="segment scrolling-wrapper">
+      <ion-segment-button
+        class="card_segment"
+        [value]="item.name"
+        *ngFor="let item of status"
+      >
+        <ion-icon (click)="changeStatus(item.name)"> {{item.value}}</ion-icon>
+      </ion-segment-button>
+      <!-- <ion-segment-button value="2" class="segment-button">
+        <ion-icon > TNI tiếp nhận</ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="3" class="segment-button">
+        <ion-icon > Xử lý đơn</ion-icon>
+      </ion-segment-button> -->
+    </ion-segment>
+
+    <ion-row *ngIf="!orders.length" style="padding-top: 50px">
+      <ion-col style="text-align: center">
+        <img src="../../../../assets/img/checklist.svg" height="60px" />
+        <p>Chưa có đơn hàng</p>
+      </ion-col>
+    </ion-row>
+
+    <!-- <ion-item *ngFor="let item of orders" style="padding: 15px !important">
+      <div class="order-product">
+        <div class="order-title">
+          {{item.statusText}}
+          <hr style="border-top: 0.5px solid #b7a6a6" />
+        </div>
+        <div class="order-detail">
+          <div class="product-img">
+            <img
+              [src]="item.details[0]?.product?.mainImage?.mediumPath"
+              alt="Sản phẩm"
+              width="100"
+              height="100"
+            />
+          </div>
+          <div class="product-content">
+            <p style="white-space: normal; color: black">
+              <b> {{item.details[0]?.product?.name}} </b>
+            </p>
+            <p style="white-space: normal; color: black">
+              <b> {{item.details[0]?.product?.sku}} </b>
+            </p>
+            <p style="white-space: normal; padding-top: 10px">
+              {{item.totalProducts}} sản phẩm |
+              <span style="color: red"
+                >{{item.totalPrice || 0 | number : '1.0-0'}} đ</span
+              >
+            </p>
+          </div>
+        </div>
+        <div class="order-button">
+          <button
+            class="linear-bunting-flirt"
+            (click)="openOrderDetail(item._id)"
+          >
+            Xem chi tiết
+          </button>
+          <button class="linear-bunting-flirt" (click)="order_again(item._id)">
+            Mua lại
+          </button>
+        </div>
+      </div>
+    </ion-item> -->
+    <div  *ngFor="let item of orders" >
+      <div *ngIf="item.orderStatus !== 'scanned'">
+        <ion-item style="padding: 15px !important">
+      
+          <div class="order-product">
+            <div class="order-title">
+              {{item.statusText}}
+              <hr style="border-top: 0.5px solid #b7a6a6" />
+            </div>
+            <div class="order-detail">
+              <div class="product-img">
+                <img [src]="item.details[0]?.product?.mainImage?.mediumPath" alt="Sản phẩm" width="100" height="100" />
+              </div>
+              <div class="product-content">
+                <p style="white-space: normal; color: black">
+                  <b> {{item.details[0]?.product?.name}} </b>
+                </p>
+                <p style="white-space: normal; color: black">
+                  <b> {{item.details[0]?.product?.sku}} </b>
+                </p>
+                <p style="white-space: normal; padding-top: 10px">
+                  {{item.totalProducts}} sản phẩm |
+                  <span style="color: red">{{item.totalPrice || 0 | number : '1.0-0'}} đ</span>
+                </p>
+              </div>
+            </div>
+            <ion-infinite-scroll (ionInfinite)="doInfinite($event)" *ngIf="orders.length < total">
+              <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="{{'Loading more data...' | translate}}">
+              </ion-infinite-scroll-content>
+            </ion-infinite-scroll>
+            <ion-infinite-scroll (ionInfinite)="loading($event)" *ngIf="orders.length >= total">
+              <ion-infinite-scroll-content loadingSpinner="none" loadingText="{{'No more orders found.' | translate}}">
+              </ion-infinite-scroll-content>
+            </ion-infinite-scroll>
+          </div>
+    
+        </ion-item>
+      </div>
+    </div>
+
+    <ion-infinite-scroll
+      (ionInfinite)="doInfinite($event)"
+      *ngIf="orders.length < total"
+    >
+      <ion-infinite-scroll-content
+        loadingSpinner="bubbles"
+        loadingText="{{'Loading more data...' | translate}}"
+      >
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+    <ion-infinite-scroll
+      (ionInfinite)="loading($event)"
+      *ngIf="orders.length >= total"
+    >
+      <ion-infinite-scroll-content
+        loadingSpinner="none"
+        loadingText="{{'No more orders found.' | translate}}"
+      >
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </ion-list>
+</ion-content>
+<button
+  ion-button
+  class="icon-scroll-top"
+  (click)="scrollTop()"
+  *ngIf="scrollHeight > 400"
+>
+  <ion-icon name="arrow-up"></ion-icon>
+</button>

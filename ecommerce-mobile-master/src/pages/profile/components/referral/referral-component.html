@@ -1,0 +1,129 @@
+<style>
+  .text-refferral input{
+    padding: 10px !important;
+    background-color: #d4d4d4 !important;
+    height: 35px !important;
+    border: none !important;
+    border-radius: 4px 0 0 4px !important;
+  }
+
+  .col{
+    padding-bottom: 0px !important;
+  }
+
+  .refferal-code input{
+    border-radius: 4px !important;
+  }
+
+  .label-md{
+    margin: 13px 0 !important;
+  }
+</style>
+<app-header #header [headerTransparent]="true" [isShowLogo]="true"></app-header>
+<ion-content class="common-bg bg-transparent" *ngIf="!isLoading">
+  <referral-banner class="banner-slide"></referral-banner>
+  <div class="body_referral position-relative" style="background-color: #fff; padding: 15px 20px">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <label style="color: black; font-size: 15px">Link giới thiệu bạn bè</label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-9>
+          <ion-item>
+            <ion-input disabled class="text-refferral" [(ngModel)]="referralCodeLink"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col col-3 style="margin-left: -8px; margin-top: -8.5px; padding-right: 0; padding-left: 0;">
+          <ion-item>
+            <ion-label style="margin-right: 0">
+              <button translate (click)="copyReferralLink()" style="
+                    color: white;
+                    font-size: 12px;
+                    height: 35px;
+                    border-width: thin;
+                    border-radius: 0 4px 4px 0;
+                    border-top-left-radius: unset;
+                    border-bottom-left-radius: unset;
+                    width: 100%;
+                    background-color: #d22fb5;
+                  ">
+                Sao chép
+              </button>
+            </ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-7>
+          <ion-item>
+            <label style="color: black; font-size: 15px">Mã giới thiệu</label>
+          </ion-item>
+          <ion-item>
+            <ion-input class="text-refferral refferal-code" [(ngModel)]="referralCode" style="font-weight: bold; color: #d11287" disabled></ion-input>
+          </ion-item>
+          <ion-item>
+            <label style="color: black; font-size: 15px; margin-left: 6px; text-align: right;">Chia sẻ</label>
+          </ion-item>
+          <ion-item style="margin-top: -15px">
+            <img (click)="shareFacebook()" src="../../../../assets/icon/facebook.png"
+              style=" margin-right: 10px;
+              width: 40px;
+              display: inline-block;
+              vertical-align: text-bottom;"/>
+            <ion-icon ios="ios-share" (click)="shareSocial()" md="md-share" style="font-size: 26px;
+            color: white;
+            vertical-align: text-bottom;
+            padding: 6.5px 10px;
+            border-radius: 28px;
+            background: #d22fb5;">
+            </ion-icon>
+          </ion-item>
+        </ion-col>
+        <ion-col col-5 style="text-align: right; padding-right: 0; padding-left: 0;">
+          <ion-item>
+            <ion-label style="text-overflow: unset; text-align: right; margin-right: 9px !important; overflow: unset;">
+              <label style="color: black; font-size: 15px;">Quét mã QR code</label>
+            </ion-label>
+          </ion-item>
+          <img [src]="qrCode" style="margin-top: -10px; margin-right: -5px;" />
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-6> </ion-col>
+      </ion-row>
+      <ion-row style="border-bottom: 1px solid #f1f1f1; margin-right: 9px;">
+        <ion-col col-12>
+          <ion-item>
+            <label style="color: black; font-size: 15px">Người giới thiệu</label>
+          </ion-item>
+          <label style="color: #c2c2c2; font-size: 15px; padding-bottom: 10px; display: block;">{{customerNameSponsor}}</label>
+        </ion-col>
+      </ion-row>
+      <ion-row style="margin-right: 9px;">
+        <ion-col col-6>
+          <ion-item>
+            <label style="color: black; font-size: 15px">Bạn bè của tôi</label>
+          </ion-item>
+          <ion-list *ngFor="let referral of listMemberReferralF1">
+            <label style="color: cc; font-size: 15px">{{referral.Name}}</label>
+          </ion-list>
+        </ion-col>
+        <ion-col col-6 style="text-align: right;">
+          <ion-item class="right-block">
+            <ion-label style="margin-right: 0;">
+              <label style="color: black; font-size: 15px; width: 100%; display: block; text-align: right;">{{totalMemberReferral}} người
+              </label>
+            </ion-label>
+          </ion-item>
+          <ion-list *ngFor="let referral of listMemberReferralF1">
+            <label style="color: rgb(46, 46, 46); font-size: 15px">{{referral.CustomerNumber}}</label>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>

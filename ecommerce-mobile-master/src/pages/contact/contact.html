@@ -1,0 +1,44 @@
+<app-header [title]="'Contact Us'"></app-header>
+<ion-content class="common-bg animated fadeIn" padding>
+  <ion-list no-lines>
+    <form (submit)="submit(frm)" #frm="ngForm">
+      <ion-item>
+        <ion-label color="primary" floating translate>Full Name</ion-label>
+        <ion-input type="text" required name="name" #name="ngModel" [(ngModel)]="contact.name"></ion-input>
+      </ion-item>
+      <div *ngIf="name.errors && (name.dirty || name.touched || isSubmitted)">
+        <p [hidden]="!name.errors.required" ion-text color="danger" padding-left translate>
+          Full name is required
+        </p>
+      </div>
+      <ion-item>
+        <ion-label color="primary" floating translate>Email</ion-label>
+        <ion-input type="text" [(ngModel)]="contact.email" #email="ngModel" pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" name="email" required></ion-input>
+      </ion-item>
+      <p ion-text class="font-8" color="summary" padding-left translate>We don't share to anyone.</p>
+      <div *ngIf="email.errors && (email.dirty || email.touched || submitted)">
+        <p [hidden]="!email.errors.required" ion-text color="danger" padding-left translate>
+          Email is required
+        </p>
+        <p [hidden]="!email.errors.pattern" ion-text color="danger" padding-left translate>
+          Email is wrong format
+        </p>
+      </div>
+      <ion-item>
+        <ion-label color="primary" floating translate>Message</ion-label>
+        <ion-textarea type="text" name="content" #content="ngModel" [(ngModel)]="contact.message">
+        </ion-textarea>
+      </ion-item>
+      <div *ngIf="content.errors && (content.dirty || content.touched || isSubmitted)">
+        <p [hidden]="!password.errors.required" ion-text color="danger" padding-left translate>
+          Please enter message.
+        </p>
+      </div>
+      <ion-row responsive-sm>
+        <ion-col>
+          <button ion-button color="light" class="btn-primary" clear block type="submit" translate>Submit</button>
+        </ion-col>
+      </ion-row>
+    </form>
+  </ion-list>
+</ion-content>
