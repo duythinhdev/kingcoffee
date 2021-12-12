@@ -1,0 +1,80 @@
+export class OrderViewTitleModel {
+    Generalinformation: string;
+    Number: string;
+    IP: string;
+    Createdat: string;
+    Shippingaddress: string;
+    Paymentmethod: string;
+    Paymentstatus: string;
+    Totalprice: string;
+    Shippingdetails: string;
+    Name: string;
+    Email: string;
+    Phonenumber: string;
+    Streetaddress: string;
+    City: string;
+    State: string;
+    Country: string;
+    Products: string;
+    Product:string;
+    Quantity: string;
+    Status: string;
+    Tax: string;
+    Shippingprice: string;
+    Price: string;
+    Commission: string;
+    CommissionPrice: string;
+    Balance: string;
+    Completed: string;
+    Shipping: string;
+    Pending: string;
+    Progressing: string;
+    Refunded: string;
+    Cancelled: string;
+    UpdateStatus: string;
+    Cancel: string;
+    District: string;
+    Ward: string;
+    FeeShip: string;
+}
+ export const OrderViewTitle: OrderViewTitleModel[] = [
+     {
+        Generalinformation: '',
+        Number: '',
+        IP: '',
+        Createdat: '',
+        Shippingaddress: '',
+        Paymentmethod: 'P',
+        Paymentstatus: '',
+        Totalprice: '',
+        Shippingdetails: '',
+        Name: '',
+        Email: '',
+        Phonenumber: '',
+        Streetaddress: '',
+        City: '',
+        State: '',
+        Country: '',
+        Products: '',
+        Product: '',
+        Quantity: '',
+        Status: '',
+        Tax: '',
+        Shippingprice: '',
+        Price: '',
+        Commission: '',
+        CommissionPrice: '',
+        Balance: '',
+        Completed: '',
+        Shipping: '',
+        Pending: '',
+        Progressing: '',
+        Refunded: '',
+        Cancelled: '',
+        UpdateStatus: '',
+        Cancel: '',
+        District: '',
+        Ward: '',
+        FeeShip: '',
+     },
+ ]

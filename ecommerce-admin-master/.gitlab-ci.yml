@@ -1,0 +1,71 @@
+image: node:latest
+
+stages:
+  - deploy development
+  - deploy staging
+  - deploy production
+deploy_dev_stage:
+  stage: deploy development
+  environment:
+    name: deploy development
+    url: http://admin-ecommerce.tni.dev.ncs.int
+  only:
+    - develop
+  variables:
+      DOCKER_DRIVER: overlay
+      DOCKER_IMAGE_NAME: tni/admin
+      DOCKER_IMAGE_TAG: latest
+      DOCKER_CONTAINER_NAME: tni-admin-web-container-dev
+      DOCKER_CONTAINER_PORT_EXPOSE: 7004
+      DOCKER_CONTAINER_PORT_LISTEN: 80
+  script:
+      - chmod u+x ./deploy/develop/build.sh
+      - ./deploy/develop/build.sh
+      - chmod u+x ./deploy/develop/run.sh
+      - ./deploy/develop/run.sh
+deploy_stg_stage:
+  stage: deploy staging
+  environment:
+    name: deploy staging
+    url: http://admin-ecommerce.tni.stg.ncs.int
+  only:
+    - develop
+  when:
+    manual
+  tags:
+      - stg
+  variables:
+      DOCKER_DRIVER: overlay
+      DOCKER_IMAGE_NAME: tni/admin
+      DOCKER_IMAGE_TAG: latest
+      DOCKER_CONTAINER_NAME: tni-admin-web-container-stg
+      DOCKER_CONTAINER_PORT_EXPOSE: 7004
+      DOCKER_CONTAINER_PORT_LISTEN: 80
+  script:
+      - chmod u+x ./deploy/staging/build.sh
+      - ./deploy/staging/build.sh
+      - chmod u+x ./deploy/staging/run.sh
+      - ./deploy/staging/run.sh
+deploy_prod_stage:
+  stage: deploy production
+  environment:
+    name: deployProduction
+  only:
+    - tags
+  when:
+    manual
+  tags:
+    - production
+  variables:
+      DOCKER_DRIVER: overlay
+      DOCKER_IMAGE_NAME: tni/admin
+      DOCKER_IMAGE_TAG: latest
+      DOCKER_CONTAINER_NAME: tni-admin-web-container-prod
+      DOCKER_CONTAINER_PORT_EXPOSE: 7004
+      DOCKER_CONTAINER_PORT_LISTEN: 80
+
+  script:
+      - chmod u+x ./deploy/production/build.sh
+      - ./deploy/production/build.sh
+      - chmod u+x ./deploy/production/run.sh
+      - ./deploy/production/run.sh

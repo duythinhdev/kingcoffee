@@ -1,0 +1,45 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import '~perfect-scrollbar/css/perfect-scrollbar.css';
+
+.ps .ps__scrollbar-y-rail {
+    left: 3px;
+    right: auto;
+}
+a {
+  cursor: pointer;
+}
+
+#stage #rotate .ring .slot {
+  position: absolute;
+  width: 90px;
+  height: 80px;
+  box-sizing: border-box;
+  opacity: 0.9;
+  color: rgba(0,0,0,0.9);
+  background: #fff;
+  border: solid 1px #000;
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+#stage #rotate .ring .slot p {
+  font-size: 36px;
+  font-weight: bold;
+  line-height: 80px;
+  margin: 0;
+  text-align: center;
+}
+
+::ng-deep .modal-winner .modal-dialog {
+  max-width: 50%;
+  width: 50%;
+}
+
+.inline-block{
+  display: inline-block;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: "Montserrat", sans-serif !important; }

@@ -1,0 +1,63 @@
+<div class="card">
+  <div class="card-block table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>
+            <a>{{complaintListTitleModel?.User}}</a>
+          </th>
+          <th>
+            <a>{{complaintListTitleModel?.UserType}}</a>
+          </th>
+          <th>
+            <a>{{complaintListTitleModel?.Content}}</a>
+          </th>
+          <th>
+            <a>{{complaintListTitleModel?.Status}}</a>
+          </th>
+          <th>
+            <a>{{complaintListTitleModel?.Createdat}}</a>
+          </th>
+          <th>
+            {{complaintListTitleModel?.Actions}}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of items, let i = index">
+          <td><img [src]="item?.user?.avatarUrl" width="40px"> {{item?.user?.name}}</td>
+          <td>
+            <span class="badge badge-warning" *ngIf="item.user && item.user.isShop">{{complaintListTitleModel?.Seller}}</span>
+            <span class="badge badge-primary" *ngIf="item.user && !item.user.isShop">{{complaintListTitleModel?.User}}</span>
+          </td>
+          <td>
+            <div>{{complaintListTitleModel?.Clickedittoviewcontent}}.</div>
+          </td>
+          <td>
+            <span class="badge badge-warning" *ngIf="item.status === 'pending'">{{complaintListTitleModel?.Pending}}</span>
+            <span class="badge badge-success" *ngIf="item.status === 'resolved'">{{complaintListTitleModel?.Resolved}}</span>
+            <span class="badge badge-danger" *ngIf="item.status === 'rejected'">{{complaintListTitleModel?.Rejected}}</span>
+          </td>
+          <td>
+            <span>{{item.createdAt | date :'dd/MM/yyyy'}}</span>
+          </td>
+          <td>
+            <a [routerLink]="['/complaints/update', item._id ]">
+              <i class="fa fa-pencil"></i>
+            </a>&nbsp;
+            <a (click)="remove(item, i)">
+              <i class="fa fa-trash"></i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="4">
+            <ngb-pagination [collectionSize]="total" [(page)]="page" [maxSize]="5" (pageChange)="query()"></ngb-pagination>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>

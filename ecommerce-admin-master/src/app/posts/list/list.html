@@ -1,0 +1,93 @@
+<style>
+  .h-300 {
+    min-height: 300px;
+  }
+</style>
+
+<div class="card h-300">
+  <div class="card-block table-responsive h-300">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>
+            <a>{{postListTitleModel?.Title}}</a>
+          </th>
+          <!-- <th *ngIf="isPage">
+            <a>{{postListTitleModel?.Alias}}</a>
+          </th> -->
+          <th *ngIf="!isPage">
+            <a>{{postListTitleModel?.Category}}</a>
+          </th>
+          <!-- <th>
+            <a>{{postListTitleModel?.Content}}</a>
+          </th> -->
+          <th *ngIf="!isPage">
+            <a>{{postListTitleModel?.Active}}</a>
+          </th>
+          <th>
+            <a>{{postListTitleModel?.Createdat}}</a>
+          </th>
+          <th>
+            {{postListTitleModel?.Actions}}
+          </th>
+        </tr>
+        <tr *ngIf="!isPage">
+          <th>
+            <input type="text" class="form-control" [(ngModel)]="searchText" (keypress)="keyPress($event)" />
+          </th>
+          <th>
+            <select (change)="query()" class="form-control" name="category" [(ngModel)]="selectedCategory">
+              <option value="">-- {{'All' | translate}} --</option>
+              <option *ngFor="let category of categories" value="{{category._id}}">{{category.name | translate}}</option>
+            </select>
+          </th>
+          <!-- <th></th> -->
+          <th>
+            <div class="d-inline-block" ngbDropdown #myDrop="ngbDropdown">
+              <button class="btn btn-outline-dark w-100" id="dropdownActive" ngbDropdownAnchor (focus)="myDrop.open()">{{searchActive}}</button>
+              <div ngbDropdownMenu aria-labelledby="dropdownActive">
+                <a *ngFor="let item of searchActiveList; let i = index" (click)="sortActive(i)" class="dropdown-item">{{searchActiveList[i]}}</a>
+              </div>
+            </div>
+          </th>
+          <th></th>
+          <th>
+            <a class="btn btn-primary" (click)="query()">{{postListTitleModel?.Filter}}</a>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of items, let i = index">
+          <td>{{item?.title}}</td>
+          <!-- <td *ngIf="isPage">{{item?.alias}}</td> -->
+          <td *ngIf="!isPage">{{item?.categoryIds[0].name | translate}}</td>
+          <!-- <td>
+            <div><span class="label label-info">{{postListTitleModel?.Clickedittoviewcontent}}.</span></div>
+          </td> -->
+          <td *ngIf="!isPage">
+            <span class="label label-success text-nowrap" *ngIf="item.isActive">{{'Active' | translate}}</span>
+            <span class="label label-danger text-nowrap" *ngIf="!item.isActive">{{'Deactive' | translate}}</span>
+          </td>
+          <td>
+            <span>{{item.createdAt | date :'dd/MM/yyyy'}}</span>
+          </td>
+          <td>
+            <a [routerLink]="['/posts/update', item._id ]">
+              <i class="fa fa-pencil"></i>
+            </a>&nbsp;
+            <a *ngIf="!isPage" (click)="remove(item, i)">
+              <i class="fa fa-trash"></i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="4">
+            <ngb-pagination [collectionSize]="total" [maxSize]="5" [(page)]="page" (pageChange)="query()"></ngb-pagination>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>

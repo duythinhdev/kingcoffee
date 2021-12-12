@@ -1,0 +1,65 @@
+.date-input-disable {
+  background-color: #ffffff;
+}
+
+.form-group.hidden {
+  width: 0;
+  margin: 0;
+  border: none;
+  padding: 0;
+}
+
+.custom-day {
+  text-align: center;
+  padding: 0.185rem 0.25rem;
+  display: inline-block;
+  height: 2rem;
+  width: 2rem;
+}
+
+.custom-day.focused {
+  background-color: #e6e6e6;
+}
+
+.custom-day.range,
+.custom-day:hover {
+  background-color: rgb(2, 117, 216);
+  color: white;
+}
+
+.custom-day.faded {
+  background-color: rgba(2, 117, 216, 0.5);
+}
+
+.input-group-append {
+  height: 38px;
+}
+
+.scrollbar {
+    height: 15px;
+    width: 100%;
+    background: #fff;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    position: fixed;
+    margin-bottom: 25px;
+    bottom: 20px;
+    left: 0;
+    z-index: 9999;
+}
+
+.force-overflow {
+    width: 8000px;
+    height: 1px;
+}
+
+.scrollbar-primary::-webkit-scrollbar {
+  width: 12px;
+  background-color: #F5F5F5;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  background-color: #4285F4;
+}

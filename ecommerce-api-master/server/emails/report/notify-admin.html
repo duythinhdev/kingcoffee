@@ -1,0 +1,9 @@
+{% extends '../layouts/layoutTemplateEmail.html' %}
+
+{% block content %}
+<p>Xin chào,</p>
+
+<p>{{user.name}} Đã gửi báo cáo cửa hàng <strong>{{shop.name}}</strong></p>
+<p>{{ report.content }}</p>
+
+{% endblock %}

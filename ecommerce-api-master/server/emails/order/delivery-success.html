@@ -1,0 +1,181 @@
+{% extends '../layouts/default.html' %}
+{% block style %}
+<style>
+    .product-list th,
+    .product-list td {
+        padding: 10px;
+        text-align: center;
+        border-top: 1px solid #c1c1c1;
+    }
+
+    .product-list .quantity {
+        padding: 2px;
+        border: 1px solid #d1d1d1;
+        margin: 2px auto;
+        display: block;
+    }
+
+    .product-name {
+        text-align: left;
+    }
+
+    .w-50-p {
+        width: 49%;
+        display: inline-block;
+        vertical-align: bottom;
+    }
+
+    p,
+    h3 {
+        text-align: left;
+        font-size: 16px;
+        margin-bottom: 15px;
+        color: #222;
+    }
+
+    .product-list,
+    .checkout-table,
+    .address-table {
+        margin-bottom: 20px;
+    }
+
+    .product-list td,
+    .checkout-table td,
+    .address-table td {
+        padding: 10px;
+        margin-bottom: 20px;
+    }
+
+    .checkout-table tr td:last-child,
+    .address-table tr td:last-child {
+        text-align: right;
+    }
+
+    .inline {
+        display: inline-block;
+        width: 100%;
+        vertical-align: middle;
+        margin-bottom: 25px;
+    }
+
+    @media(max-with: 991px) {
+        .w-50-p {
+            width: 100%;
+        }
+    }
+</style>
+{% endblock style %}
+{% block content %}
+<p>Cảm ơn {{order.customer.name}} đã đặt hàng.</p>
+<p style="margin-bottom: 20px;">Vui lòng kiểm tra thông tin đơn hàng được nêu ở bên dưới.</p>
+<h3 style="text-transform: uppercase;">Chi tiết đơn hàng</h3>
+<table class="product-list" width='100%'>
+    <tr>
+        <th width='8%'><strong>Sản phẩm</strong></th>
+        <th width='21%'></th>
+        <th width='20%'><strong>Số lượng</strong></th>
+        <th width='20%'><strong>Giá</strong></th>
+        <th width='20%'><strong>Khuyến mãi</strong></th>
+        <th width='20%'><strong>Tổng tiền</strong></th>
+    </tr>
+    {% for orderDetail in order.details %}
+    <tr>
+        <td><img width="100%" src="{{orderDetail.product.mainImage.thumbPath}}" /></td>
+        <td class='product-name'>
+            <p>{{orderDetail.product.name}}</p>
+            <p>{{orderDetail.product.sku}}</p>
+        </td>
+        <td><span class="quantity">{{orderDetail.quantity | number}}</span></td>
+        <td>{{orderDetail.unitPrice | number}}đ</td>
+        <td>{{orderDetail.priceAfterPromo | number}}đ</td>
+        <td>{{orderDetail.totalPrice | number}}đ</td>
+    </tr>
+    {% endfor %}
+</table>
+</div>
+<div class="inline">
+    <div class="w-50-p">
+        <h3 style="text-transform: uppercase;">Thông tin giao hàng</h3>
+        <p>Địa chỉ giao hàng</p>
+        <table class="address-table" width='100%'>
+            <tr>
+                <td width='50%'><strong>Tỉnh/Thành phố</strong></td>
+                <td style="text-align: right;">{{order.city.name}}</td>
+            </tr>
+            <tr>
+                <td width='50%'><strong>Quận/Huyện</strong></td>
+                <td style="text-align: right;">{{order.district.name}}</td>
+            </tr>
+            <tr>
+                <td width='50%'><strong>Phường/Xã</strong></td>
+                <td style="text-align: right;">{{order.ward.name}}</td>
+            </tr>
+            <tr>
+                <td width='50%'><strong>Số nhà và tên đường</strong></td>
+                <td style="text-align: right;">{{order.streetAddress}}</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="w-50-p">
+        <table class="checkout-table" width='100%'>
+            <tr>
+                <td width='50%'><strong>Tạm tính</strong></td>
+                <td style="text-align: right;">{{tempTotalPrice | number}}đ</td>
+            </tr>
+            {% for extraProduct in extraProducts %}
+            <tr>
+                <td width='50%' style="color: red">Mua 1 <span style="text-overflow: ellipsis; max-width: 150px; 
+                    display: inline; 
+                    vertical-align: bottom;
+                    overflow: hidden;">{{extraProduct.product.name}}</span> ưu đãi</td>
+                <td style="text-align: right; color: red">{{extraProduct.totalPrice | number}} đ</td>
+            </tr>
+            {% endfor %}
+            {% for promotion in order.promotions %}
+                {%if promotion.discountPrice %}
+                    <tr>
+                        {%if promotion.discountPercent %}
+                        <td>Khuyến mãi ({{promotion.discountPercent}} %)</td>
+                        {% else %}
+                        <td>Khuyến mãi</td>
+                        {% endif %}
+                        <td style="text-align: right;">{{promotion.discountPrice | number}}đ</td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+            <tr>
+                <td width='50%'><strong>Phí giao hàng</strong></td>
+                <td style="text-align: right;"> {{shippingPrice}}</td>
+            </tr>
+            {% for freeShip in freeShipList %}
+                {%if freeShip.discountPrice %}
+                <tr>
+                    <td width='50%'><strong>KM phí vận chuyển</strong></td>
+                    <td style="text-align: right;">
+                        {{freeShip.discountPrice | number}}đ
+                    </td>
+                </tr>
+                {% endif %}
+            {% endfor %}
+            <tr>
+                <td colspan="2">
+                    <hr>
+                </td>
+            </tr>
+            <tr>
+                <td width='50%'><strong>Tổng tiền</strong></td>
+                <td style="text-align: right;">{{(order.totalPrice + order.totalDiscountPrice) | number}}đ</td>
+            </tr>
+            <tr>
+                <td width='50%'><strong>Tổng tiền sau chiết khấu</strong></td>
+                <td style="text-align: right;">{{order.totalPrice | number}}đ</td>
+            </tr>
+        </table>
+    </div>
+</div>
+<p>Nếu bạn cần thêm bất kỳ thông tin nào, hãy vui lòng liên hệ hotline: {{hotline}}, chúng tôi luôn sẵn sàng để lắng
+    nghe bạn.</p>
+<p>Cám ơn bạn đã lựa chọn chúng tôi.</p>
+
+{% endblock %}

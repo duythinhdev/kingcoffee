@@ -1,0 +1,83 @@
+<div class="card">
+  <div class="card-block table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th style="width: 200px;">
+            <a (click)="sortBy('updatedAt', 'desc')">{{userProfileHistoryTitleModel?.Time}}</a>
+            <span *ngIf="sortOption.sortBy=='updatedAt'">
+              <a (click)="sortBy('updatedAt', 'asc')" *ngIf="sortOption.sortType=='desc'"><i class="fa fa-caret-down"></i></a>
+              <a (click)="sortBy('updatedAt', 'desc')" *ngIf="sortOption.sortType=='asc'"><i class="fa fa-caret-up"></i></a>
+            </span>
+          </th>
+          <th style="width: 300px;">
+            <a (click)="sortBy('username', 'desc')">{{userProfileHistoryTitleModel?.Username}}</a>
+            <span *ngIf="sortOption.sortBy=='username'">
+              <a (click)="sortBy('username', 'asc')" *ngIf="sortOption.sortType=='desc'"><i class="fa fa-caret-down"></i></a>
+              <a (click)="sortBy('username', 'desc')" *ngIf="sortOption.sortType=='asc'"><i class="fa fa-caret-up"></i></a>
+            </span>
+          </th>
+          <th style="width: 200px;">
+            <a (click)="sortBy('action', 'desc')">{{userProfileHistoryTitleModel?.Action}}</a>
+            <span *ngIf="sortOption.sortBy=='action'">
+              <a (click)="sortBy('action', 'asc')" *ngIf="sortOption.sortType=='desc'"><i class="fa fa-caret-down"></i></a>
+              <a (click)="sortBy('action', 'desc')" *ngIf="sortOption.sortType=='asc'"><i class="fa fa-caret-up"></i></a>
+            </span>
+          </th>
+          <th>
+            <a (click)="sortBy('role', 'desc')">{{userProfileHistoryTitleModel?.Description}}</a>
+            <span *ngIf="sortOption.sortBy=='role'">
+              <a (click)="sortBy('role', 'asc')" *ngIf="sortOption.sortType=='desc'"><i class="fa fa-caret-down"></i></a>
+              <a (click)="sortBy('role', 'desc')" *ngIf="sortOption.sortType=='asc'"><i class="fa fa-caret-up"></i></a>
+            </span>
+          </th>
+        </tr>
+        <tr>
+          <td>
+          </td>
+          <td>
+            <input type="text" name="username" class="form-control" [(ngModel)]="searchFields.username"  />
+          </td>
+          <td>
+            <select class="form-control" [(ngModel)]="searchFields.action">
+              <option value="">All</option>
+              <option value="Tạo">{{userProfileHistoryTitleModel?.Create}}</option>
+              <option value="Chỉnh sửa">{{userProfileHistoryTitleModel?.Edit}}</option>
+              <option value="Xóa">{{userProfileHistoryTitleModel?.Delete}}</option>
+            </select>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td></td>
+          <td style="text-align: center;">
+            <button class="btn btn-primary" (click)="onSearch()">{{userProfileHistoryTitleModel?.Filter}}</button>
+          </td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of items, let i = index">
+          <td>{{item.updatedAt | date :'dd/MM/yyyy HH:mm:ss'}}</td>
+          <td>{{item.username}}</td>
+          <td>
+            <span class="badge badge-success" *ngIf="item.action === 'Tạo'">{{userProfileHistoryTitleModel?.Create}}</span>
+            <span class="badge badge-info" *ngIf="item.action === 'Chỉnh sửa'">{{userProfileHistoryTitleModel?.Edit}}</span>
+            <span class="badge badge-danger" *ngIf="item.action === 'Xóa'">{{userProfileHistoryTitleModel?.Delete}}</span>
+          </td>
+          <td>{{item.text}}</td>
+          <td></td> 
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr *ngIf="count > pageSize">
+          <td colspan="7">
+            <ngb-pagination [collectionSize]="count" [(page)]="currentPage" [pageSize]="pageSize" [maxSize]="5" (pageChange)="query()"></ngb-pagination>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>

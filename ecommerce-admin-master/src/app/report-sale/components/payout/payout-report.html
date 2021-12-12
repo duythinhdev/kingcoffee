@@ -1,0 +1,79 @@
+<div class="card">
+  <div class="card-body table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>{{reportPayOutTitleModel?.Shop}}</th>
+          <th>{{reportPayOutTitleModel?.Approved}}/{{reportPayOutTitleModel?.Paid}}</th>
+          <th>{{reportPayOutTitleModel?.Pendingrequest}}</th>
+          <th>{{reportPayOutTitleModel?.CurrentCODbalance}}</th>
+          <th>{{reportPayOutTitleModel?.CurrentNonCODbalance}}</th>
+          <th>{{reportPayOutTitleModel?.Currentbalancesummary}}</th>
+        </tr>
+        <tr>
+          <th>
+            <div class="input-group">
+              <input class="form-control" [(ngModel)]="searchFields.name"  (keypress)="keyPress($event)" />
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary fa fa-search" (click)="query()" type="button"></button>
+              </div>
+            </div>
+          </th>
+          <th colspan="5"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let shop of shops">
+          <td>
+            <a [routerLink]="['/shops/update', shop._id]">{{shop.name}}</a>
+          </td>
+          <td>
+            <p>
+              <strong>{{reportPayOutTitleModel?.Shopearning}}</strong> {{shop.payout?.approved?.shopBalance | currency}} <br />
+              <strong>{{reportPayOutTitleModel?.Siteearning}}</strong> {{shop.payout?.approved?.siteBalance | currency}} <br />
+              <strong>{{reportPayOutTitleModel?.Commission}}</strong> {{shop.payout?.approved?.commission | currency}} </p>
+          </td>
+          <td>
+            <p>
+              <strong>{{reportPayOutTitleModel?.Shopearning}}</strong> {{shop.payout?.pending?.shopBalance | currency}} <br />
+              <strong>{{reportPayOutTitleModel?.Siteearning}}</strong> {{shop.payout?.pending?.siteBalance | currency}} <br />
+              <strong>{{reportPayOutTitleModel?.Commission}}</strong> {{shop.payout?.pending?.commission | currency}} </p>
+          </td>
+          <td>
+            <p>
+              <strong>{{reportPayOutTitleModel?.Total}}</strong> {{shop.balance?.cod?.total | currency}} <br />
+              <strong>{{reportPayOutTitleModel?.Commission}}</strong> {{shop.balance?.cod?.commission | currency}} <br />
+              <strong>{{reportPayOutTitleModel?.Shopearning}}</strong> {{shop.balance?.cod?.balance | currency}} </p>
+          </td>
+          <td>
+            <p>
+              <strong>{{reportPayOutTitleModel?.Total}}</strong> {{shop.balance?.nonCod?.total | currency}} <br />
+              <strong>{{reportPayOutTitleModel?.Commission}}</strong> {{shop.balance?.nonCod?.commission | currency}} <br />
+              <strong>{{reportPayOutTitleModel?.Shopearning}}</strong> {{shop.balance?.nonCod?.balance | currency}} </p>
+          </td>
+          <td>
+            <p>
+              <strong>{{reportPayOutTitleModel?.Sitemustpay}}</strong>
+              <span *ngIf="shop.balance?.nonCod?.balance > shop.balance?.cod?.commission">
+                {{shop.balance?.nonCod?.balance - shop.balance?.cod?.commission | currency}} </span>
+              <span *ngIf="shop.balance?.nonCod?.balance <= shop.balance?.cod?.commission"> {{0 | currency}}</span>
+            </p>
+            <p>
+              <strong>{{reportPayOutTitleModel?.Shopmustpay}}</strong>
+              <span *ngIf="shop.balance?.cod?.commission > shop.balance?.nonCod?.balance">
+                {{shop.balance?.cod?.commission - shop.balance?.nonCod?.balance | currency}} </span>
+              <span *ngIf="shop.balance?.cod?.commission <= shop.balance?.nonCod?.balance"> {{0 | currency}}</span>
+            </p>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="8" *ngIf="total > 10">
+            <ngb-pagination [collectionSize]="total" [(page)]="page" [maxSize]="5" (pageChange)="query()"></ngb-pagination>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>

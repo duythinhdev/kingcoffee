@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  ecom-api:
+    image: "tni/api:latest"
+    build: ./
+    ports:
+      - "7001:7001"
+    restart: always
+  redis-ecom-api:
+    image: "redis:alpine"
+    ports:
+      - "6379:6379"
+    restart: always
+  mongo-ecom-api:
+      image: mongo:3.6.21-xenial
+      environment: # Defined in .env file
+        - MONGO_INITDB_ROOT_USERNAME=${DB_USERNAME}
+        - MONGO_INITDB_ROOT_PASSWORD=${DB_PASSWORD}
+        - MONGO_INITDB_DATABASE=${DB_NAME}
+      restart: unless-stopped
+      ports:
+        - ${DB_PORT}:${DB_PORT}

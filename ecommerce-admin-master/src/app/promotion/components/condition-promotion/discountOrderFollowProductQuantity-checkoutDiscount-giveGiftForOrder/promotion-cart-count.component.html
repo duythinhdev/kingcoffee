@@ -1,0 +1,294 @@
+<div class="condition">
+    <label class="required">{{ titleCondition | translate }}</label>
+    <ng-template [ngIf]="typePromotion == 'discountOrderFollowProductQuantity'">
+        <div class="row">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>{{ nameCondition | translate }}</label>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <input type="number" [disabled]="isEdit" class="form-control" [(ngModel)]="orderQuantity" (change)="changePromotionCartCount()" />
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>{{ nameChildCondition | translate }}</label>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <input type="number" [disabled]="isEdit" class="form-control" [(ngModel)]="discountPercent" (change)="changePromotionCartCount()" (keyup)="onCheckPercent($event)" />
+                </div>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template [ngIf]="
+      typePromotion == 'checkoutDiscount' || typePromotion == 'giveGiftForOrder'
+    ">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>{{ nameCondition | translate }}</label>
+                </div>
+            </div>
+            <div class="col-md-2" *ngIf="typePromotion == 'giveGiftForOrder'">
+                <div class="form-group">
+                    <select class="form-control" [(ngModel)]="totalOrderPriceConditionType" (change)="changePromotionCartCount()">
+            <option
+              *ngFor="let item of TotalOrderPriceConditionType | enumToArray"
+              [value]="TotalOrderPriceConditionType[item]"
+            >
+              {{ item | translate }}
+            </option>
+          </select>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <input *ngIf="typePromotion == 'checkoutDiscount'" type="number" [disabled]="isEdit" class="form-control" (change)="changePromotionCartCount()" [(ngModel)]="orderQuantity" />
+                    <input *ngIf="typePromotion == 'giveGiftForOrder'" type="text" [disabled]="isEdit" class="form-control" (change)="changePromotionCartCount()" [ngModel]="orderQuantity | number" (ngModelChange)="orderQuantity = currencyInputChanged($event)" (keydown)="kd_checkNumber($event)"
+                    />
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>{{ nameChildCondition | translate }}</label>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <!-- <input type="number" *ngIf="typePromotion !='checkoutDiscount'" [disabled]="isEdit" class="form-control" (change)="changePromotionCartCount()" [(ngModel)]="orderQuantity" /> -->
+                    <!-- <item-select [isEdit]="isEdit" [valueUpdate]="childValue" [isPromotion]="true" (State)="importProductGiven($event)" ></item-select> -->
+                </div>
+            </div>
+        </div>
+    </ng-template>
+    <label class="required" translate>Applies to products</label>
+    <div class="row">
+        <div class="col-md-2">
+            <div class="form-group">
+                <label translate>Product Type</label>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <select class="form-control" [(ngModel)]="category" name="categoryId" [attr.disabled]="isEdit ? '' : null">
+          <option value="">-- {{ "No category" | translate }} --</option>
+          <option *ngFor="let item of tree" [ngValue]="item._id">
+            {{ item.name }}
+          </option>
+        </select>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label translate>Product ID</label>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <item-select [keyChange]="keychange" [isEdit]="isEdit" [categoryId]="category" (State)="importProduct($event)" (arrState)="importArrProduct($event)"></item-select>
+            </div>
+        </div>
+        <div class="col-md-1" *ngIf="!isEdit">
+            <a (click)="addProduct()"><i
+          class="fa fa-plus-circle"
+          style="color: #0cda08; font-size: 25px; line-height: 38px"
+        ></i
+      ></a>
+        </div>
+    </div>
+    <div class="row">
+        <!-- <div class="col-md-2">
+      <div class="form-group">
+        <label>{{'Listing' | translate}} {{'Product' | translate}}</label>
+      </div>
+    </div> -->
+        <div class="col-md-10">
+            <table class="table" *ngIf="arrProduct.length != 0; else orderListEmpty">
+                <thead>
+                    <tr>
+                        <th>{{ "Product Type" | translate }}</th>
+                        <th>{{ "Product ID" | translate }}</th>
+                        <th>{{ "Product name" | translate }}</th>
+                        <th *ngIf="typePromotion == 'checkoutDiscount'">
+                            {{ "Qty" | translate }} {{ "Regulations" | translate | lowercase }}
+                        </th>
+                        <th>
+                            <a (click)="removeAllProduct()" *ngIf="!isEdit">
+                                <i class="fa fa-trash"></i>
+                            </a>
+                        </th>
+                        <th *ngIf="!isEdit"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of arrProduct; let i = index">
+                        <td>{{ item?.category }}</td>
+                        <td>{{ item?.sap }}</td>
+                        <td>{{ item?.name }}</td>
+                        <td *ngIf="typePromotion == 'checkoutDiscount'">
+                            <input type="number" style="width: 80px" [disabled]="checkValueQuantity || isEdit" [(ngModel)]="item.quantity" (change)="changePromotionCartCount()" />
+                        </td>
+                        <td *ngIf="!isEdit">
+                            <a (click)="remove(i)">
+                                <i class="fa fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <ng-template #orderListEmpty>
+                <div class="order-list-empty">
+                    <p class="depth" translate>No products found</p>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+    <ng-template [ngIf]="
+      typePromotion == 'checkoutDiscount' || typePromotion == 'giveGiftForOrder'
+    ">
+        <div class="row">
+            <div class="col-md-4">
+                <label class="required">{{ "product" | translate }}/ {{ "Items" | translate }}
+          {{ "Donate" | translate | lowercase }}:</label
+        >
+      </div>
+      <div class="col-md-2">
+        <label>{{ "How to donate" | translate }}</label>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <select class="form-control" [(ngModel)]="giveGiftType" name="giveGiftType" [attr.disabled]="isEdit ? '' : null">
+            <option value="or">{{ "Or" | translate }}</option>
+            <option value="and">{{ "And" | translate }}</option>
+          </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label translate>Product Type</label>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <select class="form-control" [(ngModel)]="categoryPresent" name="categoryIdPresent" [attr.disabled]="isEdit ? '' : null">
+            <option value="">-- {{ "No category" | translate }} --</option>
+            <option *ngFor="let item of treeGift" [ngValue]="item._id">
+              {{ item.name }}
+            </option>
+          </select>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>{{ "Product ID" | translate }}</label>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <item-select [isPromotion]="true" [keyChange]="keychangePresent" [isEdit]="isEdit" [categoryId]="categoryPresent" (State)="importProductPresent($event)" (arrState)="importArrProductPresent($event)"></item-select>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <a (click)="addProductPresent()" *ngIf="!isEdit"><i
+            class="fa fa-plus-circle"
+            style="color: #0cda08; font-size: 25px; line-height: 38px"
+          ></i
+        ></a>
+            </div>
+        </div>
+        <div class="row" *ngIf="typePromotion == 'giveGiftForOrder'">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>{{ "Maximum total gift number" | translate }}</label>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <input type="text" [disabled]="isEdit" class="form-control" (change)="changePromotionCartCount()" [ngModel]="maximumTotalGift | number" (ngModelChange)="maximumTotalGift = currencyInputChanged($event)" />
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>{{ "Maximum total gift number per user" | translate }}</label>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <input type="text" [disabled]="isEdit" class="form-control" (change)="changePromotionCartCount()" [ngModel]="maximumTotalGiftPerUser | number" (ngModelChange)="
+              maximumTotalGiftPerUser = currencyInputChanged($event)
+            " />
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="typePromotion == 'giveGiftForOrder'">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>{{ "Has progressive" | translate }}</label>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <input type="checkbox" [disabled]="isEdit" [(ngModel)]="hasProgressive" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-10">
+                <table class="table" *ngIf="arrProductPresent.length != 0; else orderListEmptyPresent">
+                    <thead>
+                        <tr>
+                            <th>{{ "Product Type" | translate }}</th>
+                            <th>
+                                {{ "Product ID" | translate }} {{ "Donate" | translate | lowercase }}
+                            </th>
+                            <th>
+                                {{ "Product name" | translate }} {{ "Donate" | translate | lowercase }}
+                            </th>
+                            <th>
+                                {{ "Qty" | translate }} {{ "Donate" | translate | lowercase }}
+                            </th>
+                            <th *ngIf="typePromotion == 'giveGiftForOrder'">
+                                {{ "Maximum received quantity" | translate }}
+                            </th>
+                            <th>
+                                <a (click)="removeAllGift()" *ngIf="!isEdit">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                            </th>
+                            <th *ngIf="!isEdit"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of arrProductPresent; let i = index">
+                            <td>{{ item?.category }}</td>
+                            <td>{{ item?.sap }}</td>
+                            <td>{{ item?.name }}</td>
+                            <td>
+                                <input type="number" [disabled]="isEdit" style="width: 80px" [(ngModel)]="item.quantity" (change)="changePromotionCartCount()" />
+                            </td>
+                            <td *ngIf="typePromotion == 'giveGiftForOrder'">
+                                <input type="number" [disabled]="isEdit" style="width: 80px" [(ngModel)]="item.maximumQuantity" (change)="changePromotionCartCount()" />
+                            </td>
+                            <td *ngIf="!isEdit">
+                                <a (click)="removePresent(i)">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <ng-template #orderListEmptyPresent>
+                    <div class="order-list-empty">
+                        <p class="depth" translate>No products found</p>
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+    </ng-template>
+</div>

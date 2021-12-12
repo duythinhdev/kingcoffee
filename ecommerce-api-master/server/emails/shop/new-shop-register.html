@@ -1,0 +1,22 @@
+{% extends '../layouts/layoutTemplateEmail.html' %}
+
+{% block content %}
+<p>Xin chào,</p>
+
+<p>
+  Có cửa hàng mới đã đăng ký vào hệ thống. Truy cập <a href="{{shopUpdateUrl}}">trang quản trị để xác minh và chấp thuận.</a>.
+</p>
+
+<p>
+  <h3>Thông tin cửa hàng:</h3>
+  <strong>Tên cửa hàng: </strong> <a href="{{shopUpdateUrl}}">{{shop.name}}</a> <br />
+  <strong>Email: </strong> {{shop.email}} <br />
+  <strong>Số điện thoại: </strong> {{shop.phoneNumber}} <br />
+  <strong>Địa chỉ: </strong> {{shop.address}} <br />
+  <strong>Thành phố: </strong> {{shop.city}} <br />
+  <strong>Quận: </strong> {{shop.district}} <br />
+  <strong>Phường: </strong> {{shop.ward}} <br />
+  <strong>ZipCode: </strong> {{shop.zipCode}} <br />
+</p>
+
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends '../layouts/layoutTemplateEmail.html' %}
+
+{% block content %}
+<p>Xin chào {{data.customer.name}},</p>
+
+<p>Chi tiết đơn hàng <a href="{{data.orderLink}}">#{{data.orderId}}</a></p>
+
+<div>
+  <h3>Thông tin khách hàng</h3>
+  <table class="table" width='100%'>
+    <tr>
+      <td width='30%'><strong>Tên: </strong></td>
+      <td>{{data.customer.name}}</td>
+    </tr>
+    <tr>
+      <td><strong>Email: </strong></td>
+      <td>{{data.customer.email}}</td>
+    </tr>
+    <tr>
+      <td><strong>Điện thoại: </strong></td>
+      <td>{{data.customer.phoneNumber}}</td>
+    </tr>
+    <tr>
+      <td><strong>Địa chỉ: </strong></td>
+      <td>{{data.customer.streetAddress}}</td>
+    </tr>
+    <tr>
+      <td><strong>Địa điểm giao hàng: </strong></td>
+      <td>{{data.customer.shippingType}}</td>
+    </tr>
+  </table>
+</div>
+
+<div>
+  <table class="table" width='100%'>
+    <tr>
+      <td width='30%'><strong>Sản phẩm: </strong></td>
+      <td>{{data.productName}}</td>
+    </tr>
+    <tr>
+      <td><strong>Số lượng: </strong></td>
+      <td>{{data.quantity|number}}</td>
+    </tr>
+    <tr>
+      <td><strong>Tổng thanh toán: </strong></td>
+      <td>{{data.userTotalPriceStr}} đ</td>
+    </tr>
+    <tr>
+      <td><strong>Ghi chú: </strong></td>
+      <td>{{data.customer.description}}</td>
+    </tr>
+  </table>
+</div>
+
+{% endblock %}

@@ -1,0 +1,68 @@
+<div class="card">
+  <div class="card-body">
+    <form (submit)="submit(frm)" #frm *ngIf="package">
+      <div class="row">
+        <div class="col col-md-12">
+          <div class="tab-content">
+            <div class="row">
+              <div class="col col-md-6">
+                <div class="form-group">
+                  <label>{{packageCreateTitleModel?.Name}} (*)</label>
+                  <input type="text" name="packageName" #packageName="ngModel" class="form-control" 
+                    [(ngModel)]="package.name" required />
+                  <div *ngIf="packageName.errors && (packageName.dirty || packageName.touched || isSubmitted)">
+                    <p [hidden]="!packageName.errors.required" class="required-text">
+                      {{packageCreateTitleModel?.Pleaseenterpackagename}} !
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="col col-md-6">
+                <div class="form-group">
+                  <label>{{packageCreateTitleModel?.Price}} (*)</label>
+                  <input type="number" name="price" min="0.1"  #price="ngModel" class="form-control"
+                    required [(ngModel)]="package.price" />
+                  <div *ngIf="price.errors && (price.dirty || price.touched || isSubmitted)">
+                    <p [hidden]="!price.errors.required" class="required-text">
+                      {{packageCreateTitleModel?.Pleaseenterpackageprice}}!
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="col col-md-6">
+                <div class="form-group">
+                  <label>{{packageCreateTitleModel?.Duration}} (*)</label>
+                  <input type="number" name="numDays" min="0"  #numDays="ngModel" class="form-control"
+                    required [(ngModel)]="package.numDays" />
+                  <small class="text-muted">{{packageCreateTitleModel?.Durationofthepackageinday}} (s).</small>
+                  <div *ngIf="numDays.errors && (numDays.dirty || numDays.touched || isSubmitted)">
+                    <p [hidden]="!numDays.errors.required" class="required-text">
+                      {{packageCreateTitleModel?.Pleaseenterpackageduration}} !
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="col col-md-12">
+                <div class="form-group">
+                  <label>{{packageCreateTitleModel?.Description}} (*)</label>
+                  <textarea type="text" name="description" rows="4" #description="ngModel" class="form-control"
+                    required  [(ngModel)]="package.description"></textarea>
+                  <div *ngIf="description.errors && (description.dirty || description.touched || isSubmitted)">
+                    <p [hidden]="!description.errors.required" class="required-text">
+                      {{packageCreateTitleModel?.Pleaseenterpackagedescription}} !
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col col-md-12">
+          <div class="form-group">
+            <hr />
+            <button type="submit" class="btn btn-primary">{{packageCreateTitleModel?.Submit}}</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>

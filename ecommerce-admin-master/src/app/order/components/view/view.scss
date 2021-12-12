@@ -1,0 +1,14 @@
+.short-text{
+    text-overflow: ellipsis;
+    max-width: 150px;
+    display: inline-block;
+    vertical-align: bottom;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+#statistic-table{
+    td:last-child{
+        white-space: nowrap;
+    }
+}

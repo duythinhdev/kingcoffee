@@ -1,0 +1,221 @@
+<div class="card">
+  <div class="card-body">
+    <form #frm="ngForm" (submit)="submit(frm)" ngNativeValidate>
+      <div class="row">
+        <div *ngIf="!isPage" class="col-md-12">
+          <div
+            class="nav flex-column nav-pills nav-top-cus"
+            role="tablist"
+            aria-orientation="vertical"
+          >
+            <a
+              class="nav-link"
+              data-toggle="tab"
+              role="tab"
+              aria-controls="home"
+              aria-selected="true"
+              [ngClass]="{'active': tab == 'info'}"
+              (click)="changeTab('info')"
+            >{{'Information' | translate}}</a
+            >
+            <a
+              class="nav-link"
+              data-toggle="tab"
+              role="tab"
+              aria-controls="contact"
+              aria-selected="false"
+              [ngClass]="{'active': tab == 'images'}"
+              (click)="changeTab('images')"
+            >{{'Image' | translate}}</a
+            >
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="tab-content">
+            <div
+              class="tab-pane fade show active"
+              role="tabpanel"
+              [ngClass]="{'show active': tab === 'info'}"
+            >
+              <div class="row">
+                <div *ngIf="!isPage" class="col-md-4">
+                  <div class="form-group">
+                    <label>{{postCreateTitleModel?.Category}}</label>
+                    <select
+                      class="form-control"
+                      name="category"
+                      [(ngModel)]="selectedCategory"
+                    >
+                      <option value="">-- No category --</option>
+                      <option
+                        *ngFor="let category of categories"
+                        value="{{category._id}}"
+                      >
+                        {{category.name | translate}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-8"></div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>{{postCreateTitleModel?.Title}} (*)</label>
+                    <input
+                      type="text"
+                      name="title"
+                      class="form-control"
+                      [(ngModel)]="item.title"
+                      (change)="changeAlias()"
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div
+                    class="form-group"
+                    [ngClass]="{'hide': isPage && isUpdating}"
+                  >
+                    <label>{{postCreateTitleModel?.Alias}} (*)</label>
+                    <input
+                      type="text"
+                      name="alias"
+                      class="form-control"
+                      [(ngModel)]="item.alias"
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label>{{postCreateTitleModel?.Description}}</label>
+                    <textarea
+                      name="description"
+                      class="form-control"
+                      [(ngModel)]="item.description"
+                    ></textarea>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label>{{postCreateTitleModel?.Content}}</label>
+                    <ckeditor
+                      [editor]="Editor"
+                      [config]="ckEditorConfig"
+                      [(ngModel)]="item.content"
+                      name="content"
+                    ></ckeditor>
+                  </div>
+                </div>
+                <div *ngIf="!isPage" class="col-md-4">
+                  <div class="form-group">
+                    <div class="checkbox">
+                      <label
+                      ><input
+                        class="mr-1"
+                        type="checkbox"
+                        name="active"
+                        [(ngModel)]="item.isActive"
+                      />{{postCreateTitleModel?.Active}}</label
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="!isPage" class="col-md-4">
+                  <div class="form-group">
+                    <div class="checkbox">
+                      <label *ngIf="isAll === false">
+                        <input
+                          class="mr-1"
+                          type="checkbox"
+                          name="all"
+                          [(ngModel)]="isAll"
+                        />
+                        Thông báo tất cả
+<!--                        {{postCreateTitleModel?.Notification}} {{postCreateTitleModel?.All}} -->
+                      </label
+                      >
+                      <label *ngIf="isAll === true">
+                        <input
+                          class="mr-1"
+                          type="checkbox"
+                          name="all"
+                          [(ngModel)]="isAll"
+                        />
+                        Thông báo tất cả
+                        <!--                        {{postCreateTitleModel?.Notification}} {{postCreateTitleModel?.All}}-->
+                      </label
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="!isPage" class="col-md-4">
+                  <div class="form-group">
+                    <div class="checkbox">
+                      <label
+                      ><input
+                        class="mr-1"
+                        type="checkbox"
+                        name="main"
+                        [(ngModel)]="item.isMain"
+                      />{{postCreateTitleModel?.MainSet}}</label
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="tab-pane fade show active"
+              role="tabpanel"
+              [ngClass]="{'show active': tab === 'images'}"
+            >
+              <h3>{{'Click to set main image' | translate}}</h3>
+              <div class="row">
+                <div
+                  class="col-md-3 text-center"
+                  *ngFor="let media of images; let i = index"
+                >
+                  <div [ngClass]="{selected: media._id === mainImage}">
+                    <media-preview [media]="media"></media-preview>
+                  </div>
+                  <div class="btn-group" role="group">
+                    <button
+                      class="btn btn-secondary"
+                      type="button"
+                      [ngClass]="{'btn-success' : media._id === mainImage}"
+                      (click)="setMain(media)"
+                    >
+                      <i class="fa fa-check"></i>
+                    </button>
+                    <button
+                      class="btn btn-secondary"
+                      type="button"
+                      (click)="removeImage(media, i)"
+                    >
+                      <i class="fa fa-trash"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <hr />
+              <media-select
+                (onSelect)="selectImage($event)"
+                [options]="imagesOptions"
+              ></media-select>
+            </div>
+          </div>
+        </div>
+        <div class="col col-md-12">
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary">
+              {{postCreateTitleModel?.Submit}}</button
+            >&nbsp;
+            <button class="btn btn-warning" (click)="goBack()">
+              {{postCreateTitleModel?.Cancel}}
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

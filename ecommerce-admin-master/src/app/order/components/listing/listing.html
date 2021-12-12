@@ -1,0 +1,389 @@
+<style>
+  .mh-default{
+    overflow-x: auto !important;
+  }
+
+  .mh-default::-webkit-scrollbar {
+    width: 0px;
+  }
+
+  .table thead th, .table th {
+      min-width: 150px;
+  }
+
+  .center-btn, .center{
+    display: block;
+    width: fit-content;
+    margin: auto;
+  }
+
+  .rotate {
+    animation: rotation 1s infinite linear;
+  }
+
+  @keyframes rotation {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(359deg);
+    }
+  }
+</style>
+
+<div class="card mh-default">
+  <div class="card-body table-responsive mh-default" #mainScrollBlock>
+    <div class="scrollbar" #simulatorScrollBlock (scroll)="onScroll($event)">
+      <div class="force-overflow"></div>
+    </div>
+    <a class="btn btn-primary" style="margin-right: 25px;" (click)="onSearch()">{{'Filter' | translate}}</a>
+    <a class="btn btn-primary" (click)="checkOrderToExcel()">Xuất Excel</a>
+    <table class="table border-1">
+      <thead>
+        <tr>
+          <th>
+            <!-- <a (click)="sortBy('trackingCode', 'desc')" translate>{{'Order ID' | translate}}</a> -->
+            <a>{{'Order ID' | translate}}</a>
+            <!-- <span *ngIf="sortOption.sortBy == 'trackingCode'">
+              <a (click)="sortBy('trackingCode', 'asc')" *ngIf="sortOption.sortType=='desc'">
+                <i class="fa fa-caret-down"></i>
+              </a>
+              <a (click)="sortBy('trackingCode', 'desc')" *ngIf="sortOption.sortType=='asc'">
+                <i class="fa fa-caret-up"></i>
+              </a>
+            </span> -->
+          </th>
+          <th>
+            <!-- <a (click)="sortBy('trackingCode', 'desc')">{{'Buyer' | translate}}</a> -->
+            <a>{{'Buyer' | translate}}</a>
+            <!-- <span *ngIf="sortOption.sortBy == 'trackingCode'">
+              <a (click)="sortBy('trackingCode', 'asc')" *ngIf="sortOption.sortType=='desc'">
+                <i class="fa fa-caret-down"></i>
+              </a>
+              <a (click)="sortBy('trackingCode', 'desc')" *ngIf="sortOption.sortType=='asc'">
+                <i class="fa fa-caret-up"></i>
+              </a>
+            </span> -->
+          </th>
+          <th>
+            <!-- <a (click)="sortBy('trackingCode', 'desc')">{{'Order status' | translate}}</a> -->
+            <a>{{'Order status' | translate}}</a>
+            <!-- <span *ngIf="sortOption.sortBy == 'trackingCode'">
+              <a (click)="sortBy('trackingCode', 'asc')" *ngIf="sortOption.sortType=='desc'">
+                <i class="fa fa-caret-down"></i>
+              </a>
+              <a (click)="sortBy('trackingCode', 'desc')" *ngIf="sortOption.sortType=='asc'">
+                <i class="fa fa-caret-up"></i>
+              </a>
+            </span> -->
+          </th>
+          <th>
+            <!-- <a (click)="sortBy('totalPrice', 'desc')" translate>{{orderListingTitleModel?.Totalprice}}</a> -->
+            <a (click)="sortBy('totalProducts', 'desc')">{{orderListingTitleModel?.Totalprice}}</a>
+            <span *ngIf="sortOption.sortBy=='totalProducts'">
+              <a (click)="sortBy('totalProducts', 'asc')" *ngIf="sortOption.sortType=='desc'">
+                <i class="fa fa-caret-down"></i>
+              </a>
+              <a (click)="sortBy('totalProducts', 'desc')" *ngIf="sortOption.sortType=='asc'">
+                <i class="fa fa-caret-up"></i>
+              </a>
+            </span>
+          </th>
+          <!-- <th>
+            <a (click)="sortBy('totalProducts', 'desc')" translate>{{orderListingTitleModel?.TotalProducts}}</a>
+            <span *ngIf="sortOption.sortBy=='totalProducts'">
+              <a (click)="sortBy('totalProducts', 'asc')" *ngIf="sortOption.sortType=='desc'">
+                <i class="fa fa-caret-down"></i>
+              </a>
+              <a (click)="sortBy('totalProducts', 'desc')" *ngIf="sortOption.sortType=='asc'">
+                <i class="fa fa-caret-up"></i>
+              </a>
+            </span>
+          </th> -->
+          <th>
+            <a>{{'Payment Type' | translate}}</a>
+          </th>
+          <th>
+            <a>{{'Delivery Party' | translate}}</a>
+          </th>
+          <th>
+            <a>{{'Hubs action' | translate}}</a>
+          </th>
+          <th>
+            <!-- <a (click)="sortBy('totalProducts', 'desc')" translate>{{'Order date' | translate}}</a> -->
+            <a>{{'Order date' | translate}}</a>
+            <!-- <span *ngIf="sortOption.sortBy=='totalProducts'">
+              <a (click)="sortBy('totalProducts', 'asc')" *ngIf="sortOption.sortType=='desc'">
+                <i class="fa fa-caret-down"></i>
+              </a>
+              <a (click)="sortBy('totalProducts', 'desc')" *ngIf="sortOption.sortType=='asc'">
+                <i class="fa fa-caret-up"></i>
+              </a>
+            </span> -->
+
+          </th>
+          <!-- <th>
+            <a (click)="sortBy('totalProducts', 'desc')" translate>{{'Delivery date' | translate}}</a>
+            <span *ngIf="sortOption.sortBy=='totalProducts'">
+              <a (click)="sortBy('totalProducts', 'asc')" *ngIf="sortOption.sortType=='desc'">
+                <i class="fa fa-caret-down"></i>
+              </a>
+              <a (click)="sortBy('totalProducts', 'desc')" *ngIf="sortOption.sortType=='asc'">
+                <i class="fa fa-caret-up"></i>
+              </a>
+            </span>
+          </th> -->
+          <th>
+            <!-- <a (click)="sortBy('totalProducts', 'desc')" translate>{{'Payment status' | translate}}</a> -->
+            <a>{{'Payment status' | translate}}</a>
+            <!-- <span *ngIf="sortOption.sortBy=='totalProducts'">
+              <a (click)="sortBy('totalProducts', 'asc')" *ngIf="sortOption.sortType=='desc'">
+                <i class="fa fa-caret-down"></i>
+              </a>
+              <a (click)="sortBy('totalProducts', 'desc')" *ngIf="sortOption.sortType=='asc'">
+                <i class="fa fa-caret-up"></i>
+              </a>
+            </span> -->
+          </th>
+          <th>
+            <a>{{'BravoCode' | translate}}</a>
+          </th>
+          <th>
+            <a>{{'Bravo_InvoiceId' | translate}}</a>
+          </th>
+          <th>
+            <a>{{'Bravo_OrderCode' | translate}}</a>
+          </th>
+          <th>
+            <a>{{'Bravo_OrderStatus' | translate}}</a>
+          </th>
+          <th>
+            <a>{{'Action' | translate}}</a>
+            <!-- <span *ngIf="sortOption.sortBy=='paymentMethod'">
+              <a (click)="sortBy('paymentMethod', 'asc')" *ngIf="sortOption.sortType=='desc'">
+                <i class="fa fa-caret-down"></i>
+              </a>
+              <a (click)="sortBy('paymentMethod', 'desc')" *ngIf="sortOption.sortType=='asc'">
+                <i class="fa fa-caret-up"></i>
+              </a>
+            </span> -->
+          </th>
+          <!-- <a (click)="sortBy('userIP', 'desc')" translate>{{orderListingTitleModel?.UserIP}} </a> -->
+            <!-- <th>
+            <a (click)="sortBy('userIP', 'desc')" translate>{{'Buyer' | translate}} </a>
+            <span *ngIf="sortOption.sortBy=='userIP'">
+              <a (click)="sortBy('userIP', 'asc')" *ngIf="sortOption.sortType=='desc'">
+                <i class="fa fa-caret-down"></i>
+              </a>
+              <a (click)="sortBy('userIP', 'desc')" *ngIf="sortOption.sortType=='asc'">
+                <i class="fa fa-caret-up"></i>
+              </a>
+            </span>
+          </th>
+          <th>
+            <a (click)="sortBy('status', 'desc')" translate>{{'Payment status' | translate}} </a>
+            <span *ngIf="sortOption.sortBy=='status'">
+              <a (click)="sortBy('status', 'asc')" *ngIf="sortOption.sortType=='desc'">
+                <i class="fa fa-caret-down"></i>
+              </a>
+              <a (click)="sortBy('status', 'desc')" *ngIf="sortOption.sortType=='asc'">
+                <i class="fa fa-caret-up"></i>
+              </a>
+            </span>
+          </th>
+          <th>
+            <a (click)="sortBy('createdAt', 'desc')" translate>{{orderListingTitleModel?.CreatedAt}} </a>
+            <span *ngIf="sortOption.sortBy=='createdAt'">
+              <a (click)="sortBy('createdAt', 'asc')" *ngIf="sortOption.sortType=='desc'">
+                <i class="fa fa-caret-down"></i>
+              </a>
+              <a (click)="sortBy('createdAt', 'desc')" *ngIf="sortOption.sortType=='asc'">
+                <i class="fa fa-caret-up"></i>
+              </a>
+            </span>
+          </th> -->
+        </tr>
+        <tr>
+          <th>
+            <div class="input-group">
+              <input class="form-control" [(ngModel)]="orderCode" type="number"  (keypress)="keyPress($event)" />
+            </div>
+          </th>
+          <th>
+            <div class="input-group">
+              <input class="form-control" [(ngModel)]="memberId"  (keypress)="keyPress($event)" />
+            </div>
+          </th>
+          <th colspan="4"></th>
+          <th>
+            <div class="form-group hidden">
+              <div class="input-group">
+                <input name="datepicker"
+                       class="form-control"
+                       ngbDatepicker
+                       #datepicker="ngbDatepicker"
+                       [autoClose]="'outside'"
+                       (dateSelect)="onDateSelection($event)"
+                       [displayMonths]="2"
+                       [dayTemplate]="t"
+                       outsideDays="hidden"
+                       [startDate]="fromDate!"
+                       style="display: none;">
+                <ng-template #t let-date let-focused="focused">
+                  <span class="custom-day"
+                        [class.focused]="focused"
+                        [class.range]="isRange(date)"
+                        [class.faded]="isHovered(date) || isInside(date)"
+                        (mouseenter)="hoveredDate = date"
+                        (mouseleave)="hoveredDate = null">
+                    {{ date.day }}
+                  </span>
+                </ng-template>
+              </div>
+            </div>
+
+        </th>
+          <th>
+            <!-- <div class="input-group">
+              <input class="form-control br-l" placeholder="Chọn ngày" name="createdAt" [(ngModel)]="createdAt"
+            ngbDatepicker #startdate="ngbDatepicker" (click)="startdate.toggle()"/>
+            </div> -->
+            <div>
+              <div class="input-group">
+                <input #dpFromDate
+                       class="form-control date-input-disable" placeholder="dd-yyyy-mm"
+                       name="dpFromDate"
+                       [value]="formatter.format(fromDate)"
+                       (input)="fromDate = validateInput(fromDate, dpFromDate.value)" [disabled]="true">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary calendar" (click)="datepicker.toggle()" type="button"><i class="fa fa-calendar" title="Date" aria-hidden="true"></i></button>
+                </div>
+              </div>
+            </div>
+            <br>
+            <div>
+              <div class="input-group">
+                <input #dpToDate
+                       class="form-control date-input-disable" placeholder="dd-mm-yyyy"
+                       name="dpToDate"
+                       [value]="formatter.format(toDate)"
+                       (input)="toDate = validateInput(toDate, dpToDate.value)" [disabled]="true">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary calendar" (click)="datepicker.toggle()" type="button"><i class="fa fa-calendar" title="Date" aria-hidden="true"></i></button>
+                </div>
+              </div>
+            </div>
+
+          </th>
+          <!-- <th> -->
+            <!-- <div class="input-group"> -->
+              <!-- <input class="form-control br-l" placeholder="dd-mm-yyyy" name="startDate" [(ngModel)]="username"
+            ngbDatepicker #startDate="ngbDatepicker" (click)="startDate.toggle()" /> -->
+            <!-- </div> -->
+          <!-- </th> -->
+          <th style="width: 150px">
+            <div class="d-inline-block" ngbDropdown #myDrop="ngbDropdown">
+              <button class="btn btn-outline-dark w-100" id="dropdownManual" ngbDropdownAnchor (focus)="myDrop.open()">{{strPaymentStatus}}</button>
+              <div ngbDropdownMenu aria-labelledby="dropdownManual">
+                <a *ngFor="let item of paymentStatusList, let i = index" (click)="sortPaymentStatus(item, strPaymentStatusList[i])" class="dropdown-item">{{strPaymentStatusList[i]}}</a>
+              </div>
+            </div>
+          </th>
+          <th>
+            <div class="d-inline-block" ngbDropdown #myDropBravo="ngbDropdown" style="margin-bottom: 22px;">
+              <button class="btn btn-outline-dark w-100" id="dropdownManualBravo" ngbDropdownAnchor (focus)="myDropBravo.open()">{{strSortDocNo}}</button>
+              <div ngbDropdownMenu aria-labelledby="dropdownManualBravo">
+                <a *ngFor="let item of strSortDocNoList, let i = index" (click)="sortBravoCode(item, strSortDocNoList[i])" class="dropdown-item">{{strSortDocNoList[i]}}</a>
+              </div>
+            </div>
+            <div class="input-group">
+              <input class="form-control" [(ngModel)]="bravoCode" type="text"  (keypress)="keyPress($event)" />
+            </div>
+          </th>
+          <th colspan="4"></th>
+          <th style="width: 70px;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of orders, let i = index">
+          <td>
+            <a [routerLink]="['/orders/view/', item._id ]">
+              {{item?.orderCode}}
+            </a>
+          </td>
+          <td>{{item?.customer?.memberId || ""}}</td>
+          <td>{{OrderStatusDescription[item?.orderStatus] | translate}}</td>
+          <td>{{item?.totalPrice | priceCurrency: 'VND'}}</td>
+          <td>
+
+            <span *ngIf="item?.transaction?.paymentGateway" class="label d-inline-block" style="background: #D12886;">{{item?.transaction?.paymentGateway | paymentGatewayName | translate }}</span>
+            <!-- <span class="label label-success" *ngIf="item.paymentMethod === 'cod'">Cod</span>
+            <span class="label label-warning" *ngIf="item.paymentMethod === 'stripe'">Stripe</span>
+            <span class="label label-primary" *ngIf="item.paymentMethod === 'paypal'">Paypal</span> -->
+          </td>
+          <td>{{item?.transportation}}</td>
+          <td>{{item?.senderName}}</td>
+          <td>{{item?.createdAt | date:'dd/MM/yyyy'}}</td>
+          <!-- <td>{{item?.expectedDeliveryDate}}</td> -->
+          <td [ngSwitch]="item?.transaction?.status">
+            <span *ngSwitchCase="'success'" class="label label-success d-inline-block w-75 text-center py-2">{{'Success' | translate}}</span>
+            <span *ngSwitchCase="'pending'" class="label label-warning d-inline-block w-75 text-center py-2">{{'Pending' | translate}}</span>
+            <span *ngSwitchCase="'fail'" class="label label-danger d-inline-block w-75 text-center py-2">{{'Fail' | translate}}</span>
+          </td>
+          <td>{{item?.docNo && item?.docNo != -1 ? item?.docNo : ""}}</td>
+          <td>{{item?.bravo?.DocNoXB && item?.bravo?.DocNoXB != -1 ? item?.bravo?.DocNoXB : ""}}</td>
+          <td>{{item?.bravo?.DocNoHD && item?.bravo?.DocNoHD != -1 ? item?.bravo?.DocNoHD : ""}}</td>
+          <td>
+            <span *ngIf="item?.bravo?.DocStatus" class="label d-inline-block" style="background: #D12886;">
+              {{item?.bravo?.DocStatus ? DocStatusDesEnum[DocStatusEnum[item?.bravo?.DocStatus]] : ""}}
+            </span>
+          </td>
+          <td>
+            <div class="center">
+              <a title="Hủy đơn hàng" (click)="showModalCancel(content,item?._id)" *ngIf="checkCancel(item?.transaction,item?.orderStatus) == true"><i style="color: red; font-size: 37px;" class="fa fa-times"></i></a>
+              <a title="Chọn Hub" (click)="showModalAssign(item?._id,item?.city?.id,item?.details,item?.promotions)" *ngIf="checkAsign(item?.isAssignHub,item?.orderStatus) == true"><i style="font-size: 37px;" class="fa fa-tasks "></i></a>
+              <a title="Xác nhận đơn hàng" (click)="confirmAccept(item?._id)" *ngIf="checkAccept(item?.customer,item?.isConfirmOrderHub,item?.orderStatus) == true"><i style="color: green; font-size: 37px;" class="fa fa-check"></i></a>
+              <a title="Chọn lại Hub" (click)="showModalRefresh(item?._id,item?.city?.id,item?.details,item?.promotions)" *ngIf="checkRefresh(item?.isDeliveryReject,item?.senderId,item?.orderStatus) == true"><i style="font-size: 37px;" class="fa fa-refresh"></i></a>
+            </div>
+          </td>
+          <td>
+            <div class="center">
+              <a (click)="exportExcel(item?._id)"><i class="fa fa-download" style="font-size: 27px; margin-top: 7px;" title="Tải xuống" aria-hidden="true"></i></a>
+              <a (click)="sendOrderDataToBravo(item)" [class.disabled]="item?.docNo ? true : null"><i class="fa fa-file" style="font-size: 27px; margin-top: 7px; margin-left: 13px" title="Gửi hóa đơn" aria-hidden="true"></i></a>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="display-inline" [hidden]="total < take">
+      <div class="pull-left">
+        <ngb-pagination [maxSize]="5" [collectionSize]="changePage" [(page)]="page" [pageSize]="take" (pageChange)="changePage()">
+        </ngb-pagination>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #content let-modal>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label for="dateOfBirth">{{'Reason Cancel' | translate}}</label>
+        <div class="input-group">
+          <input id="reasonCancel" class="form-control" [(ngModel)]="reasonCancel" name="reasonCancel">
+        </div>
+        <p *ngIf="requiredReason">{{requiredReason | translate}}</p>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer" style="justify-content: center;">
+    <button type="button" style="background: #610C3E; color: white;" class="btn btn-outline-dark" (click)="cancelOrder()">{{'Verified' | translate}}</button>
+    <button type="button" style="background: #610C3E; color: white;" class="btn btn-outline-dark" (click)="modal.close('Save click')">{{'Close' | translate}}</button>
+  </div>
+</ng-template>
+
+
+
+
+
+

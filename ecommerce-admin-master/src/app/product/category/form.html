@@ -1,0 +1,74 @@
+<div class="card">
+  <div class="card-body">
+    <form (submit)="submit(frm)" #frm>
+      <div class="row">
+        <div class="col col-md-6">
+          <div class="form-group">
+            <label>{{productCreateCategoryTitleModel?.nameCol}} (*)</label>
+            <input type="text" name="categoryName" class="form-control"  [(ngModel)]="category.name" (change)="changeAlias()" required />
+          </div>
+        </div>
+        <div class="col col-md-6">
+          <div class="form-group">
+            <label>{{productCreateCategoryTitleModel?.Alias}}</label>
+            <input type="text" name="alias" class="form-control"  [(ngModel)]="category.alias" required />
+          </div>
+        </div>
+        <div class="col col-md-6">
+          <div class="form-group">
+            <label>{{productCreateCategoryTitleModel?.Description}}</label>
+            <textarea class="form-control" name="categorydesc"  [(ngModel)]="category.description"></textarea>
+          </div>
+        </div>
+        <div class="col col-md-6">
+          <div class="form-group">
+            <label>{{productCreateCategoryTitleModel?.Parent}}</label>
+            <select class="form-control" [(ngModel)]="category.parentId" name="parent">
+              <option value="">-- No parent --</option>
+              <option *ngFor="let item of tree" [ngValue]="item._id">{{item.name}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col col-md-3">
+          <div class="form-group">
+            <div class="checkbox" style="margin-top: 5px;">
+              <label><input class="mr-1" type="checkbox" name="isActive" [(ngModel)]="category.isActive"/>{{'Active' | translate}}</label>
+            </div>
+          </div>
+        </div>
+        <div class="col col-md-3">
+          <div class="form-group">
+            <div class="checkbox" style="margin-top: 5px;">
+              <label><input class="mr-1" type="checkbox" name="isPromotion" [(ngModel)]="category.isPromotion"/>{{'isPromotion' | translate}}</label>
+            </div>
+          </div>
+        </div>
+        <div class="col col-md-12">
+          <div class="form-group">
+            <label>{{productCreateCategoryTitleModel?.Image}} <media-select (onSelect)="selectImage($event)"></media-select></label>
+            <hr />
+            <img *ngIf="imageUrl" width="150" [src]="imageUrl" />
+          </div>
+        </div>
+        <!-- <div class="col col-md-6" *ngIf="category.metaSeo">
+          <div class="form-group">
+            <label>{{productCreateCategoryTitleModel?.Metakeywords}}</label>
+            <input type="text" class="form-control" name="metakw" [(ngModel)]="category.metaSeo.keywords"  />
+          </div>
+        </div>
+        <div class="col col-md-6" *ngIf="category.metaSeo">
+          <div class="form-group">
+            <label>{{productCreateCategoryTitleModel?.Metadescription}}</label>
+            <textarea class="form-control" name="metadesc" [(ngModel)]="category.metaSeo.description" ></textarea>
+          </div>
+        </div> -->
+        <div class="col col-md-12">
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary">{{productCreateCategoryTitleModel?.Submit}}</button>&nbsp;
+            <a class="btn btn-warning" [routerLink]="['/products/categories']">{{productCreateCategoryTitleModel?.Cancel}}</a>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

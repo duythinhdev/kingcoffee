@@ -1,0 +1,148 @@
+<div class="card">
+  <div class="card-block table-responsive">
+    <div class="row mt-3 ml-1 mb-3">
+      <div class="col-md-4">
+        <button type="button" class="btn btn-info ml-4" (click)="exportCSV()">{{'ExportData' | translate}}</button>
+      </div>
+      <div class="col-md-8 text-right">
+        <button class="btn btn-primary" style="font-weight: bold; margin-right: 30px; display: inline;" type="button" (click)="getTotalInfo()"><i class="fa fa-repeat"></i></button>
+        <p style="font-weight: bold; margin-right: 30px; display: inline;"><span>{{'Tổng tiền' | translate}}</span>: {{totalPrice | priceCurrency}}</p>
+        <p style="font-weight: bold; margin-right: 30px; display: inline;"><span>{{'Tổng hoa hồng' | translate}}</span>: {{totalCommission | priceCurrency}}</p>
+        <p style="font-weight: bold; margin-right: 30px; display: inline;"><span>{{'Tổng vé' | translate}}</span>: {{total | number }}</p>
+      </div>
+    </div>
+    <table class="table table-custom">
+      <thead>
+        <tr>
+          <th>
+            <a (click)="sortBy('sponsorName', 'desc')">{{'Sponsor Name' | translate}}</a>
+            <span *ngIf="sortOption.sortBy=='sponsorName'">
+              <a (click)="sortBy('sponsorName', 'asc')" *ngIf="sortOption.sortType=='desc'"><i class="fa fa-caret-down"></i></a>
+              <a (click)="sortBy('sponsorName', 'desc')" *ngIf="sortOption.sortType=='asc'"><i class="fa fa-caret-up"></i></a>
+            </span>
+          </th>
+          <th>
+            <a (click)="sortBy('parentName', 'desc')">{{'Parent Name' | translate}}</a>
+            <span *ngIf="sortOption.sortBy=='parentName'">
+              <a (click)="sortBy('parentName', 'asc')" *ngIf="sortOption.sortType=='desc'"><i class="fa fa-caret-down"></i></a>
+              <a (click)="sortBy('parentName', 'desc')" *ngIf="sortOption.sortType=='asc'"><i class="fa fa-caret-up"></i></a>
+            </span>
+          </th>
+          <th>
+            <a (click)="sortBy('ownerName', 'desc')">{{'Owner Name' | translate}}</a>
+            <span *ngIf="sortOption.sortBy=='ownerName'">
+              <a (click)="sortBy('ownerName', 'asc')" *ngIf="sortOption.sortType=='desc'"><i class="fa fa-caret-down"></i></a>
+              <a (click)="sortBy('ownerName', 'desc')" *ngIf="sortOption.sortType=='asc'"><i class="fa fa-caret-up"></i></a>
+            </span>
+          </th>
+          <th>
+            <a (click)="sortBy('level', 'desc')">{{'Level' | translate}}</a>
+            <span *ngIf="sortOption.sortBy=='level'">
+              <a (click)="sortBy('level', 'asc')" *ngIf="sortOption.sortType=='desc'"><i class="fa fa-caret-down"></i></a>
+              <a (click)="sortBy('level', 'desc')" *ngIf="sortOption.sortType=='asc'"><i class="fa fa-caret-up"></i></a>
+            </span>
+          </th>
+          <th>
+            <a (click)="sortBy('numberChild', 'desc')">{{'Number Child' | translate}}</a>
+            <span *ngIf="sortOption.sortBy=='numberChild'">
+              <a (click)="sortBy('numberChild', 'asc')" *ngIf="sortOption.sortType=='desc'"><i class="fa fa-caret-down"></i></a>
+              <a (click)="sortBy('numberChild', 'desc')" *ngIf="sortOption.sortType=='asc'"><i class="fa fa-caret-up"></i></a>
+            </span>
+          </th>
+          <th>
+            <a (click)="sortBy('code', 'desc')">{{'Ticket Code' | translate}}</a>
+            <span *ngIf="sortOption.sortBy=='code'">
+              <a (click)="sortBy('code', 'asc')" *ngIf="sortOption.sortType=='desc'"><i class="fa fa-caret-down"></i></a>
+              <a (click)="sortBy('code', 'desc')" *ngIf="sortOption.sortType=='asc'"><i class="fa fa-caret-up"></i></a>
+            </span>
+          </th>
+          <!-- <th>
+            <a (click)="sortBy('name', 'desc')">{{'Is Reward' | translate}}</a>
+            <span *ngIf="sortOption.sortBy=='name'">
+              <a (click)="sortBy('name', 'asc')" *ngIf="sortOption.sortType=='desc'"><i class="fa fa-caret-down"></i></a>
+              <a (click)="sortBy('name', 'desc')" *ngIf="sortOption.sortType=='asc'"><i class="fa fa-caret-up"></i></a>
+            </span>
+          </th> -->
+          <th>
+            <a (click)="sortBy('createdAt', 'desc')">{{'Create At' | translate}}</a>
+            <span *ngIf="sortOption.sortBy=='createdAt'">
+              <a (click)="sortBy('createdAt', 'asc')" *ngIf="sortOption.sortType=='desc'"><i class="fa fa-caret-down"></i></a>
+              <a (click)="sortBy('createdAt', 'desc')" *ngIf="sortOption.sortType=='asc'"><i class="fa fa-caret-up"></i></a>
+            </span>
+          </th>
+          <th class="text-center">
+            {{'Actions' | translate}}
+          </th>
+        </tr>
+        <tr>
+          <th>
+            <div class="input-group">
+              <input class="form-control" [(ngModel)]="searchFields.sponsorName" (keypress)="keyPress($event)" />
+            </div>
+          </th>
+          <th>
+            <div class="input-group">
+              <input class="form-control" [(ngModel)]="searchFields.parentName"  (keypress)="keyPress($event)" />
+            </div>
+          </th>
+          <th>
+            <div class="input-group">
+              <input class="form-control" [(ngModel)]="searchFields.ownerName"  (keypress)="keyPress($event)" />
+            </div>
+          </th>
+          <th colspan="2"></th>
+          <th>
+            <div class="input-group">
+              <input class="form-control" [(ngModel)]="searchFields.code"  (keypress)="keyPress($event)" />
+            </div>
+          </th>
+          <!-- <th>
+            <select class="form-control" [(ngModel)]="searchFields.isReward">
+              <option value="">All</option>
+              <option value="0">No</option>
+              <option value="1">Yes</option>
+            </select>
+          </th> -->
+          <th></th>
+          <th class="text-center">
+            <button type="button" class="btn btn-success" (click)="query()">{{'Filter' | translate}}</button>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngIf="!total && !isLoading">
+          <td colspan="11">
+            <p class="text-center text-danger">{{'There is no user buy ticket yet' | translate}}..</p>
+          </td>
+        </tr>
+        <tr *ngFor="let item of items, let i = index">
+          <td>{{item.sponsorName}}</td>
+          <td>{{item.parentName}}</td>
+          <td>{{item.ownerName}}</td>
+          <td>{{item.level}}</td>
+          <td>{{item.numberChild}}</td>
+          <td>{{item.code}}</td>
+          <!-- <td class="text-center">
+            <span class="badge badge-warning" *ngIf="!item.isReward">N</span>
+            <span class="badge badge-success" *ngIf="item.isReward">Y</span>
+          </td> -->
+          <td>
+            <span>{{item.createdAt | date :'dd/MM/yyyy hh:mm:ss'}}</span>
+          </td>
+          <td class="text-center">
+            <a (click)="reSendEmail(item)">
+              <i class="fa fa-envelope-o"></i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="8" *ngIf="total > 10">
+            <ngb-pagination [collectionSize]="total" [(page)]="page" [maxSize]="5" (pageChange)="query()"></ngb-pagination>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>

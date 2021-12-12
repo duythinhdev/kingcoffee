@@ -1,0 +1,170 @@
+<div class="card">
+  <div class="row" style="padding: 25px">
+    <div class="col-md-3">
+      <div class="input-group input-date">
+        <label>{{requestPayOutTitleModel?.From}} &nbsp;</label>
+        <input class="form-control br-l" class="form-control" placeholder="yyyy-mm-dd" name="startDate" [(ngModel)]="dateFilter.startDate"
+          ngbDatepicker #startDate="ngbDatepicker">
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary fa fa-calendar br-r" (click)="startDate.toggle()" type="button"></button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="input-group input-date">
+        <label>{{requestPayOutTitleModel?.To}} &nbsp;</label>
+        <input class="form-control br-l" placeholder="yyyy-mm-dd" class="form-control" name="toDate" [(ngModel)]="dateFilter.toDate"
+          ngbDatepicker #toDate="ngbDatepicker">
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary fa fa-calendar br-r" (click)="toDate.toggle()" type="button"></button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="input-group input-date">
+        <label>{{requestPayOutTitleModel?.Shop}} &nbsp;</label>
+        <input type="text" name="seller" class="form-control" [class.is-invalid]="searchFailed" [(ngModel)]="seller"
+          [ngbTypeahead]="search"  [resultTemplate]="rt" [inputFormatter]="formatter" />
+        <span *ngIf="searching">{{requestPayOutTitleModel?.searching}}...</span>
+        <div class="invalid-feedback" *ngIf="searchFailed">{{requestPayOutTitleModel?.Sorrysuggestionscouldnotbeloaded}}.</div>
+        <ng-template #rt let-r="result" let-t="term">
+          <ngb-highlight [result]="r.name" [term]="t"></ngb-highlight>
+        </ng-template>
+      </div>
+    </div>
+    <div class="col-md-3"><a class="btn btn-success" (click)="queryStats()">{{requestPayOutTitleModel?.FilterStats}}</a></div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group" style="padding: 25px; padding-bottom: 0">
+        <label>{{requestPayOutTitleModel?.Pending}}</label>
+        <!-- <h4>COD Balance: {{stats?.pending?.codBalance | currency}}</h4>
+        <h4>Non-COD Balance: {{stats?.pending?.nonCodBalance | currency}}</h4> -->
+        <h4>{{requestPayOutTitleModel?.Commission}}: {{stats?.pending?.commission | currency}}</h4>
+        <h4>{{requestPayOutTitleModel?.ShopBalance}}: {{stats?.pending?.shopBalance | currency}}</h4>
+        <h4>{{requestPayOutTitleModel?.SiteBalance}}: {{stats?.pending?.siteBalance | currency}}</h4>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group" style="padding: 25px; padding-bottom: 0">
+        <label>{{requestPayOutTitleModel?.Approved}}</label>
+        <!-- <h4>COD Balance: {{stats?.approved?.codBalance | currency}}</h4>
+        <h4>Non-COD Balance: {{stats?.approved?.nonCodBalance | currency}}</h4> -->
+        <h4>{{requestPayOutTitleModel?.Commission}}: {{stats?.approved?.commission | currency}}</h4>
+        <h4>{{requestPayOutTitleModel?.ShopBalance}}: {{stats?.approved?.shopBalance | currency}}</h4>
+        <h4>{{requestPayOutTitleModel?.SiteBalance}}: {{stats?.approved?.siteBalance | currency}}</h4>
+      </div>
+    </div>
+  </div>
+  <div class="card-body table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>
+            <a (click)="sortBy('code', 'desc')">{{requestPayOutTitleModel?.RequestID}}</a>
+            <span *ngIf="sortOption.sortBy=='code'">
+              <a (click)="sortBy('code', 'asc')" *ngIf="sortOption.sortType=='desc'"><i class="fa fa-caret-down"></i></a>
+              <a (click)="sortBy('code', 'desc')" *ngIf="sortOption.sortType=='asc'"><i class="fa fa-caret-up"></i></a>
+            </span>
+          </th>
+          <th>
+            <a (click)="sortBy('shop.name', 'desc')">{{requestPayOutTitleModel?.Shop}}</a>
+            <span *ngIf="sortOption.sortBy=='code'">
+              <a (click)="sortBy('shop.name', 'asc')" *ngIf="sortOption.sortType=='desc'"><i class="fa fa-caret-down"></i></a>
+              <a (click)="sortBy('shop.name', 'desc')" *ngIf="sortOption.sortType=='asc'"><i class="fa fa-caret-up"></i></a>
+            </span>
+          </th>
+          <th>
+            <a (click)="sortBy('total', 'desc')">{{requestPayOutTitleModel?.Total}}</a>
+            <span *ngIf="sortOption.sortBy=='total'">
+              <a (click)="sortBy('total', 'asc')" *ngIf="sortOption.sortType=='desc'"><i class="fa fa-caret-down"></i></a>
+              <a (click)="sortBy('total', 'desc')" *ngIf="sortOption.sortType=='asc'"><i class="fa fa-caret-up"></i></a>
+            </span>
+          </th>
+          <th>
+            <a (click)="sortBy('commission', 'desc')">{{requestPayOutTitleModel?.Commission}}</a>
+            <span *ngIf="sortOption.sortBy=='commission'">
+              <a (click)="sortBy('commission', 'asc')" *ngIf="sortOption.sortType=='desc'"><i class="fa fa-caret-down"></i></a>
+              <a (click)="sortBy('commission', 'desc')" *ngIf="sortOption.sortType=='asc'"><i class="fa fa-caret-up"></i></a>
+            </span>
+          </th>
+          <th>
+            <a (click)="sortBy('shopBalance', 'desc')">{{requestPayOutTitleModel?.ShopBalance}}</a>
+            <span *ngIf="sortOption.sortBy=='shopBalance'">
+              <a (click)="sortBy('shopBalance', 'asc')" *ngIf="sortOption.sortType=='desc'"><i class="fa fa-caret-down"></i></a>
+              <a (click)="sortBy('shopBalance', 'desc')" *ngIf="sortOption.sortType=='asc'"><i class="fa fa-caret-up"></i></a>
+            </span>
+          </th>
+          <th>
+            <a (click)="sortBy('siteBalance', 'desc')">{{requestPayOutTitleModel?.SiteBalance}}</a>
+            <span *ngIf="sortOption.sortBy=='siteBalance'">
+              <a (click)="sortBy('siteBalance', 'asc')" *ngIf="sortOption.sortType=='desc'"><i class="fa fa-caret-down"></i></a>
+              <a (click)="sortBy('siteBalance', 'desc')" *ngIf="sortOption.sortType=='asc'"><i class="fa fa-caret-up"></i></a>
+            </span>
+          </th>
+          <th>
+            <a (click)="sortBy('paidToShop', 'desc')">{{requestPayOutTitleModel?.Paid}}</a>
+            <span *ngIf="sortOption.sortBy=='paidToShop'">
+              <a (click)="sortBy('paidToShop', 'asc')" *ngIf="sortOption.sortType=='desc'"><i class="fa fa-caret-down"></i></a>
+              <a (click)="sortBy('paidToShop', 'desc')" *ngIf="sortOption.sortType=='asc'"><i class="fa fa-caret-up"></i></a>
+            </span>
+          </th>
+          <!-- <th>
+            <a (click)="sortBy('requestToTime', 'desc')">Request To Date</a>
+            <span *ngIf="sortOption.sortBy=='paidToShop'">
+              <a (click)="sortBy('requestToTime', 'asc')" *ngIf="sortOption.sortType=='desc'"><i class="fa fa-caret-down"></i></a>
+              <a (click)="sortBy('requestToTime', 'desc')" *ngIf="sortOption.sortType=='asc'"><i class="fa fa-caret-up"></i></a>
+            </span>
+          </th> -->
+          <th>
+            <a (click)="sortBy('createdAt', 'desc')">{{requestPayOutTitleModel?.CreatedAt}}</a>
+            <span *ngIf="sortOption.sortBy=='createdAt'">
+              <a (click)="sortBy('createdAt', 'asc')" *ngIf="sortOption.sortType=='desc'"><i class="fa fa-caret-down"></i></a>
+              <a (click)="sortBy('createdAt', 'desc')" *ngIf="sortOption.sortType=='asc'"><i class="fa fa-caret-up"></i></a>
+            </span>
+          </th>
+          <th>
+            {{requestPayOutTitleModel?.Actions}}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of items, let i = index">
+          <td>
+            <a [routerLink]="['/requestPayout', item?._id]">
+              {{item?.code}}
+            </a>
+          </td>
+          <td>
+            {{item?.shop.name}}
+          </td>
+          <td>
+            {{item?.total | currency}}
+          </td>
+          <td>{{item?.commission | currency}}</td>
+          <td>
+            {{item?.shopBalance | currency}}
+          </td>
+          <td>
+            {{item?.siteBalance | currency}}
+          </td>
+          <td>
+            <span *ngIf="item.status ==='approved'" class="label label-success">{{requestPayOutTitleModel?.Approved}}</span>
+            <span *ngIf="item.status ==='rejected'" class="label label-danger">{{requestPayOutTitleModel?.Rejected}}</span>
+            <span *ngIf="item.status ==='pending'" class="label label-warning">{{requestPayOutTitleModel?.Pending}}</span>
+          </td>
+          <!-- <td>{{item?.requestToTime | date}}</td> -->
+          <td>{{item?.createdAt | date :'dd/MM/yyyy'}}</td>
+          <td>
+            <a [routerLink]="['/requestPayout', item?._id]"><i class="fa fa-eye"></i></a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="display-inline" [hidden]="total < take">
+      <div class="pull-right">
+        <ngb-pagination [collectionSize]="total" [(page)]="page" [maxSize]="5" [pageSize]="take" (pageChange)="query()"></ngb-pagination>
+      </div>
+    </div>
+  </div>
+</div>

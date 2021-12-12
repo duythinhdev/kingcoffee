@@ -1,0 +1,275 @@
+<div class="card">
+  <div class="card-body">
+    <div class="content" [@toggleContent]="isToogleSideBar">
+      <h3 class="mb-3">Quay thưởng</h3>
+      <div id="stage" class="perspective-off">
+        <div id="rotate">
+          <div id="ring1" class="ring"></div>
+          <div id="ring2" class="ring"></div>
+          <div id="ring3" class="ring"></div>
+          <div id="ring4" class="ring"></div>
+          <div id="ring5" class="ring"></div>
+          <div id="ring6" class="ring" (animationend)="wheelingEnd()"></div>
+          <div class="center-retangle"></div>
+        </div>
+        <div>
+          <label style="text-align: left;">Sản phẩm</label>
+          <select class="form-control" required name="event-product" (change)="onChange($event.target.value)">
+            <option translate selected value="0">Chọn sản phẩm</option>
+            <option *ngFor="let item of eventProducts" [value]="item.productId">{{item.product.name}}</option>
+          </select>
+        </div>
+        <div style="margin-top: 20px;">
+          <button class="go btn btn-danger" (click)="go()" [disabled]="slotButtonDisabled">Bắt đầu quay thưởng</button>
+          <!-- <button class="go btn btn-danger" (click)="end()">Kết thúc</button> -->
+        </div>
+      </div>
+    </div>
+    <button class="toggle-btn" (click)="toggleSideBar()" [@rotate180]="isToogleSideBar"><i
+        class="fa fa-angle-left"></i></button>
+    <div class="side-bar" [@toggleSideBar]="isToogleSideBar">
+      <h4>{{'Program Rules' | translate}}</h4>
+      <!-- <div class="side-bar-container" [@slideInOut]="isExtendPol" [innerHTML]="eventTicket?.description | safeHtml"></div> -->
+      <div class="side-bar-container" [@slideInOut]="isExtendPol">
+        <div class="mar-top-15 policy">
+          <p
+            style="box-sizing: border-box; outline: 0px; margin: 0cm 0cm 0.0001pt; color: #000000; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 300; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; line-height: normal; font-size: 19px; font-family: 0Times New Roman, serif; text-align: center; background: white;">
+            <span
+              style="box-sizing: border-box; outline: 0px; font-size: 25px; font-family: 0Geomanist Medium, serif; color: #f90000;">
+              THỂ LỆ CHƯƠNG TR&Igrave;NH MUA V&Eacute;&nbsp; </span></p>
+          <p
+            style="box-sizing: border-box; outline: 0px; margin: 0cm 0cm 0.0001pt; color: #000000; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 300; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; line-height: normal; font-size: 19px; font-family: 0Times New Roman, serif; text-align: center; background: white;">
+            <span
+              style="box-sizing: border-box; outline: 0px; font-size: 25px; font-family: 0Geomanist Medium, serif; color: #f90000;">
+              &ldquo;NGŨ H&Agrave;NH TƯƠNG SINH&rdquo; </span></p>
+          <p
+            style="box-sizing: border-box; outline: 0px; margin: 0cm 0cm 7.9pt; color: #000000; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 300; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; line-height: normal; font-size: 19px; font-family: 0Times New Roman, serif; background: white;">
+            <span
+              style="box-sizing: border-box; outline: 0px; font-size: 14px; font-family: 0Geomanist Regular, serif; color: #2f2f2f;">
+              &nbsp; </span></p>
+          <p
+            style="box-sizing: border-box; outline: 0px; margin: 0cm 0cm 7.9pt; color: #000000; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 300; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; line-height: normal; font-size: 19px; font-family: 0Times New Roman, serif; background: white;">
+            <span
+              style="box-sizing: border-box; outline: 0px; font-size: 17px; font-family: 0Geomanist Regular, serif; color: #2c3e50;">
+              Để đ&aacute;p lại sự tin y&ecirc;u của c&aacute;c th&agrave;nh vi&ecirc;n trong đại gia đ&igrave;nh Gold
+              Time trong v&agrave; ngo&agrave;i nước, từ ng&agrave;y 05 th&aacute;ng 05 năm 2020 C&ocirc;ng ty Cổ phần
+              Tập đo&agrave;n THỜI GIAN V&Agrave;NG ch&iacute;nh thức triển khai chương tr&igrave;nh mua v&eacute; NGŨ
+              H&Agrave;NH TƯƠNG SINH. </span></p>
+          <p
+            style="box-sizing: border-box; outline: 0px; margin: 0cm 0cm 7.9pt; color: #000000; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 300; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; line-height: normal; font-size: 19px; font-family: 0Times New Roman, serif; background: white;">
+            <span
+              style="box-sizing: border-box; outline: 0px; font-size: 17px; font-family: 0Geomanist Regular, serif; color: #2c3e50;">
+              Th&ocirc;ng tin chương tr&igrave;nh mua v&eacute;&nbsp; </span> <strong> <span
+                style="box-sizing: border-box; outline: 0px; font-size: 17px; font-family: 0Geomanist Medium, serif; color: #2c3e50;">
+                &ldquo;NGŨ H&Agrave;NH TƯƠNG SINH&rdquo;: </span> </strong></p>
+          <p
+            style="box-sizing: border-box; outline: 0px; margin: 0cm 0cm 7.9pt; color: #000000; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 300; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; line-height: normal; font-size: 19px; font-family: 0Times New Roman, serif; background: white;">
+            <strong> <span
+                style="box-sizing: border-box; outline: 0px; font-size: 17px; font-family: 0Geomanist Medium, serif; color: #2c3e50;">
+                1. T&ecirc;n v&eacute;: &ldquo;NGŨ H&Agrave;NH TƯƠNG SINH&rdquo; </span> </strong></p>
+          <p
+            style="box-sizing: border-box; outline: 0px; margin: 0cm 0cm 7.9pt; color: #000000; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 300; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; line-height: normal; font-size: 19px; font-family: 0Times New Roman, serif; background: white;">
+            <strong> <span
+                style="box-sizing: border-box; outline: 0px; font-size: 17px; font-family: 0Geomanist Medium, serif; color: #2c3e50;">
+                2. Thời gian mua v&eacute; </span> </strong> <span
+              style="box-sizing: border-box; outline: 0px; font-size: 17px; font-family: 0Geomanist Medium, serif; color: #2c3e50;">
+              : Từ 17:00 ng&agrave;y 05/05/2020 </span></p>
+          <p
+            style="box-sizing: border-box; outline: 0px; margin: 0cm 0cm 7.9pt; color: #000000; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 300; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; line-height: normal; font-size: 19px; font-family: 0Times New Roman, serif; background: white;">
+            <strong> <span
+                style="box-sizing: border-box; outline: 0px; font-size: 17px; font-family: 0Geomanist Medium, serif; color: #2c3e50;">
+                3. Địa b&agrave;n (phạm vi) mua v&eacute;: </span> </strong> <span
+              style="box-sizing: border-box; outline: 0px; font-size: 17px; font-family: 0Geomanist Regular, serif; color: #2c3e50;">
+              &nbsp;Thuộc th&agrave;nh vi&ecirc;n Gold Time đ&atilde; mua ph&acirc;n quyền kinh doanh trong v&agrave;
+              ngo&agrave;i nước. </span></p>
+          <p
+            style="box-sizing: border-box; outline: 0px; margin: 0cm 0cm 7.9pt; color: #000000; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 300; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; line-height: normal; font-size: 19px; font-family: 0Times New Roman, serif; background: white;">
+            <strong> <span
+                style="box-sizing: border-box; outline: 0px; font-size: 17px; font-family: 0Geomanist Medium, serif; color: #2c3e50;">
+                4. H&igrave;nh thức mua v&eacute;: </span> </strong> <span
+              style="box-sizing: border-box; outline: 0px; font-size: 17px; font-family: 0Geomanist Regular, serif; color: #2c3e50;">
+              &nbsp;Mua v&eacute; tr&ecirc;n website ch&iacute;nh thức&nbsp; </span> <a href="https://goldtimemart.vn/">
+              <span style="box-sizing: border-box; outline: 0px; font-family: 0Geomanist Regular, serif;">
+                https://goldtimemart.vn/ </span> </a> <span
+              style="box-sizing: border-box; outline: 0px; font-size: 17px; font-family: 0Geomanist Regular, serif; color: #2c3e50;">
+              , nhận m&atilde; v&eacute; từ email được gửi về v&agrave; quay số x&aacute;c định tr&uacute;ng thưởng. Lưu
+              &yacute;: Do lưu lượng người d&ugrave;ng mua v&eacute; nhiều, n&ecirc;n email c&oacute; thể trả về chậm,
+              vui l&ograve;ng kiểm tra hộp thư sau 5 ph&uacute;t mua v&eacute;. </span></p>
+          <p
+            style="box-sizing: border-box; outline: 0px; margin: 0cm 0cm 7.9pt; color: #000000; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 300; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; line-height: normal; font-size: 19px; font-family: 0Times New Roman, serif; background: white;">
+            <strong> <span
+                style="box-sizing: border-box; outline: 0px; font-size: 17px; font-family: 0Geomanist Medium, serif; color: #2c3e50;">
+                5. Kh&aacute;ch h&agrave;ng của&nbsp;chương&nbsp;tr&igrave;nh mua v&eacute;: </span> </strong></p>
+          <p
+            style="box-sizing: border-box; outline: 0px; margin: 0cm 0cm 8pt; color: #000000; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 300; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; line-height: normal; font-size: 19px; font-family: 0Times New Roman, serif; background: white;">
+            <span
+              style="box-sizing: border-box; outline: 0px; font-size: 17px; font-family: 0Geomanist Regular, serif; color: #2c3e50;">
+              L&agrave; th&agrave;nh vi&ecirc;n Gold Time đ&atilde; mua ph&acirc;n quyền kinh doanh </span> <strong>
+              <span
+                style="box-sizing: border-box; outline: 0px; font-size: 17px; font-family: 0Geomanist Medium, serif; color: #2c3e50;">
+                . </span> </strong></p>
+          <p
+            style="box-sizing: border-box; outline: 0px; margin: 0cm 0cm 8pt; color: #000000; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 300; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; line-height: normal; font-size: 19px; font-family: 0Times New Roman, serif; background: white;">
+            <strong> <span
+                style="box-sizing: border-box; outline: 0px; font-size: 17px; font-family: 0Geomanist Medium, serif; color: #2c3e50;">
+                6. Cơ cấu giải thưởng </span> </strong></p>
+          <p
+            style="box-sizing: border-box; outline: 0px; margin: 0cm 0cm 8pt; color: #000000; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 300; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; line-height: normal; font-size: 19px; font-family: 0Times New Roman, serif; background: white;">
+            <strong> <span
+                style="box-sizing: border-box; outline: 0px; font-size: 17px; font-family: 0Geomanist Regular, serif; color: red;">
+                Giải thưởng lần quay đầu ti&ecirc;n l&agrave; chiếc smart phone gi&aacute; trị 23.000.000 đồng. </span>
+            </strong></p>
+          <ol start="1">
+            <li><span
+                style="box-sizing: border-box; outline: 0px; font-family: 0Geomanist Regular, serif; font-size: 13pt;">
+                Giải thưởng kh&ocirc;ng thể quy đổi th&agrave;nh tiền mặt. </span></li>
+            <li><span
+                style="box-sizing: border-box; outline: 0px; font-family: 0Geomanist Regular, serif; font-size: 13pt;">
+                C&ocirc;ng ty Cổ phần Tập đo&agrave;n THỜI GIAN V&Agrave;NG cam kết trao thưởng đ&uacute;ng giải thưởng
+                được m&ocirc; tả ở tr&ecirc;n v&agrave; gi&aacute; trị giải thưởng tr&ecirc;n l&agrave; ch&iacute;nh
+                x&aacute;c dựa tr&ecirc;n h&oacute;a đơn đầu v&agrave;o cho việc mua giải thưởng của C&ocirc;ng
+                ty.&nbsp; </span></li>
+            <li><span
+                style="box-sizing: border-box; outline: 0px; font-family: 0Geomanist Regular, serif; font-size: 13pt;">
+                M&ocirc;̣t khách hàng chỉ có th&ecirc;̉ trúng thưởng một l&acirc;̀n. </span></li>
+          </ol>
+          <p
+            style="box-sizing: border-box; outline: 0px; margin: 0cm 0cm 8pt; color: #000000; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 300; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; line-height: normal; font-size: 19px; font-family: 0Times New Roman, serif; background: white;">
+            <strong> <span
+                style="box-sizing: border-box; outline: 0px; font-size: 17px; font-family: 0Geomanist Medium, serif; color: #2c3e50;">
+                7. Nội dung v&agrave; thể lệ chi tiết chương tr&igrave;nh mua v&eacute;: </span> </strong></p>
+          <p
+            style="box-sizing: border-box; outline: 0px; margin: 0cm 0cm 7.9pt; color: #000000; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 300; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; line-height: normal; font-size: 19px; font-family: 0Times New Roman, serif; background: white;">
+            <strong> <span
+                style="box-sizing: border-box; outline: 0px; font-size: 17px; font-family: 0Geomanist Medium, serif; color: #2c3e50;">
+                7.1 Điều kiện, c&aacute;ch thức, thủ tục cụ thể kh&aacute;ch h&agrave;ng phải thực hiện để được tham gia
+                chương tr&igrave;nh mua v&eacute;: </span> </strong></p>
+          <p
+            style="box-sizing: border-box; outline: 0px; margin: 0cm 0cm 7.9pt; color: #000000; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 300; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; line-height: normal; font-size: 19px; font-family: 0Times New Roman, serif; background: white;">
+            <span
+              style="box-sizing: border-box; outline: 0px; font-size: 17px; font-family: 0Geomanist Regular, serif; color: #2c3e50;">
+              Mỗi kh&aacute;ch h&agrave;ng chỉ c&oacute; thể mua v&eacute; một lần v&agrave; nhận m&atilde; v&eacute;
+              được gửi về mail. M&atilde; v&eacute; được gửi ngẫu nhi&ecirc;n về mail. </span></p>
+          <p
+            style="box-sizing: border-box; outline: 0px; margin: 0cm 0cm 7.9pt; color: #000000; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 300; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; line-height: normal; font-size: 19px; font-family: 0Times New Roman, serif; background: white;">
+            <span
+              style="box-sizing: border-box; outline: 0px; font-size: 17px; font-family: 0Geomanist Regular, serif; color: #2c3e50;">
+              Số lượng giải thưởng kh&aacute;ch h&agrave;ng c&oacute; cơ hội nhận được từ quay số tr&uacute;ng thưởng
+              l&agrave;:&nbsp; </span></p>
+          <ol>
+            <li
+              style="box-sizing: border-box; outline: 0px; margin: 0cm 0cm 8pt; line-height: 20.33px; font-size: 19px; font-family: 0Times New Roman, serif;">
+              <span
+                style="box-sizing: border-box; outline: 0px; font-family: 0Geomanist Regular, serif; font-size: 13pt;">
+                Một chiếc smart phone gi&aacute; trị 23.000.000 đồng. </span></li>
+          </ol>
+          <p
+            style="box-sizing: border-box; outline: 0px; margin: 0cm 0cm 7.9pt; color: #000000; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 300; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; line-height: normal; font-size: 19px; font-family: 0Times New Roman, serif; background: white;">
+            <strong> <span
+                style="box-sizing: border-box; outline: 0px; font-size: 17px; font-family: 0Geomanist Medium, serif; color: #2c3e50;">
+                7.2 Thời gian, c&aacute;ch thức ph&aacute;t h&agrave;nh bằng chứng x&aacute;c định tr&uacute;ng
+                thưởng:&nbsp; </span> </strong></p>
+          <p
+            style="box-sizing: border-box; outline: 0px; margin: 0cm 0cm 7.9pt; color: #000000; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 300; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; line-height: normal; font-size: 19px; font-family: 0Times New Roman, serif; background: white;">
+            <span
+              style="box-sizing: border-box; outline: 0px; font-size: 17px; font-family: 0Geomanist Regular, serif; color: #2c3e50;">
+              C&ocirc;ng ty Cổ phần Tập đo&agrave;n THỜI GIAN V&Agrave;NG sẽ tiến h&agrave;nh quay số tr&uacute;ng
+              thưởng c&ocirc;ng khai, sau đ&oacute; ph&acirc;n bố số giải thưởng tr&ecirc;n website ch&iacute;nh thức
+              của c&ocirc;ng ty.&nbsp; </span></p>
+          <p
+            style="box-sizing: border-box; outline: 0px; margin: 0cm 0cm 7.9pt; color: #000000; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 300; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; line-height: normal; font-size: 19px; font-family: 0Times New Roman, serif; background: white;">
+            <strong> <span
+                style="box-sizing: border-box; outline: 0px; font-size: 17px; font-family: 0Geomanist Medium, serif; color: #2c3e50;">
+                7.3 Quy định về bằng chứng x&aacute;c định tr&uacute;ng thưởng: </span> </strong></p>
+          <p
+            style="box-sizing: border-box; outline: 0px; margin: 0cm 0cm 7.9pt; color: #000000; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 300; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; line-height: normal; font-size: 19px; font-family: 0Times New Roman, serif; background: white;">
+            <strong> <span
+                style="box-sizing: border-box; outline: 0px; font-size: 17px; font-family: 0Geomanist Medium, serif; color: #2c3e50;">
+                &nbsp; &nbsp; &nbsp; &nbsp; a. </span> </strong> <span
+              style="box-sizing: border-box; outline: 0px; font-size: 17px; font-family: 0Geomanist Regular, serif; color: #2c3e50;">
+              &nbsp;M&atilde; v&eacute; hợp l&ecirc;̣ là m&atilde; v&eacute; do C&ocirc;ng ty C&ocirc;̉ ph&acirc;̀n
+              Tập đo&agrave;n THỜI GIAN V&Agrave;NG &nbsp;phát hành. M&atilde; v&eacute; hợp l&ecirc;̣ gồm có 5 chữ
+              số. </span></p>
+          <p
+            style="box-sizing: border-box; outline: 0px; margin: 0cm 0cm 7.9pt; color: #000000; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 300; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; line-height: normal; font-size: 19px; font-family: 0Times New Roman, serif; background: white;">
+            <strong> <span
+                style="box-sizing: border-box; outline: 0px; font-size: 17px; font-family: 0Geomanist Medium, serif; color: #2c3e50;">
+                &nbsp; &nbsp; &nbsp; &nbsp; b. </span> </strong> <span
+              style="box-sizing: border-box; outline: 0px; font-size: 17px; font-family: 0Geomanist Regular, serif; color: #2c3e50;">
+              &nbsp;Quy định về k&yacute; tự m&atilde; v&eacute; bao gồm 5 k&yacute; tự l&agrave;: trong c&aacute;c số
+              từ 0-9 </span></p>
+          <p
+            style="box-sizing: border-box; outline: 0px; margin: 0cm 0cm 7.9pt; color: #000000; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 300; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; line-height: normal; font-size: 19px; font-family: 0Times New Roman, serif; background: white;">
+            <strong> <span
+                style="box-sizing: border-box; outline: 0px; font-size: 17px; font-family: 0Geomanist Medium, serif; color: #2c3e50;">
+                8. Quy định về đầu mối giải đ&aacute;p thắc mắc li&ecirc;n quan đến chương tr&igrave;nh mua v&eacute;:
+              </span> </strong></p>
+          <p
+            style="box-sizing: border-box; outline: 0px; margin: 0cm 0cm 7.9pt; color: #000000; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 300; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; line-height: normal; font-size: 19px; font-family: 0Times New Roman, serif; background: white;">
+            <span
+              style="box-sizing: border-box; outline: 0px; font-size: 17px; font-family: 0Geomanist Regular, serif; color: #2c3e50;">
+              Mọi thắc mắc li&ecirc;n quan đến chương tr&igrave;nh mua v&eacute; n&agrave;y, kh&aacute;ch h&agrave;ng
+              li&ecirc;n hệ theo hotline chương tr&igrave;nh&nbsp; <strong> <u> 02838119211 </u> </strong> để được hướng
+              dẫn, giải đ&aacute;p.&nbsp; </span></p>
+          <p
+            style="box-sizing: border-box; outline: 0px; margin: 0cm 0cm 7.9pt; color: #000000; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 300; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; line-height: normal; font-size: 19px; font-family: 0Times New Roman, serif; background: white;">
+            <strong> <span
+                style="box-sizing: border-box; outline: 0px; font-size: 17px; font-family: 0Geomanist Medium, serif; color: #2c3e50;">
+                9. Tr&aacute;ch nhiệm c&ocirc;ng bố th&ocirc;ng tin: </span> </strong></p>
+          <ol>
+            <li><span
+                style="box-sizing: border-box; outline: 0px; font-family: 0Geomanist Regular, serif; font-size: 13pt;">
+                C&ocirc;ng ty Cổ Phần Tập đo&agrave;n THỜI GIAN V&Agrave;NG th&ocirc;ng b&aacute;o chương tr&igrave;nh
+                tr&uacute;ng thưởng tr&ecirc;n website&nbsp; </span> <a href="https://goldtimegroup.com.vn/">
+                https://goldtimegroup.com.vn/ </a> <span
+                style="box-sizing: border-box; outline: 0px; font-family: 0Geomanist Regular, serif; font-size: 13pt;">
+                . </span></li>
+            <li><span
+                style="box-sizing: border-box; outline: 0px; font-family: 0Geomanist Regular, serif; font-size: 13pt;">
+                C&ocirc;ng ty Cổ Phần Tập đo&agrave;n THỜI GIAN V&Agrave;NG c&oacute; tr&aacute;ch nhiệm th&ocirc;ng
+                b&aacute;o kết quả cho người tr&uacute;ng thưởng v&agrave; trả thưởng, đồng thời c&ocirc;ng bố kết quả
+                thực hiện chương tr&igrave;nh mua v&eacute; tr&ecirc;n website&nbsp; </span> <a
+                href="https://goldtimegroup.com.vn/"> https://goldtimegroup.com.vn/ </a> <span
+                style="box-sizing: border-box; outline: 0px; font-family: 0Geomanist Regular, serif; font-size: 13pt;">
+                . </span></li>
+          </ol>
+          <p
+            style="box-sizing: border-box; outline: 0px; margin: 0cm 0cm 7.9pt; color: #000000; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 300; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; line-height: normal; font-size: 19px; font-family: 0Times New Roman, serif; background: white;">
+            <strong> <span
+                style="box-sizing: border-box; outline: 0px; font-size: 17px; font-family: 0Geomanist Medium, serif; color: #2c3e50;">
+                10. C&aacute;c quy định kh&aacute;c: </span> </strong></p>
+          <ol>
+            <li><span
+                style="box-sizing: border-box; outline: 0px; font-family: 0Geomanist Regular, serif; font-size: 13pt;">
+                C&ocirc;ng Ty Cổ Phần Tập đo&agrave;n THỜI GIAN V&Agrave;NG chịu to&agrave;n bộ tr&aacute;ch nhiệm trong
+                việc t&iacute;nh ch&iacute;nh x&aacute;c của m&atilde; v&eacute;. </span></li>
+            <li><span
+                style="box-sizing: border-box; outline: 0px; font-family: 0Geomanist Regular, serif; font-size: 13pt;">
+                Việc tổ chức chương tr&igrave;nh mua v&eacute; phải đảm bảo t&iacute;nh c&ocirc;ng bằng, minh bạch,
+                kh&aacute;ch quan. Nếu kh&aacute;ch h&agrave;ng tr&uacute;ng thưởng đồng &yacute;, C&ocirc;ng ty Cổ Phần
+                Tập đo&agrave;n THỜI GIAN V&Agrave;NG sẽ sử dụng t&ecirc;n v&agrave; h&igrave;nh ảnh của kh&aacute;ch
+                h&agrave;ng tr&uacute;ng thưởng cho mục đ&iacute;ch quảng c&aacute;o thương mại. </span></li>
+            <li><span
+                style="box-sizing: border-box; outline: 0px; font-family: 0Geomanist Regular, serif; font-size: 13pt;">
+                Trong trường hợp xảy ra tranh chấp li&ecirc;n quan đến chương tr&igrave;nh mua v&eacute; n&agrave;y,
+                C&ocirc;ng ty Cổ Phần Tập đo&agrave;n THỜI GIAN V&Agrave;NG c&oacute; tr&aacute;ch nhiệm trực tiếp giải
+                quyết, nếu kh&ocirc;ng thỏa thuận được tranh chấp sẽ được xử l&yacute; theo quy định của ph&aacute;p
+                luật. </span></li>
+          </ol>
+          <p
+            style="box-sizing: border-box; outline: 0px; margin: 0cm 0cm 8pt; color: #000000; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 300; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; line-height: normal; font-size: 19px; font-family: 0Times New Roman, serif; text-align: right; background: white;">
+            <strong> <span
+                style="box-sizing: border-box; outline: 0px; font-family: 0Geomanist Medium, serif; color: #2c3e50;">
+                C&Ocirc;NG TY CỔ PHẦN TẬP ĐO&Agrave;N THỜI GIAN V&Agrave;NG </span> </strong></p>
+          <p
+            style="box-sizing: border-box; outline: 0px; margin: 0cm 0cm 8pt; color: #000000; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 300; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff; text-decoration-style: initial; text-decoration-color: initial; line-height: 20.33px; font-size: 19px; font-family: 0Times New Roman, serif;">
+            &nbsp;</p>
+        </div>
+      </div>
+      <div class="extend-container">
+        <hr />
+        <button class="extend-btn" (click)="togglePolicy()" [@rotate180]="isExtendPol"><i
+            class="fa fa-angle-down"></i></button>
+      </div>
+    </div>
+  </div>

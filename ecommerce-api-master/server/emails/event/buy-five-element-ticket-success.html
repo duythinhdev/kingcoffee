@@ -1,0 +1,30 @@
+{% extends '../layouts/layoutTemplateEmail.html' %}
+
+{% block content %}
+<!--<p>Xin chào {{username}},</p>-->
+<div>
+    <h3>Thông tin đơn hàng</h3>
+    <table class="table" width='100%'>
+        <tr>
+            <td width="30%"><strong>Tên đăng nhập: </strong></td>
+            <td>{{data.username}}</td>
+        </tr>
+        <tr>
+            <td><strong>Tên vé: </strong></td>
+            <td>{{data.ticketName}}</td>
+        </tr>
+        <tr>
+            <td><strong>Mã: </strong></td>
+            <td>{{data.code}}</td>
+        </tr>
+        <tr>
+            <td><strong>Đường link AFF: </strong></td>
+            <td>{{data.affLink}}</td>
+        </tr>
+        <tr>
+            <td><strong>Số điểm: </strong></td>
+            <td>{{data.ticketPrice}}</td>
+        </tr>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,51 @@
+<div class="card">
+  <div class="card-body">
+    <form #frm="ngForm" (submit)="submit(frm)">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label>{{sendMailTitleModel?.subject}} (*)</label>
+            <input type="text" name="title" class="form-control"  [(ngModel)]="data.subject" required #subject="ngModel" />
+            <div *ngIf="submitted && !data.subject">
+              <p [hidden]="!subject.errors.required" class="error">
+                {{sendMailTitleModel?.subjectisrequired}}
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="form-group">
+            <label>{{sendMailTitleModel?.usertype}}</label>
+            <select class="form-control" name="user type" [(ngModel)]="data.userType">
+              <optgroup label="Users">
+                <option value="">{{sendMailTitleModel?.allusers}</option>
+                <option value="seller">{{sendMailTitleModel?.seller}}</option>
+                <option value="user">{{sendMailTitleModel?.registereduser}}</option>
+              </optgroup>
+              <optgroup label="Other">
+                <option value="">{{sendMailTitleModel?.newslettercontacts}}</option>
+              </optgroup>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="form-group">
+            <label>{{sendMailTitleModel?.content}} (*)</label>
+            <ckeditor [editor]="Editor" [config]="ckEditorConfig" [(ngModel)]="data.content" name="content"></ckeditor>
+            <div *ngIf="submitted && !data.content">
+              <p class="error">
+                {{sendMailTitleModel?.contentisrequired}}
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col col-md-12">
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary">{{sendMailTitleModel?.send}}</button>&nbsp;
+            <button class="btn btn-warning" [routerLink]="['/newsletter/contacts']">{{sendMailTitleModel?.cancel}}</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

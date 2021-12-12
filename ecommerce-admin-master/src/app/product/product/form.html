@@ -1,0 +1,606 @@
+<style>
+  .input-discount {
+    width: 63px;
+    height: 20px;
+    border-radius: 5px;
+    border: 1px solid #67757c;
+    font-size: 12px;
+    text-align: center;
+    font-weight: bold;
+    color: #67757c;
+  }
+
+  .input-discount:disabled {
+    background: #e9ecef;
+  }
+
+  .cml-1 {
+    margin-left: 52px;
+  }
+
+  .cml-2 {
+    margin-left: 48px;
+  }
+
+  .cml-3 {
+    margin-left: 22px;
+  }
+
+</style>
+
+<div class="card">
+  <div class="card-body">
+    <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 100%" *ngIf="!product"></div>
+    <form (submit)="submit(frm)" #frm="ngForm" *ngIf="product">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="nav flex-column nav-pills nav-top-cus" role="tablist" aria-orientation="vertical">
+            <a class="nav-link" data-toggle="tab" role="tab" aria-controls="home" aria-selected="true"
+              [ngClass]="{active: tab == 'info'}"
+              (click)="changeTab('info')">{{productCreateTitleModel?.Information}}</a>
+
+            <!-- <a class="nav-link" data-toggle="tab" role="tab" aria-controls="profile" aria-selected="false" [ngClass]="{active: tab == 'spec'}"
+              (click)="changeTab('spec')">{{productCreateTitleModel?.Specifications}}</a> -->
+
+            <a class="nav-link" data-toggle="tab" role="tab" aria-controls="contact" aria-selected="false"
+              [ngClass]="{active: tab == 'images'}"
+              (click)="changeTab('images')">{{productCreateTitleModel?.Images}}</a>
+
+            <!-- <a class="nav-link" data-toggle="tab" role="tab" aria-controls="contact" aria-selected="false" [ngClass]="{active: tab == 'variants'}"
+              (click)="changeTab('variants')">{{productCreateTitleModel?.Variants}}</a> -->
+
+            <!-- <a class="nav-link" data-toggle="tab" role="tab" aria-controls="contact" aria-selected="false"
+              [ngClass]="{active: tab == 'reviews'}" (click)="changeTab('reviews')"
+              [hidden]="!product._id">{{productCreateTitleModel?.Reviews}}</a> -->
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="tab-content">
+            <div class="tab-pane fade show active" role="tabpanel" [ngClass]="{'show active': tab === 'info'}">
+              <div class="row">
+                <!-- <div class="col-md-6">
+                  <div class="form-group">
+                    <label>{{productCreateTitleModel?.Seller}} (*)</label>
+                    <input type="text" name="seller" class="form-control" [class.is-invalid]="searchFailed"
+                      *ngIf="!isUpdate" [(ngModel)]="seller" [ngbTypeahead]="search" [resultTemplate]="rt"
+                      [inputFormatter]="formatter" [disabled]="product.fiveElement" />
+                    <input type="text" name="seller" class="form-control" *ngIf="isUpdate" readonly
+                      [(ngModel)]="product.shop.name" />
+                    <span *ngIf="searching">{{productCreateTitleModel?.searching}}...</span>
+                    <div class="invalid-feedback" *ngIf="searchFailed">
+                      {{productCreateTitleModel?.Sorrysuggestionscouldnotbeloaded}}.</div>
+                    <ng-template #rt let-r="result" let-t="term">
+                      <ngb-highlight [result]="r.name" [term]="t"></ngb-highlight>&nbsp; -->
+                      <!-- <small>({{r?.owner?.name ? r.owner.name : 'N/A'}})</small> -->
+                      <!-- <small>({{r.name}})</small>
+                    </ng-template>
+                  </div>
+                </div> -->
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>{{productCreateTitleModel?.Name}} (*)</label>
+                    <input type="text" name="productName" class="form-control" [(ngModel)]="product.name" required
+                      (change)="changeAlias()" />
+                  </div>
+                </div>
+                <div class="col-md-6" hidden>
+                  <div class="form-group">
+                    <label>{{productCreateTitleModel?.Alias}} (*)</label>
+                    <input type="text" name="alias" class="form-control" [(ngModel)]="product.alias"/>
+                    <!-- <small class="text-muted">{{productCreateTitleModel?.Ifthealiasisexist}}</small> -->
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>{{productCreateTitleModel?.SAP}} (*)</label>
+                    <input [readonly]="isUpdate" type="text" name="sap" [(ngModel)]="product.sap" class="form-control" required />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>{{productCreateTitleModel?.Lang}} (*)</label>
+                    <input type="text" name="lang" class="form-control" [(ngModel)]="product.lang"/>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>{{productCreateTitleModel?.NTDPrice}} (*)</label>
+                    <input type="number" name="price" min="0" class="form-control" [(ngModel)]="product.price"/>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>{{productCreateTitleModel?.NTDUnit}} (*)</label>
+                    <select name="unitPrice" class="form-control" [(ngModel)]="product.unitPrice">
+                      <option value="bag">Túi</option>
+                      <option value="package">Bịch</option>
+                      <option value="box">Hộp</option>
+                      <option value="wire">Dây</option>
+                      <option value="can">Lon</option>
+                      <option value="bottle">Chai</option>
+                      <option value="container">Thùng</option>
+                      <option value="voucher">Voucher</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>{{productCreateTitleModel?.WEPrice}} (*)</label>
+                    <input type="number" name="salePrice" min="0" class="form-control" [(ngModel)]="product.salePrice" />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>{{productCreateTitleModel?.WEUnit}} (*)</label>
+                    <select name="unitSalePrice" class="form-control" [(ngModel)]="product.unitSalePrice">
+                      <option value="bag">Túi</option>
+                      <option value="package">Bịch</option>
+                      <option value="box">Hộp</option>
+                      <option value="wire">Dây</option>
+                      <option value="can">Lon</option>
+                      <option value="bottle">Chai</option>
+                      <option value="container">Thùng</option>
+                      <option value="voucher">Voucher</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>{{productCreateTitleModel?.SKU}} (*)</label>
+                    <input type="text" name="sku" class="form-control" [(ngModel)]="product.sku" #sku="ngModel" required/>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>{{productCreateTitleModel?.Weight}} (*)</label>
+                    <input type="number" name="weight" min="0" class="form-control" [(ngModel)]="product.weight" />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>{{productCreateTitleModel?.PackageMethod}} (*)</label>
+                    <input type="number" name="packingSpecifications" class="form-control" [(ngModel)]="product.packingSpecifications" required/>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>{{productCreateTitleModel?.Producer}} (*)</label>
+                    <input type="text" name="producer" class="form-control" [(ngModel)]="product.producer" required/>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>{{productCreateTitleModel?.Expiry}} (*)</label>
+                    <input type="number" name="expireDate" class="form-control" [(ngModel)]="product.expiryDate" required/>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>{{productCreateTitleModel?.Country}} (*)</label>
+                      <select name="country" class="form-control" [(ngModel)]="product.country">
+                        <option *ngFor="let country of allCountry" value="{{country.Code}}">{{country.Name}}</option>
+                      </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>{{productCreateTitleModel?.Category}} (*)</label>
+                    <select class="form-control" [(ngModel)]="product.categoryId" name="categoryId">
+                      <option value="">-- No category --</option>
+                      <option *ngFor="let item of tree" [ngValue]="item._id">{{item.name}}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6 pt-5">
+                  <div class="form-group">
+                    <div class="checkbox">
+                      <label><input class="mr-1" type="checkbox" name="active"
+                          [(ngModel)]="product.isActive" />{{productCreateTitleModel?.Active}} </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 pt-5">
+                  <div class="form-group">
+                    <div class="checkbox">
+                      <label><input class="mr-1" type="checkbox" name="isPromotion"
+                          [(ngModel)]="product.isPromotion" />{{productCreateTitleModel?.isPromotion}} </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label>{{productCreateTitleModel?.Ingredient}}</label>
+                    <textarea class="form-control" name="productsdesc"
+                      [(ngModel)]="product.shortDescription"></textarea>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label>{{productCreateTitleModel?.Description}}</label>
+                    <ckeditor [editor]="Editor" [config]="ckEditorConfig" [(ngModel)]="product.description" name="description"></ckeditor>
+                  </div>
+                </div>
+                <!-- <div class="col-md-6">
+                  <div class="form-group">
+                    <label>{{productCreateTitleModel?.Type}}</label>
+                    <select type="text" name="type" class="form-control" [(ngModel)]="product.type">
+                      <option value="physical">{{productCreateTitleModel?.Physical}}</option>
+                      <option value="digital">{{productCreateTitleModel?.Digital}}</option>
+                    </select>
+                  </div>
+                </div> -->
+                <!-- <div class="col-md-6">
+                  <div class="form-group" *ngIf="product.type === 'digital'">
+                    <label style="width:100%">{{productCreateTitleModel?.DigitalFilePath}} (*)</label>
+                    <file-upload [options]="fileOptions"></file-upload>
+                    <img src="/assets/images/doc_image.png" width="45px" *ngIf="product.type === 'digital' && product.digitalFileId">
+                    <img src="/assets/images/nofile-available.png" width="45px" *ngIf="product.type === 'digital' && !product.digitalFileId">
+                  </div>
+                </div> -->
+                <!-- <div class="col-md-6">
+                  <div class="form-group">
+                    <label>{{productCreateTitleModel?.StockQuantity}}</label>
+                    <input type="number" name="stockQuantity" min="1" class="form-control"
+                      [(ngModel)]="product.stockQuantity" />
+                  </div>
+                </div> -->
+                <!-- <div class="col-md-6">
+                  <div class="form-group">
+                    <label>{{productCreateTitleModel?.Price}}</label>
+                    <input type="number" name="price" min="0" class="form-control" [(ngModel)]="product.price" />
+                    <small class="text-muted">{{'Minimum price 1,000 VND' | translate}}</small>
+                  </div>
+                </div> -->
+                <!-- <div class="col-md-6">
+                  <div class="form-group">
+                    <label>{{productCreateTitleModel?.TaxName}}</label>
+                    <input type="text" name="taxClass" class="form-control"  [(ngModel)]="product.taxClass" />
+                  </div>
+                </div> -->
+                <!-- <div class="col-md-6">
+                  <div class="form-group">
+                    <label>{{productCreateTitleModel?.TaxValue}} (%)</label>
+                    <input type="number" name="taxValue" class="form-control" placeholder="10" [(ngModel)]="product.taxPercentage" />
+                  </div>
+                </div> -->
+                <!-- <div class="col-md-6">
+                  <div class="form-group">
+                    <label>{{productCreateTitleModel?.RestrictCODareas}}</label>
+                    <div>
+                      <span *ngFor="let item of product.restrictCODAreas; let i = index" class="label label-warning position-relative">
+                        {{item}}<a (click)="removeCodeArea(i)" class="remove-item">x</a>
+                      </span>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-9"><input type="text" name="restrictCODAreas" [(ngModel)]="restrictCODAreas"
+                          class="form-control" /></div>
+                      <div class="col-sm-3">
+                        <div class="btn btn-success" (click)="addRestrictCODAreas()">{{productCreateTitleModel?.Add}}</div>
+                      </div>
+                    </div>
+                  </div>
+                </div> -->
+
+                <!-- <div class="col-md-12">
+                  <div class="form-group">
+                    <label>{{productCreateTitleModel?.RestrictCODareas}}</label>
+                    <div>
+                      <span *ngFor="let item of product.restrictCODAreas; let i = index" class="label label-warning position-relative">
+                        {{item}}<a (click)="removeCodeArea(i)" class="remove-item">x</a>
+                      </span>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-9"><input type="text" name="restrictCODAreas" [(ngModel)]="restrictCODAreas"
+                          class="form-control" /></div>
+                      <div class="col-sm-3">
+                        <div class="btn btn-success" (click)="addRestrictCODAreas()">{{productCreateTitleModel?.Add}}</div>
+                      </div>
+                    </div>
+                  </div>
+                </div> -->
+                <!-- <div class="col-md-6">
+                  <div class="form-group">
+                    <label>UPC</label>
+                    <input type="text" name="upc"  class="form-control" [(ngModel)]="product.upc" />
+                  </div>
+                </div> -->
+                <!-- <div class="col-md-6">
+                  <div class="form-group">
+                    <label>MPN</label>
+                    <input type="text" name="mpn"  class="form-control"
+                      [(ngModel)]="product.mpn" />
+                  </div>
+                </div> -->
+                <!-- <div class="col-md-6">
+                  <div class="form-group">
+                    <label>EAN</label>
+                    <input type="text" name="ean"  class="form-control"
+                      [(ngModel)]="product.ean" />
+                  </div>
+                </div> -->
+                <!-- <div class="col-md-6">
+                  <div class="form-group">
+                    <label>JAN</label>
+                    <input type="text" name="jan"  class="form-control"
+                      [(ngModel)]="product.jan" />
+                  </div>
+                </div> -->
+                <!-- <div class="col-md-6">
+                  <div class="form-group">
+                    <label>ISBN</label>
+                    <input type="text" name="isbn" class="form-control"
+                      [(ngModel)]="product.isbn" />
+                  </div>
+                </div> -->
+                <!-- <div class="col-md-6">
+                </div>
+                <div class="col-md-6" *ngIf="product.metaSeo">
+                  <div class="form-group">
+                    <label>{{productCreateTitleModel?.Metakeywords}}</label>
+                    <input type="text" class="form-control" name="metakw" [(ngModel)]="product.metaSeo.keywords"/>
+                  </div>
+                </div>
+                <div class="col-md-6" *ngIf="product.metaSeo">
+                  <div class="form-group">
+                    <label>{{productCreateTitleModel?.Metadescription}}</label>
+                    <input class="form-control" name="metadesc" [(ngModel)]="product.metaSeo.description">
+                  </div>
+                </div> -->
+                <!-- <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Ordering</label>
+                    <input type="number" name="ordering" [(ngModel)]="product.ordering" class="form-control" />
+                  </div>
+                </div> -->
+                <!-- <div class="col-md-6"></div> -->
+                <!-- <div class="col-md-12">
+                  <hr>
+                  <h4>{{productCreateTitleModel?.Enterzipcode}}.</h4>
+                  <span *ngFor="let item of freeShipAreas; let i = index" class="label label-warning position-relative">
+                    {{item.areaType}}: {{item.name ? item.name : item.value}}<a (click)="removeArea(i)" class="remove-item">x</a>
+                  </span>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label>{{productCreateTitleModel?.ZipCode}}</label>
+                    <input type="text" name="Zipcode" [(ngModel)]="zipCode" class="form-control" />
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label>{{productCreateTitleModel?.FreeShipCountry}}</label>
+                    <select [(ngModel)]="freeCountry" class="form-control" name="freeCountry" (change)="loadStates(freeCountry.isoCode)">
+                      <option *ngFor="let item of countries" [ngValue]="item">{{item.name}}</option>
+                    </select>
+                  </div>
+                </div> -->
+                <!-- <div class="col-md-3">
+                  <div class="form-group">
+                    <label>{{productCreateTitleModel?.FreeShipState}}</label>
+                    <select [(ngModel)]="freeState" class="form-control" name="freeCountry" (change)="loadCities(freeState._id)">
+                      <option *ngFor="let item of states" [ngValue]="item">{{item.name}}</option>
+                    </select>
+                  </div>
+                </div> -->
+                <!-- <div class="col-md-3">
+                  <div class="form-group">
+                    <label>{{productCreateTitleModel?.FreeShipCity}}</label>
+                    <select [(ngModel)]="freeCity" class="form-control" name="freeCity">
+                      <option *ngFor="let item of cities" [ngValue]="item">{{item.name}}</option>
+                    </select>
+                  </div>
+                </div> -->
+                <!-- <div class="col-md-2">
+                  <div class="btn btn-success" (click)="addFreeShipAreas()">{{productCreateTitleModel?.Add}}</div>
+                </div> -->
+                <!-- <div class="col-md-12">
+                  <hr>
+                </div> -->
+                <!-- <div class="col-md-4">
+                  <div class="form-group">
+                    <div class="checkbox">
+                      <label><input type="checkbox" name="dailyDeal" [(ngModel)]="product.dailyDeal" />
+                        {{productCreateTitleModel?.Dailydeal}}</label>
+                    </div>
+                  </div>
+                </div> -->
+                <!-- <div class="col-md-8">
+                  <div class="form-group" *ngIf="product.dailyDeal">
+                    <div class="checkbox">
+                      <label>{{productCreateTitleModel?.DealTo}}(UTC): <span class="label label-info daily-font-size"
+                          *ngIf="product.dealTo">{{product?.dealTo
+                          | date :'dd/MM/yyyy'}}</span></label>
+                      <div class="row">
+                        <ngb-datepicker [(ngModel)]="dealDate" name="dealTo" (select)="updateDealTime()">
+                        </ngb-datepicker>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <hr>
+                </div> -->
+                <!-- <div class="col-md-6">
+                  <div class="form-group">
+                    <div class="checkbox">
+                      <label><input type="checkbox" name="freeShipe" [(ngModel)]="product.freeShip" />{{productCreateTitleModel?.FreeShip}} </label>
+                    </div>
+                  </div>
+                </div> -->
+                <!-- <div class="col-md-6">
+                  <div class="form-group">
+                    <div class="checkbox">
+                      <label><input class="mr-1" type="checkbox" name="featured"
+                          [(ngModel)]="product.featured" />{{productCreateTitleModel?.Featured}} </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <div class="checkbox">
+                      <label><input class="mr-1" type="checkbox" name="hot"
+                          [(ngModel)]="product.hot" />{{productCreateTitleModel?.HotProduct}} </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <div class="checkbox">
+                      <label><input class="mr-1" type="checkbox" name="bestSell"
+                          [(ngModel)]="product.bestSell" />{{productCreateTitleModel?.BestSelling}} </label>
+                    </div>
+                  </div>
+                </div> -->
+                <!-- <div class="col-md-6">
+                  <div class="form-group">
+                    <div class="checkbox">
+                      <label><input class="mr-1" type="checkbox" name="tradeDiscount"
+                          [(ngModel)]="product.isTradeDiscount" />{{productCreateTitleModel?.TradeDiscount}} </label>
+                    </div>
+                  </div>
+                </div> -->
+                <!-- <div class="col-md-12">
+                  <hr>
+                </div> -->
+                <!-- <div class="col-md-12">
+                  <div class="form-group">
+                    <div class="checkbox">
+                      <label><input class="mr-1" type="checkbox" name="marketingDiscount"
+                          [(ngModel)]="product.configs.isTradeDiscountSeller" />{{productCreateTitleModel?.MarketingDiscount}} </label>
+                          <span style="padding: 5px 20px; font-weight: bold;" class="badge badge-info cml-1">15%</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-12 ml-3">
+                  <div class="form-group">
+                    <label>{{productCreateTitleModel?.BuyerDiscount}}</label>
+                    <span style="padding: 5px 20px; font-weight: bold;" class="badge badge-info cml-2">10%</span>
+                  </div>
+                </div>
+                <div class="col-md-12 ml-3">
+                  <div class="form-group">
+                    <label>{{productCreateTitleModel?.GoldTimeDiscount}} (%) </label>
+                      <input [disabled]="product.isActive" class="cml-3 input-discount inline-block" type="text" name="goldTimeDiscount"
+                      [(ngModel)]="product.configs.tradeDiscountGoldtime" (keydown)="checkDecimalNumber($event)"/>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <hr>
+                </div> -->
+                <!-- <div class="col-md-4">
+                  <div class="form-group">
+                    <div class="checkbox">
+                      <label><input type="checkbox" name="deny" [(ngModel)]="deny" />
+                        {{productCreateTitleModel?.Deny}}</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-8">
+                  <div class="form-group" *ngIf="deny">
+                    <div class="checkbox">
+                      <label>{{productCreateTitleModel?.Cause}}:</label>
+                      <div class="row">
+                        <textarea [(ngModel)]="product.note" name="note" class="form-control" rows="3"></textarea>
+                      </div>
+                    </div>
+                  </div>
+                </div> -->
+                <div class="col-md-12">
+                  <hr>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="tab-pane fade show active" role="tabpanel" [ngClass]="{'show active': tab === 'spec'}">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>{{productCreateTitleModel?.Specifications}}</label>
+                    <table class="table">
+                      <tbody class="sortable"  [sortablejs]="product.specifications">
+                          <tr *ngFor="let c of product.specifications; let i = index">
+                            <div *ngIf="c.value !==''">
+                              <td>
+                                <span >
+                                  <i class="fa fa-bars"></i> <strong>{{c.key}}</strong>
+                                </span>
+                              </td>
+                              <td>
+                                <input type="text" name="spec{{i}}" [(ngModel)]="c.value" class="form-control" />
+                              </td>
+                              <td>
+                                <a (click)="removeSpec(i)"><i class="fa fa-trash"></i></a>
+                              </td>
+                            </div>
+                          </tr>
+                      </tbody>
+                      <tfoot>
+                        <tr>
+                          <td>
+                            <input type="text" class="form-control" name="newSpec"
+                              [(ngModel)]="newSpecification.key" />
+                          </td>
+                          <td>
+                            <div class="input-group mb-3">
+                              <input type="text" class="form-control"  name="newChemicalValue"
+                                [(ngModel)]="newSpecification.value" />
+                              <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button" (click)="addSpecification()">{{productCreateTitleModel?.Add}}</button>
+                              </div>
+                            </div>
+                          </td>
+                          <td></td>
+                        </tr>
+                      </tfoot>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div> -->
+
+            <div class="tab-pane fade show active" role="tabpanel" [ngClass]="{'show active': tab === 'images'}">
+              <h3>{{productCreateTitleModel?.Clicktosetmainimage}}.</h3>
+              <div class="row">
+                <div class="col-md-3 text-center" *ngFor="let media of images; let i = index">
+                  <div [ngClass]="{selected: media._id === mainImage}">
+                    <media-preview [media]="media"></media-preview>
+                  </div>
+                  <div class="btn-group" role="group">
+                    <button class="btn btn-secondary" type="button"
+                      [ngClass]="{'btn-success' : media._id === mainImage}" (click)="setMain(media)">
+                      <i class="fa fa-check"></i>
+                    </button>
+                    <button class="btn btn-secondary" type="button" (click)="removeImage(media, i)">
+                      <i class="fa fa-trash"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <hr />
+              <media-select (onSelect)="selectImage($event)" [options]="imagesOptions"></media-select>
+            </div>
+
+            <!-- <div class="tab-pane fade show active" role="tabpanel" [ngClass]="{'show active': tab === 'variants'}">
+              <product-variants [product]="product" *ngIf="product?._id"></product-variants>
+              <div class="alert" *ngIf="!product?._id">
+                {{productCreateTitleModel?.Pleasecreateproductthenaddvariants}}
+              </div>
+            </div> -->
+            <div class="tab-pane fade " role="tabpanel" [ngClass]="{'show active': tab === 'reviews'}">
+              <reviews-listing [product]="product" *ngIf="product?._id"></reviews-listing>
+              <div class="alert" *ngIf="!product?._id">
+                {{productCreateTitleModel?.Pleasecreateproduct}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary">{{productCreateTitleModel?.Submit}}</button>&nbsp;
+          <a class="btn btn-warning" [routerLink]="['/products']">{{productCreateTitleModel?.Cancel}}</a>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

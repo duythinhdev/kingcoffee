@@ -1,0 +1,357 @@
+<div class="padding-main">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="panel panel-default">
+          <div class="panel-heading resume-heading">
+            <div class="row">
+              <div class="col-lg-12">
+                <h3 class="title-detail" translate>{{orderViewTitleModel?.Generalinformation}}</h3>
+                <ul class="list-group">
+                  <li class="list-group-item">
+                    <div class="row">
+                      <div class="col-md-2" translate>
+                        {{orderViewTitleModel?.Number}}
+                      </div>
+                      <div class="col-md-10">
+                        <strong>{{order?.orderCode}}</strong>
+                      </div>
+                    </div>
+                  </li>
+                  <!-- <li class="list-group-item">
+                    <div class="row">
+                      <div class="col-md-2" translate>
+                        {{orderViewTitleModel?.IP}}
+                      </div>
+                      <div class="col-md-10">
+                        {{order.userIP}}
+                      </div>
+                    </div>
+                  </li> -->
+                  <li class="list-group-item">
+                    <div class="row">
+                      <div class="col-md-2">
+                        {{'Order date' | translate}}
+                      </div>
+                      <div class="col-md-10">
+                        {{order?.createdAt | date:'dd/MM/yyyy'}}
+                      </div>
+                    </div>
+                  </li>
+                  <li class="list-group-item">
+                    <div class="row">
+                      <div class="col-md-2">
+                        {{'Delivery date' | translate}}
+                      </div>
+                      <div class="col-md-10">
+                        {{order?.expectedDeliveryDate | date:'dd/MM/yyyy'}}
+                      </div>
+                    </div>
+                  </li>
+                  <li class="list-group-item">
+                    <div class="row">
+                       <div class="col-md-2">{{'Order status' | translate}}</div>
+                      <div class="col-md-10">
+                        <span *ngIf="order?.orderStatus">{{(OrderStatusDescription[order?.orderStatus]) | translate}}</span>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="list-group-item">
+                    <div class="row">
+                      <div class="col-md-2">
+                        {{'Payment Type' | translate}}
+                      </div>
+                      <div class="col-md-10">
+                        <span *ngIf="order?.transaction?.paymentGateway">
+                          {{order?.transaction?.paymentGateway | paymentGatewayName | translate }}
+                        </span>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="list-group-item" *ngIf="order?.transportation">
+                    <div class="row">
+                      <div class="col-md-2">
+                        {{'Delivery Party' | translate}}
+                      </div>
+                      <div class="col-md-10">
+                        <span *ngIf="order?.transportation">
+                          {{order?.transportation }}
+                        </span>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="list-group-item">
+                    <div class="row">
+                      <div class="col-md-2" translate>
+                        {{orderViewTitleModel?.Totalprice}}
+                      </div>
+                      <div class="col-md-10 price-product">
+                        {{order?.totalPrice | priceCurrency: 'VND'}}
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+                <br>
+                <h3 class="title-detail">{{'Customer Information' | translate}}</h3>
+                <ul class="list-group">
+                  <li class="list-group-item">
+                    <div class="row">
+                      <div class="col-md-2">
+                        {{'Orderer' | translate}}
+                      </div>
+                      <div class="col-md-10">
+                        {{ order?.lastName }} {{order?.firstName }}
+                      </div>
+                    </div>
+                  </li>
+                  <li class="list-group-item">
+                    <div class="row">
+                      <div class="col-md-2">
+                        {{'Type Of Distributor' | translate}}
+                      </div>
+                      <div class="col-md-10">
+                        {{order?.customer?.typeNPP}}
+                      </div>
+                    </div>
+                  </li>
+                  <li class="list-group-item">
+                    <div class="row">
+                      <div class="col-md-2">
+                        {{'Shipping Address' | translate}}
+                      </div>
+                      <div class="col-md-10">
+                        {{order?.streetAddress}}, {{order?.ward?.name}}, {{order?.district?.name}}, {{order?.city?.name}}
+                      </div>
+                    </div>
+                  </li>
+                  <li class="list-group-item">
+                    <div class="row">
+                      <div class="col-md-2">
+                        {{'Mobile Number' | translate}}
+                      </div>
+                      <div class="col-md-10">
+                        {{order?.phoneNumber || order?.customer?.phoneNumber}}
+                      </div>
+                    </div>
+                  </li>
+                  <li class="list-group-item">
+                    <div class="row">
+                      <div class="col-md-2" >
+                        Fax
+                      </div>
+                      <div class="col-md-4">
+                        {{order?.customer?.fax}}
+                      </div>
+                    </div>
+                  </li>
+                  <li class="list-group-item">
+                    <div class="row">
+                      <div class="col-md-2" >
+                        {{'Tax Code' | translate}}
+                      </div>
+                      <div class="col-md-4">
+                        {{order?.customer?.taxCode}}
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+                <br>
+                <h3 class="title-detail">{{'Note' | translate}}</h3>
+                <ul class="list-group">
+                  <li class="list-group-item">
+                    <div class="row">
+                      <div class="col-md-2">
+                        {{'Reason Reject' | translate}}
+                      </div>
+                      <div class="col-md-10">
+                        {{order?.reasonReject}}
+                      </div>
+                    </div>
+                  </li>
+                  <li class="list-group-item">
+                    <div class="row">
+                      <div class="col-md-2">
+                        {{'Reason Cancel' | translate}}
+                      </div>
+                      <div class="col-md-10">
+                        {{order?.reasonCancel}}
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+                <br>
+                <h3 class="title-detail" translate>{{orderViewTitleModel?.Products}}</h3>
+                <table class="table table-hover bg-white">
+                  <thead>
+                    <tr>
+                      <th translate>
+                        {{orderViewTitleModel?.Product}}
+                      </th>
+                      <th>
+                        {{'Price' | translate}}
+                      </th>
+                      <th translate>
+                        {{orderViewTitleModel?.Quantity}}
+                      </th>
+                      <th>
+                        Khuyến mãi
+                      </th>
+                      <th>
+                        {{'Into Money' | translate}}
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of details, let i = index">
+                      <!-- <td>
+                        <p> -->
+                          <!-- <a [routerLink]="['/products', item.productDetails.alias]">{{item?.productDetails?.name}}</a> -->
+                          <!-- <span>{{item?.productDetails?.name}}</span>
+                          <br /> -->
+                          <!-- <span class="label label-primary">{{item.productDetails?.type}}</span> -->
+                        <!-- </p> -->
+
+                        <!-- <p *ngIf="item.variantDetails">
+                          <span *ngFor="let option of item.variantDetails.options">
+                            {{option.displayText || option.optionKey}}: {{option.value}}
+                          </span>
+                        </p>
+                      </td> -->
+                      <!-- <td>{{item?.shop?.username}}</td> -->
+                      <td>{{item?.product?.name}}</td>
+                      <td>{{item?.unitPrice | priceCurrency: 'VND'}}</td>
+                        <td *ngIf="isHub; else elseBlock">
+                          <app-plus-minus-button class="quantity-control"
+                          [value]="item?.quantity" (changeValue)="onChangeProductQuantity($event, item?.product?._id,item?.unitPrice)"></app-plus-minus-button>
+                        </td>
+                      <ng-template #elseBlock>
+                        <td>&nbsp; {{item?.quantity}}</td>
+                      </ng-template>
+                      <td>{{item?.priceAfterPromo ? item?.priceAfterPromo : 0 | priceCurrency: 'VND'}}</td>
+                      <td>{{item?.totalPrice | priceCurrency: 'VND'}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <!-- Hub -->
+                    <table style="width: 37%;
+                    margin-right: 0px;
+                    margin-left: auto;" *ngIf="isHub; else elseBlockTable">
+                      <tr>
+                        <td>{{'Total money' | translate}}</td>
+                        <td>{{totalPrice | priceCurrency: 'VND'}}</td>
+                      </tr>
+                      <tr>
+                        <td>{{'Trade discount' | translate}} ({{order?.percentDiscount * 100 | number}}%)</td>
+                        <td>{{totalDiscountPrice | priceCurrency: 'VND'}}</td>
+                      </tr>
+                      <tr>
+                        <td>{{'Total price after discount' | translate}}</td>
+                        <td>{{totalPrice - totalDiscountPrice | priceCurrency: 'VND'}}</td>
+                      </tr>
+                      <tr>
+                        <td>{{'Shipping Fee' | translate}}</td>
+                        <!-- <td>{{(!isHub ? (totalPrice - totalDiscountPrice) >= 1000000 ? ('Free ship' | translate)  :  (shippingPrice | priceCurrency:'VND') : ('Free ship' | translate))   }}</td> -->
+                        <td>{{'Free ship' | translate}}</td>
+                      </tr>
+                      <tr *ngFor="let extraProduct of extraProducts">
+                        <td class="text-danger">Mua 1 <span class="short-text">{{extraProduct?.product?.name}}</span> ưu đãi</td>
+                        <td class="text-danger">{{extraProduct?.totalPrice | priceCurrency: 'VND'}}</td>
+                      </tr>
+                      <tr *ngFor="let item of promotionOrders, let i = index">
+                        <td>Khuyến mãi ({{item?.discountPercent}} %)</td>
+                        <td>{{item?.discountPrice | priceCurrency: 'VND'}}</td>
+                      </tr>
+                      <tr>
+                        <td>{{'Total price' | translate}}</td>
+                        <!-- <td>{{(totalPrice - totalDiscountPrice) >= 1000000 ? (totalPrice - totalDiscountPrice | priceCurrency: 'VND')  : (totalPrice - totalDiscountPrice + shippingPrice | priceCurrency: 'VND') }}</td> -->
+                        <td>{{totalPrice - totalDiscountPrice   | priceCurrency: 'VND'}}</td>
+                      </tr>
+                    </table>
+                  <!-- We/We-Home -->
+                  <ng-template #elseBlockTable>
+                    <table id="statistic-table" style="width: 37%;
+                    margin-right: 0px;
+                    margin-left: auto;">
+                      <tr>
+                        <td>{{'Total money' | translate}}</td>
+                        <td>{{totalPrice | priceCurrency: 'VND'}}</td>
+                      </tr>
+                      <tr>
+                        <td>{{'Trade discount' | translate}} ({{order?.percentDiscount * 100 | number}}%)</td>
+                        <td>{{totalDiscountPrice | priceCurrency: 'VND'}}</td>
+                      </tr>
+                      <tr>
+                        <td>{{'Total price after discount' | translate}}</td>
+                        <td>{{totalPrice - totalDiscountPrice | priceCurrency: 'VND'}}</td>
+                      </tr>
+                      <tr *ngFor="let extraProduct of extraProducts">
+                        <td class="text-danger">Mua 1 <span class="short-text">{{extraProduct?.product?.name}}</span> ưu đãi</td>
+                        <td class="text-danger">{{extraProduct?.totalPrice | priceCurrency: 'VND'}}</td>
+                      </tr>
+                      <!-- <div > -->
+                        <tr *ngFor="let item of promotionOrders, let i = index">
+                          <td *ngIf="item?.discountPrice && item?.discountPercent">Khuyến mãi ({{item?.discountPercent}} %)</td>
+                          <td *ngIf="item?.discountPrice && !item?.discountPercent">Khuyến mãi</td>
+                          <td *ngIf="item?.discountPrice">{{item?.discountPrice | priceCurrency: 'VND'}}</td>
+                        </tr>
+                      <!-- </div> -->
+                      <tr>
+                        <td>{{'Shipping Fee' | translate}}</td>
+                        <!-- <td>{{(!isHub ? (totalPrice - totalDiscountPrice) >= 1000000 ? ('Free ship' | translate)  :  (shippingPrice | priceCurrency:'VND') : ('Free ship' | translate))   }}</td> -->
+                        <td>{{(totalPrice - totalDiscountPrice) > 1000000 ? ('Free ship' | translate) : (shippingPrice | priceCurrency: 'VND')}}</td>
+                      </tr>
+                      <tr *ngFor="let item of freeShipList">
+                        <td *ngIf="item?.discountPrice">{{'Shipping price discount' | translate}}</td>
+                        <td *ngIf="item?.discountPrice">{{item?.discountPrice | priceCurrency: 'VND'}}</td>
+                      </tr>
+                      <tr>
+                        <td>{{'Total price' | translate}}</td>
+                        <!-- <td>{{(totalPrice - totalDiscountPrice) >= 1000000 ? (totalPrice - totalDiscountPrice | priceCurrency: 'VND')  : (totalPrice - totalDiscountPrice + shippingPrice | priceCurrency: 'VND') }}</td> -->
+                        <td>{{order?.totalPrice | priceCurrency: 'VND'}}</td>
+                      </tr>
+                    </table>
+                  </ng-template>
+                <br>
+                <div *ngIf="bravoOrderDetails && bravoOrderDetails.length > 0">
+                  <h3 *ngIf="bravoOrderDetails && bravoOrderDetails.length > 0" class="title-detail">{{'Bravo' | translate}}</h3>
+                  <table class="table table-hover bg-white" >
+                    <thead>
+                      <tr>
+                        <th translate>
+                          {{orderViewTitleModel?.Product}}
+                        </th>
+                        <th>
+                          {{'Price' | translate}}
+                        </th>
+                        <th translate>
+                          {{orderViewTitleModel?.Quantity}}
+                        </th>
+                        <th>
+                          {{'Into Money' | translate}}
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of bravoOrderDetails, let i = index">
+                        <td>{{item?.ItemName}}</td>
+                        <td>{{item?.OriginalId | priceCurrency: 'VND'}}</td>
+                        <td>&nbsp; {{item?.Quantity9}}</td>
+                        <td>{{(item?.OriginalId * item?.Quantity9) | priceCurrency: 'VND'}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <br>
+                </div>
+                <button (click)="updateOrder(order?._id)" class="btn btn-success" *ngIf="checkButtonSave(order?.customer?.userRoles,order?.isConfirmOrderHub) == true"
+                  >{{'Lưu' | translate}}</button>
+                  &nbsp;
+                                  <button class="btn btn-warning" [routerLink]="['/orders/list']"
+                  >{{orderViewTitleModel?.Cancel | translate}}</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

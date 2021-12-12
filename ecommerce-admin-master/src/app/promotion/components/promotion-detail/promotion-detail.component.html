@@ -1,0 +1,427 @@
+<section class="promotion">
+    <div class="promotion-container">
+        <form (ngSubmit)="showForm()" [formGroup]="rfPromotion">
+            <div class="row d-flex">
+                <div class="col-md-2">
+                    <label class="required fw" translate>Type of program</label>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <select #pptype required class="form-control" (change)="changePromotion($event)" [attr.disabled]="notAllowEdit ? '' : null" formControlName="promotionProgramType">
+              <option></option>
+              <option *ngFor="let item of promotionProgramType" [ngValue]="item._id">{{item?.name}}</option>
+            </select>
+                    </div>
+                </div>
+                <div *ngIf="rfPromotion.controls.promotionProgramType?.errors?.required" class="col-md-2">
+                    <p class="error">{{'Compulsory' | translate}} (*)</p>
+                </div>
+            </div>
+            <div class="row d-flex">
+                <div class="col-md-2">
+                    <label class="required fw" translate>Check voucher</label>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <select #at required class="form-control" formControlName="applyType" [attr.disabled]="notAllowEdit ? '' : null" (change)="changePromotion($event)">
+              <option></option>
+              <option *ngFor="let item of applyType | keyvalue" [ngValue]="item.value">{{item.value | translate}}
+              </option>
+            </select>
+                    </div>
+                </div>
+                <div *ngIf="rfPromotion.controls.applyType?.errors?.required && rfPromotion.controls.applyType?.touched" class="col-md-2">
+                    <p class="error">{{'Compulsory' | translate}} (*)</p>
+                </div>
+            </div>
+            <div class="row d-flex">
+                <div class="col-md-2">
+                    <label class="required fw" translate>Promotion form</label>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <select [attr.disabled]="!rfPromotion?.value?.applyType || notAllowEdit ? '': null" required #pForm class="form-control" formControlName="promotionForm" (change)="changePromotion($event)">
+              <ng-template [ngIf]="rfPromotion?.value?.applyType == 'order'">
+                <option></option>
+                <option *ngFor="let item of applyOrder" [ngValue]="item">{{item |translate}}</option>
+              </ng-template>
+              <ng-template [ngIf]="rfPromotion?.value?.applyType == 'product'">
+                <option></option>
+                <option *ngFor="let item of applyProduct" [ngValue]="item">{{item |translate}}</option>
+              </ng-template>
+            </select>
+                    </div>
+                </div>
+                <div *ngIf="rfPromotion.controls.promotionForm?.errors?.required && rfPromotion.controls.promotionForm?.touched" class="col-md-2">
+                    <p class="error">{{'Compulsory' | translate}} (*)</p>
+                </div>
+            </div>
+            <div class="row" *ngIf="!idUpdate">
+                <div class="col-md-2">
+                    <button [disabled]="rfPromotion.invalid" class="btn btn-primary mt-2" type="submit" translate>Create
+            New</button>
+                </div>
+            </div>
+        </form>
+        <ng-template [ngIf]="show">
+            <hr style="border-bottom: 5px solid #610C3E;">
+            <div class="row">
+                <div class="col-md-2">
+                    <label class="fw" translate>General information</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-1">
+                    <label class="required">{{'ID' | translate}} {{'isPromotion' | translate}}</label>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <input #ppCode="ngModel" [(ngModel)]="promotion.code" type="text" required [attr.disabled]="notAllowEdit ? '' : null" />
+                    </div>
+                </div>
+                <div *ngIf="ppCode?.errors?.required && ppCode?.touched" class="col-md-2">
+                    <p class="error">{{'Compulsory' | translate}} (*)</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-1">
+                    <label class="required">{{'Name' | translate}} {{'isPromotion' | translate}}</label>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <input #pName="ngModel" [(ngModel)]="promotion.name" type="text" required [disabled]="isEdit" />
+                    </div>
+                </div>
+                <div *ngIf="pName?.errors?.required && pName?.touched" class="col-md-2">
+                    <p class="error">{{'Compulsory' | translate}} (*)</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-1">
+                    <label class="required">{{'Decription' | translate}}</label>
+                </div>
+                <div class="col-md-10">
+                    <div class="form-group">
+                        <ckeditor #editor="ngModel" required [editor]="Editor" [config]="ckEditorConfig" [(ngModel)]="promotion.content" name="description" [disabled]="isEdit">
+                        </ckeditor>
+                    </div>
+                </div>
+                <div *ngIf="editor?.errors?.required && editor?.touched" class="col-md-1" style="align-self: center;">
+                    <p class="error">{{'Compulsory' | translate}} (*)</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <label class="fw">{{'Condition' | translate}} {{'Check voucher' | translate | lowercase}}</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-1">
+                    <label class="required" translate>Start</label>
+                </div>
+                <div class="col-md-3">
+                    <div class="input-group d-flex">
+                        <input style="height: 40px;" #dpFromDate class="form-control" placeholder="{{'HH:mm DD-MM-YYYY' | translate}}" name="dpFromDate" [value]="formatTimePickerValue(fromTime)+formatter.format(fromDate)" [ngClass]="{'date-input-disable': !isEdit}" (input)="fromDate = validateInput(fromDate, dpFromDate.value)"
+                            [disabled]="true">
+                        <div class="input-group-append">
+                            <button style="height: 40px;" class="btn btn-outline-secondary calendar" (click)="datepicker.toggle()" type="button" [disabled]="isEdit"><i class="fa fa-calendar" title="Date"
+                  aria-hidden="true"></i></button>
+                        </div>
+                    </div>
+                    <div class="form-group hidden">
+                        <div class="input-group">
+                            <input name="datepicker" class="form-control" ngbDatepicker #datepicker="ngbDatepicker" [autoClose]="'outside'" (dateSelect)="onDateSelection($event)" [displayMonths]="2" [footerTemplate]="f0" [dayTemplate]="t" outsideDays="hidden" [startDate]="fromDate!"
+                                style="display: none;" [minDate]="minDate">
+                            <ng-template #t let-date let-focused="focused">
+                                <span class="custom-day" [class.focused]="focused" [class.range]="isRange(date)" [class.faded]="isHovered(date) || isInside(date)" (mouseenter)="hoveredDate = date" (mouseleave)="hoveredDate = null">
+                  {{ date.day }}
+                </span>
+                            </ng-template>
+                            <ng-template #f0>
+                                <div class="row">
+                                    <div class="col-6 time-picker">
+                                        <ngb-timepicker [(ngModel)]="fromTime" name="fromTime" [readonlyInputs]="isEditObject" [spinners]="!isEditObject"></ngb-timepicker>
+                                    </div>
+                                    <div class="col-6 time-picker">
+                                        <ngb-timepicker [(ngModel)]="toTime" name="toTime"></ngb-timepicker>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <label class="required" translate>End</label>
+                </div>
+                <div class="col-md-3">
+                    <div class="input-group">
+                        <input style="height: 40px;" #dpToDate class="form-control" placeholder="{{'HH:mm DD-MM-YYYY' | translate}}" name="dpToDate" [value]="formatTimePickerValue(toTime)+formatter.format(toDate)" (input)="toDate = validateInput(toDate, dpToDate.value)" [disabled]="true"
+                            [ngClass]="{'date-input-disable': !editObject(isEdit,isEditObject,'input')}">
+                        <div class="input-group-append">
+                            <button style="height: 40px;" class="btn btn-outline-secondary calendar" (click)="datepicker.toggle()" type="button" [disabled]="editObject(isEdit,isEditObject,'input')"><i class="fa fa-calendar" title="Date"
+                  aria-hidden="true"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-md-1">
+                    <label class="required" translate>Repeat</label>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <select class="form-control" [attr.disabled]="isEdit ? '' : null" name="repeat" [(ngModel)]="promotion.timeApplyConditionType" (change)="onChangeRepeat()">
+              <option *ngFor="let item of repeat" [ngValue]="item">{{item |translate}}</option>
+            </select>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <label style="font-size: 18px;" translate>Times</label>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <ng-multiselect-dropdown [disabled]="isEdit || checkRepeat" [placeholder]="' '" [data]="dayRepeat" [(ngModel)]="promotion.dayRepeat" [settings]="dropdownDayRepeatSettings" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
+                        </ng-multiselect-dropdown>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <label style="font-size: 18px;" translate>Start</label>
+                </div>
+                <div class="col-md-2">
+                    <div class="col-6 time-picker">
+                        <ngb-timepicker [(ngModel)]="promotion.timeStartLoop" name="timeStartLoop" [spinners]="false" [readonlyInputs]="isEdit || checkRepeat" (change)="onChangeTimeEnd($event)"></ngb-timepicker>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <label style="font-size: 18px;" translate>End</label>
+                </div>
+                <div class="col-md-2">
+                    <div class="col-6 time-picker">
+                        <ngb-timepicker [(ngModel)]="promotion.timeEndLoop" name="timeEndLoop" [spinners]="false" [readonlyInputs]="isEdit || checkRepeat" (change)="onChangeTimeEnd($event)"></ngb-timepicker>
+                    </div>
+                    <div *ngIf="showErrorTimeEndLoop" class="small form-text text-danger">*Thời gian kết thúc phải lớn hơn thời gian bắt đầu</div>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-md-1">
+                    <label class="required" translate>Apply area</label>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <ng-multiselect-dropdown [disabled]="editObject(isEdit,isEditObject,'input')" [placeholder]="' '" [data]="dataRoleApply" [(ngModel)]="promotion.areaApply" [settings]="dropdownAreaSettings" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
+                        </ng-multiselect-dropdown>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-1">
+                    <label class="required" translate>Role apply</label>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <ng-multiselect-dropdown [disabled]="isEdit" [placeholder]="' '" [data]="dataListUserRoles" [(ngModel)]="promotion.applyRole" [settings]="dropdownRoleSettings" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)" (onDropDownClose)="onDropDownClose()">
+                        </ng-multiselect-dropdown>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-1">
+                    <label style="font-size: 18px;" translate>Object</label>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <input #user="ngModel" type="text" [disabled]="editObject(isEdit,isEditObject,'input')" [(ngModel)]="users" />
+                    </div>
+                </div>
+                <!-- <div *ngIf="user?.errors?.required && user?.touched" class="col-md-2">
+          <p class="error">{{'Compulsory' | translate}} (*)</p>
+        </div> -->
+                <a (click)="createTable()" *ngIf="editObject(isEdit,isEditObject,'other')"><i class="fa fa-plus-circle"
+            style="font-size: 25px; color: #0cda08; line-height: 38px;"></i></a>
+            </div>
+            <div class="row mb-4">
+                <div class="col-md-1">
+                    <label style="font-size: 18px;" translate>List of objects</label>
+                </div>
+                <div class="col-md-6">
+                    <table class="table table-object" *ngIf="listUser?.length != 0; else orderListEmpty">
+                        <thead>
+                            <tr>
+                                <th style="text-align: center;">{{'ID' | translate}} {{'Member' | translate | lowercase}}</th>
+                                <th style="text-align: center;">{{'Name' | translate}} {{'Member' | translate | lowercase}}</th>
+                                <th style="text-align: center;">{{'Phone number' | translate}}</th>
+                                <!-- <th style="text-align: center;">{{'Do not apply' | translate}}</th> -->
+                                <th style="text-align: center;"></th>
+                                <th>
+                                    <a (click)="removeAllUser()" *ngIf="editObject(isEdit,isEditObject,'other')">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of listUser, let i = index">
+                                <td>{{item?.CustomerNumber}}</td>
+                                <td>{{item?.Name}}</td>
+                                <td>{{item?.Mobile}}</td>
+                                <!-- <td><input type="checkbox" [(ngModel)]="item.isRejectApplyMemberId" /></td> -->
+                                <td>
+                                    <a (click)="removeObject(i)" *ngIf="editObject(isEdit,isEditObject,'other')">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <ng-template #orderListEmpty>
+                        <div class="order-list-empty">
+                            <p class="depth" translate>No objects found</p>
+                        </div>
+                    </ng-template>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-1">
+                    <label style="font-size: 18px;" translate>Does not apply to objects</label>
+                </div>
+                <div class="col-md-2">
+                    <input #active="ngModel" [(ngModel)]="promotion.isRejectApplyMemberId" type="checkbox" [attr.disabled]="isEdit ? '' : null" />
+                </div>
+                <!-- <div *ngIf="active?.errors?.required && active?.touched" class="col-md-2">
+          <p class="error">{{'Compulsory' | translate}} (*)</p>
+        </div> -->
+            </div>
+            <!-- <div class="row">
+        <div class="col-md-1 ">
+          <label style="font-size: 18px;">{{'Time to receive Hubs' | translate}}</label>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <div class="input-group">
+              <input class="form-control" placeholder="{{'HH:mm DD-MM-YYYY' | translate}}" name="dp"
+                [value]="formatTimePickerValue(timeTimeHUB)+formatter.format(timeHUB)" ngbDatepicker #d="ngbDatepicker"
+                [placement]="'top'" (dateSelect)="onDateHUBSelection($event)" [footerTemplate]="f" [minDate]="minDate"
+                [positionTarget]="buttonEl" [ngClass]="{'date-input-disable': !isEdit, 'date-input-disable-hub': isDisableTimeHub}" readonly>
+              <ng-template #f>
+                <div class="row">
+                  <div class="col-12 time-picker">
+                    <ngb-timepicker [(ngModel)]="timeTimeHUB" name="timeTimeHUB"></ngb-timepicker>
+                  </div>
+                </div>
+              </ng-template>
+
+              <div class="input-group-append">
+                <button #buttonEl class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"
+                  [disabled]="isEdit || isDisableTimeHub"><i class="fa fa-calendar" title="Date"
+                    aria-hidden="true"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> -->
+            <div class="row">
+                <div class="col-md-1">
+                    <label style="font-size: 18px;" translate>Active</label>
+                </div>
+                <div class="col-md-2">
+                    <input #active="ngModel" [(ngModel)]="promotion.isActive" type="checkbox" [attr.disabled]="isEdit ? '' : null" />
+                </div>
+                <!-- <div *ngIf="active?.errors?.required && active?.touched" class="col-md-2">
+          <p class="error">{{'Compulsory' | translate}} (*)</p>
+        </div> -->
+            </div>
+            <!-- <div class="row mt-4">
+        <div class="col-md-1">
+          <label class="required" translate>Budget Type</label>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <select class="form-control" name="budgetType" (change)="onChangeBudgetType()"
+              [(ngModel)]="promotion.budgetType">
+              <option *ngFor="let item of budgetType" [ngValue]="item">{{item |translate}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-2 mt-1">
+          <label style="font-size: 18px;" translate>Number Rate</label>
+        </div>
+        <div class="col-md-2">
+          <div class="input-group">
+            <input type="number" name="numberRate" class="form-control" [disabled]="isEdit || checkBudgetType"
+              [(ngModel)]="promotion.numberRate">
+          </div>
+        </div>
+      </div> -->
+            <!-- <div class="row mt-4">
+        <div class="col-md-1">
+          <label class="required">{{'Ordinal' | translate}} {{'Check voucher' | translate | lowercase}}</label>
+        </div>
+        <div class="col-md-2">
+          <div class="input-group">
+            <input type="number" name="timeset" class="form-control">
+          </div>
+        </div>
+      </div> -->
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- giveSomeGiftForNewMember -->
+                    <ng-template [ngIf]="conditionPromotion == 'giveSomeGiftForNewMember'">
+                        <order-first [idUpdate]="idUpdate" [checkEdit]="isEdit" [valueUpdate]="promotion.giveSomeGiftForNewMember" (valueOrderFirst)="importGiveSomeGiftForNewMember($event)" [typePromotion]="conditionPromotion">
+                        </order-first>
+                    </ng-template>
+                    <!-- type discountOrderForNewMember -->
+                    <ng-template [ngIf]="conditionPromotion == 'discountOrderForNewMember'">
+                        <order-first [idUpdate]="idUpdate" [checkEdit]="isEdit" [valueUpdate]="promotion.discountOrderForNewMember" (valueOrderFirst)="importDiscountOrderForNewMember($event)" [typePromotion]="conditionPromotion">
+                        </order-first>
+                    </ng-template>
+                    <!-- type checkoutDiscount -->
+                    <ng-template [ngIf]="conditionPromotion == 'checkoutDiscount'">
+                        <promotion-cart-count [idUpdate]="idUpdate" [checkEdit]="isEdit" [valueUpdate]="promotion.checkoutDiscount" (valuePromotionCartCount)="importCheckoutDiscount($event)" [funcPromotion]="conditionPromotion">
+                        </promotion-cart-count>
+                    </ng-template>
+                    <!-- type discountOrderFollowProductQuantity -->
+                    <ng-template [ngIf]="conditionPromotion == 'discountOrderFollowProductQuantity'">
+                        <promotion-cart-count [idUpdate]="idUpdate" [checkEdit]="isEdit" [valueUpdate]="promotion.discountOrderFollowProductQuantity" (valuePromotionCartCount)="importDiscountOrderFollowProductQuantity($event)" [funcPromotion]="conditionPromotion"></promotion-cart-count>
+                    </ng-template>
+                    <!-- type giveGiftForOrder -->
+                    <ng-template [ngIf]="conditionPromotion == 'giveGiftForOrder'">
+                        <promotion-cart-count [idUpdate]="idUpdate" [checkEdit]="isEdit" [valueUpdate]="promotion.giveGiftForOrder" (valuePromotionCartCount)="importGiveGiftForOrder($event)" [funcPromotion]="conditionPromotion">
+                        </promotion-cart-count>
+                    </ng-template>
+                    <!-- type productDiscount -->
+                    <ng-template [ngIf]="conditionPromotion == 'productDiscount'">
+                        <promotion-product [idUpdate]="idUpdate" [checkEdit]="isEdit" [valueUpdate]="promotion.productDiscount" (valuePromotionProduct)="importProductDiscount($event)"></promotion-product>
+                    </ng-template>
+                    <!-- type orderDiscount -->
+                    <ng-template [ngIf]="conditionPromotion == 'orderDiscount'">
+                        <promotion-percent [idUpdate]="idUpdate" [checkEdit]="isEdit" [valueUpdate]="promotion.orderDiscount" (valuePromotionPercent)="importOrderDiscount($event)"></promotion-percent>
+                    </ng-template>
+                    <!-- type checkoutPercentOrMoneyDiscount -->
+                    <ng-template [ngIf]="conditionPromotion == 'checkoutPercentOrMoneyDiscount'">
+                        <promotion-cart [idUpdate]="idUpdate" [checkEdit]="isEdit" [valueUpdate]="promotion.checkoutPercentOrMoneyDiscount" (valuePromotionCart)="importCheckoutPercentOrMoneyDiscount($event)"></promotion-cart>
+                    </ng-template>
+                    <!-- type freeship -->
+                    <ng-template [ngIf]="conditionPromotion == 'freeShip'">
+                        <freeship [idUpdate]="idUpdate" [checkEdit]="isEdit" [valueUpdate]="promotion.freeShip" (valuePromotionPercent)="importFreeShip($event)"></freeship>
+                    </ng-template>
+                    <!-- type buyGoodPriceProduct -->
+                    <ng-template [ngIf]="conditionPromotion == 'buyGoodPriceProduct'">
+                        <promotion-order-endow [idUpdate]="idUpdate" [checkEdit]="isEdit" [valueUpdate]="promotion.buyGoodPriceProduct" (valuePromotionOrderEndow)="importBuyGoodPriceProduct($event)"></promotion-order-endow>
+                    </ng-template>
+                    <!-- type bonusProducts -->
+                    <ng-template [ngIf]="conditionPromotion == 'bonusProducts'">
+                        <promotion-product-give-product [idUpdate]="idUpdate" [checkEdit]="isEdit" [valueUpdate]="promotion.bonusProducts" (valuePromotionProductGiveProduct)="importBonusProducts($event)"></promotion-product-give-product>
+                    </ng-template>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <button (click)="submit()" class="btn btn-primary" *ngIf="editObject(isEdit,isEditObject,'other')">{{ 'Save' | translate}}</button>&nbsp;
+                        <a class="btn btn-warning" [routerLink]="['/promotions/list']">{{'Cancel' | translate}}</a>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </div>
+</section>

@@ -1,0 +1,9 @@
+diff a/admin/src/assets/scss/icons/themify-icons/ie7/ie7.js b/admin/src/assets/scss/icons/themify-icons/ie7/ie7.js	(rejected hunks)
+@@ -257,6 +257,7 @@
+ 		'ti-layout-sidebar-right': '&#xe6f1;',
+ 		'ti-layout-sidebar-none': '&#xe6f2;',
+ 		'ti-layout-sidebar-left': '&#xe6f3;',
++		'ti-layout-placeholder=""': '&#xe6f4;',
+ 		'ti-layout-menu': '&#xe6f5;',
+ 		'ti-layout-menu-v': '&#xe6f6;',
+ 		'ti-layout-menu-separated': '&#xe6f7;',

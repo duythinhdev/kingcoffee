@@ -1,0 +1,91 @@
+{% extends '../layouts/layoutTemplateEmail.html' %}
+
+{% block content %}
+<p>Xin chào {{customer.name}},</p>
+
+<p>Chi tiết đơn hàng <a href="{{orderLink}}">#{{order._id}}</a></p>
+
+<div>
+  <h3>Thông tin khách hàng</h3>
+  <table class="table" width='100%'>
+    <tr>
+      <td width='30%'><strong>Tên: </strong></td>
+      <td>{{order.firstName}}</td>
+    </tr>
+    <tr>
+      <td><strong>Họ: </strong></td>
+      <td>{{order.lastName}}</td>
+    </tr>
+    <tr>
+      <td><strong>Email: </strong></td>
+      <td>{{customer.email}}</td>
+    </tr>
+    <tr>
+      <td><strong>Điện thoại: </strong></td>
+      <td>{{order.phoneNumber}}</td>
+    </tr>
+    <tr>
+      <td><strong>Địa chỉ: </strong></td>
+      <td>{{order.streetAddress}}</td>
+    </tr>
+    <tr>
+      <td><strong>Thành phố: </strong></td>
+      <td>{{order.city}}</td>
+    </tr>
+    <tr>
+      <td><strong>Quận: </strong></td>
+      <td>{{order.district}}</td>
+    </tr>
+    <tr>
+      <td><strong>Phường: </strong></td>
+      <td>{{order.ward}}</td>
+    </tr>
+    <tr>
+      <td><strong>Zipcode: </strong></td>
+      <td>{{order.zipCode}}</td>
+    </tr>
+    <tr>
+      <td><strong>Phí vận chuyển: </strong></td>
+      <td>{{order.shippingPriceStr}}</td>
+    </tr>
+    <tr>
+      <td><strong>Tổng thanh toán: </strong></td>
+      <td>{{order.userTotalPriceStr}}</td>
+    </tr>
+  </table>
+</div>
+
+{% for subOrder in orderDetails %}
+<div>
+  <h3>Mã Vận Chuyển #{{subOrder.trackingCode}}</h3>
+
+  <table class="table" width='100%'>
+    <tr>
+      <td width='30%'><strong>Sản phẩm: </strong></td>
+      <td>{{subOrder.productDetails.name}}</td>
+    </tr>
+    <tr>
+      <td><strong>Số lượng: </strong></td>
+      <td>{{subOrder.quantity|number}}</td>
+    </tr>
+    <tr>
+      <td><strong>Cửa hàng: </strong></td>
+      <td>{{subOrder.shop.name}}</td>
+    </tr>
+    <tr>
+      <td><strong>Tổng tiền: </strong></td>
+      <td>{{subOrder.userTotalPriceStr}}</td>
+    </tr>
+    <tr>
+      <td><strong>Trạng thái: </strong></td>
+      <td>{{subOrder.status}}</td>
+    </tr>
+    <tr>
+      <td><strong>Ghi chú: </strong></td>
+      <td>{{subOrder.userNote}}</td>
+    </tr>
+  </table>
+</div>
+{% endfor %}
+
+{% endblock %}

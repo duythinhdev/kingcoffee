@@ -1,0 +1,14 @@
+<div class="plus-minus-button" fxLayout>
+  <button mat-stroked-button (click)="minus()" style="border: none;"><i class="fa fa-minus" ></i></button>
+  <input
+    class="input-value"
+    matInput
+    [(ngModel)]="value"
+    (change)="changeValueManual($event)"
+    (focus)="originValue = value"
+    appNumberOnly
+    aria-label="value"
+    style="border: none;"
+  />
+  <button mat-stroked-button (click)="plus()" style="border: none;"><i class="fa fa-plus" ></i></button>
+</div>

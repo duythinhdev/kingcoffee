@@ -1,0 +1,37 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{'Winner Info' | translate}}</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="form-group">
+    <label for="usernameInput">{{'User name' | translate}}</label>
+    <input type="text" class="form-control" id="usernameInput" [(ngModel)]="winner.username"
+    [placeholder]="'User name' | translate" disabled>
+  </div>
+  <div class="form-group">
+    <label for="ticketCodeInput">{{'Ticket Code' | translate}}</label>
+    <input type="text" class="form-control" id="ticketCodeInput" [(ngModel)]="winner.code"
+    [placeholder]="'Ticket Code' | translate" disabled>
+  </div>
+  <div class="form-group">
+    <label for="orderNumberInput">{{'Order Number' | translate}}</label>
+    <input type="text" class="form-control" id="orderNumberInput" [(ngModel)]="winner.orderNumber"
+    [placeholder]="'Order Number' | translate" disabled>
+  </div>
+  <div class="form-group">
+    <label for="createAtInput">{{'Create At' | translate}}</label>
+    <input type="text" class="form-control" id="createAtInput" [ngModel]="winner.createdAt | date:'dd/MM/yyyy'"
+    [placeholder]="'Create At' | translate" disabled>
+  </div>
+  <div class="form-group">
+    <label for="descriptionInput">{{'Description' | translate}}</label>
+    <textarea class="form-control" id="descriptionInput" cols="2" rows="5" [(ngModel)]="winner.description"
+    [placeholder]="'Description' | translate">
+    </textarea>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary" (click)="saveWinner()">{{'Save' | translate}}</button>
+</div>

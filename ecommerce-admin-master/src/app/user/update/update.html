@@ -1,0 +1,125 @@
+<div class="row">
+  <div class="col col-md-3">
+    <profile-card [user]="user"></profile-card>
+  </div>
+  <div class="col-md-9">
+    <div class="card">
+      <div class="card-body">
+        <form role="form" #frm="ngForm" (submit)="submit(frm)" ngNativeValidate method="post">
+          <div class="row">
+            <div class="col col-md-6">
+              <div class="form-group">
+                <label>{{userCreateTitleModel?.firstandlastname}} (*)</label>
+                <input type="text" class="form-control"  [(ngModel)]="info.name" required name="name" #name="ngModel" disabled/>
+                <div *ngIf="name.errors && (name.dirty || name.touched || isSubmitted)">
+                  <p [hidden]="!name.errors.required" style="color:red">
+                    {{userCreateTitleModel?.pleaseenteruserfirstnameandlastname}}!
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col col-md-6">
+              <div class="form-group">
+                <label>{{userCreateTitleModel?.email}} (*)</label>
+                <input type="email" class="form-control"  [(ngModel)]="info.email" name="email" required #email="ngModel" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" disabled/>
+                <div *ngIf="email.errors && (email.dirty || email.touched || isSubmitted)">
+                  <p [hidden]="!email.errors.required" style="color:red">
+                    {{userCreateTitleModel?.emailisrequired}}.
+                  </p>
+                  <p [hidden]="!email.errors.pattern" style="color:red">
+                    {{userCreateTitleModel?.pleaseenteravalidemailaddress}}.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col col-md-6">
+              <div class="form-group">
+                <div class="checkbox">
+                  <label>
+                    {{userCreateTitleModel?.active}}
+                    <input type="checkbox" [(ngModel)]="info.isActive" name="isActive" />
+                  </label>
+                </div>
+                <!-- <div class="checkbox">
+                  <label>
+                    Email verified?
+                    <input type="checkbox" [(ngModel)]="info.emailVerified" name="emailVerified" />
+                  </label>
+                </div> -->
+              </div>
+            </div>
+            <div class="col col-md-6">
+              <div class="form-group">
+                <label>{{userCreateTitleModel?.role}}</label>
+                <select [(ngModel)]="info.role" name="role" class="form-control">
+                  <option value="user">User</option>
+                  <option value="admin">Admin</option>
+                </select>
+              </div>
+            </div>
+            <div class="col col-md-6">
+              <!-- <div class="form-group">
+                <label>User type</label>
+                <select [(ngModel)]="info.type" name="type" class="form-control">
+                  <option value="user">Personal user</option>
+                  <option value="business">Business</option>
+                </select>
+              </div> -->
+            </div>
+            <div class="col col-md-6">
+            </div>
+            <div class="col col-md-6">
+              <div class="form-group">
+                <label>{{userCreateTitleModel?.phonenumber}}</label>
+                <input type="text" class="form-control" [(ngModel)]="info.phoneNumber" name="phone" disabled/>
+              </div>
+            </div>
+            <div class="col col-md-6">
+              <div class="form-group">
+                <label>{{userCreateTitleModel?.address}}</label>
+                <input type="text" class="form-control" [(ngModel)]="info.address" name="address" disabled/>
+              </div>
+            </div>
+            <!-- <div class="col col-md-6">
+              <div class="form-group">
+                <label>Password (*)</label>
+                <input type="password" class="form-control" [(ngModel)]="info.password" name="password" #password="ngModel" minlength="6" />
+                <div *ngIf="password.errors && (password.dirty || password.touched || isSubmitted)">
+                  <p [hidden]="!password.errors.minlength" style="color:red">
+                    Password must be at least 6 characters!
+                  </p>
+                </div>
+                <p class="help help-block">
+                  <small>Blank to keep current password</small>
+                </p>
+              </div>
+            </div> -->
+            <div class="col col-md-6">
+              <div class="row">
+                <div class="col col-md-6">
+                  <div class="form-group">
+                    <label>{{userCreateTitleModel?.avatar}}</label>
+                    <div class="clearfix"></div>
+                    <img [src]="avatarUrl" class="avatar" width="150" />
+                  </div>
+                </div>
+                <div class="col col-md-6">
+                  <div class="form-group">
+                    <label>&nbsp;</label>
+                    <file-upload [options]="avatarOptions"></file-upload>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col col-md-12">
+              <div class="form-group">
+                <button class="btn btn-primary" type="submit">{{userCreateTitleModel?.save}}</button>&nbsp;
+                <a class="btn btn-warning" [routerLink]="['/users/list']">{{userCreateTitleModel?.cancel}}</a>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

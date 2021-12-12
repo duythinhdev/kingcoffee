@@ -1,0 +1,148 @@
+<div class="card">
+    <div class="card-block p-5">
+        <form (submit)="submit(frm)" #frm="ngForm" ngNativeValidate>
+        <div class="row">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label class="title">{{'Code type program' | translate}} (*)</label>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <input [disabled]="isEdit" type="text" class="form-control" [(ngModel)]="item.code" name="code" required />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label class="title">{{'Name type program' | translate}} (*)</label>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <input [disabled]="isEdit" type="text" class="form-control" [(ngModel)]="item.name" name="name" required />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2 pt-2">
+                <div class="form-group">
+                    <label class="title">{{'Start date' | translate}} (*)</label>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="input-group">
+                    <input #dpFromDate class="form-control" [disabled]="true" placeholder="{{'HH:mm DD-MM-YYYY' | translate}}" name="dpFromDate" [ngClass]="{'date-input-disable': !isEdit}"
+                    [value]="formatTimePickerValue(fromTime)+formatter.format(fromDate)" (input)="fromDate = validateInput(fromDate, dpFromDate.value)" required>
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary calendar" [disabled]="isEdit" (click)="datepicker.toggle()" type="button"><i
+                        class="fa fa-calendar" title="Date" aria-hidden="true"></i></button>
+                  </div>
+            </div>
+            </div>
+            <div class="col-md-2 pt-2 pl-5">
+                <div class="form-group">
+                    <label class="title">{{'End date' | translate}} (*)</label>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="input-group" *ngIf="isEditEndDate ;else endDateEdit">
+                    <input #dpToDate class="form-control" placeholder="{{'HH:mm DD-MM-YYYY' | translate}}" [disabled]="true" name="dpToDate" [ngClass]="{'date-input-disable': true}"
+                    [value]="formatTimePickerValue(toTime)+formatter.format(toDate)" (input)="toDate = validateInput(toDate, dpToDate.value)" required>
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary calendar" (click)="datepicker.toggle()" type="button"><i
+                        class="fa fa-calendar" title="Date" aria-hidden="true"></i></button>
+                  </div>
+                </div>
+                <ng-template #endDateEdit>
+                    <div class="input-group">
+                        <input #dpToDate class="form-control" placeholder="{{'HH:mm DD-MM-YYYY' | translate}}" [disabled]="true" name="dpToDate" [ngClass]="{'date-input-disable': !isEdit}"
+                        [value]="formatTimePickerValue(toTime)+formatter.format(toDate)" (input)="toDate = validateInput(toDate, dpToDate.value)" required>
+                      <div class="input-group-append">
+                        <button class="btn btn-outline-secondary calendar" (click)="datepicker.toggle()" [disabled]="isEdit" type="button"><i
+                            class="fa fa-calendar" title="Date" aria-hidden="true"></i></button>
+                      </div>
+                    </div>
+                </ng-template>
+            </div>
+            <div class="form-group hidden">
+                <div class="input-group">
+                  <input name="datepicker" class="form-control" ngbDatepicker #datepicker="ngbDatepicker"
+                    [autoClose]="'outside'" (dateSelect)="onDateSelection($event)" [displayMonths]="2" [footerTemplate]="f" [dayTemplate]="t"
+                    outsideDays="hidden" [minDate]="minDate" [startDate]="fromDate!" style="display: none;">
+                  <ng-template #t let-date let-focused="focused">
+                    <span class="custom-day" [class.focused]="focused" [class.range]="isRange(date)"
+                      [class.faded]="isHovered(date) || isInside(date)" (mouseenter)="hoveredDate = date"
+                      (mouseleave)="hoveredDate = null">
+                      {{ date.day }}
+                    </span>
+                  </ng-template>
+                  <ng-template #f>
+                    <div class="row">
+                      <div class="col-6 time-picker">
+                        <ngb-timepicker [(ngModel)]="fromTime" name="fromTime" [readonlyInputs]="isEditEndDate" [spinners]="!isEditEndDate"></ngb-timepicker>
+                      </div>
+                      <div class="col-6 time-picker">
+                        <ngb-timepicker [(ngModel)]="toTime" name="toTime"></ngb-timepicker>
+                      </div>
+                    </div>
+                  </ng-template>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label class="title">{{'Decription' | translate}}</label>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <textarea id="description" [disabled]="isEdit" class="form-control" name="description" rows="4" cols="50" [(ngModel)]="item.description" ></textarea>
+            </div>
+        </div>
+        <!-- <div class="row mt-3">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label class="title">{{'Ordinal' | translate}} {{'Check voucher' | translate | lowercase}}</label>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <input [disabled]="isEdit || checkPrioritize" type="number" class="form-control" [(ngModel)]="item.ordering" name="ordering" />
+            </div>
+            <div class="col-md-1 mt-1">
+                <div class="form-group">
+                    <label class="title">{{'Prioritize' | translate}}</label>
+                </div>
+            </div>
+            <div class="col-md-1 mt-1">
+                <input type="checkbox" [disabled]="isEdit" [(ngModel)]="item.isPriority" name="isPriority" (click)="onChangePrioritize($event)" />
+            </div>
+        </div> -->
+        <div class="row mt-3">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label class="title">{{'Active' | translate}}</label>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <input type="checkbox" [disabled]="isEdit" [(ngModel)]="item.isActive" name="isActive" />
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label class="title">{{'Hiển Thị home page' | translate}}</label>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <input type="checkbox" [disabled]="isEnded" [(ngModel)]="item.isDisplayHomePage" name="isDisplayHomePage" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                  <button type="submit" class="btn btn-primary" *ngIf="!isEdit || isEditEndDate" >{{'Save' | translate}}</button>&nbsp;
+                  <a class="btn btn-warning" [routerLink]="['/promotions/program_list']">{{'Cancel' | translate}}</a>
+                </div>
+        </div>
+    </div>
+</form>
+</div>
+</div>

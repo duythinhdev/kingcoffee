@@ -1,0 +1,15 @@
+<div class="row page-titles" *ngIf="pageInfo && pageInfo.title">
+  <div class="col-md-12 align-self-center" style="background: #610C3E;">
+    <h4 class="text-themecolor">{{pageInfo?.title}}</h4>
+  </div>
+  <!-- <div class="col-md-7 align-self-center">
+    <ol class="breadcrumb pull-right">
+      <ng-template ngFor let-url [ngForOf]="pageInfo?.urls" let-last="last">
+        <li class="breadcrumb-item" *ngIf="!last" [routerLink]="url.url">
+          <a [routerLink]="url.url">{{url.title}}</a>
+        </li>
+        <li class="breadcrumb-item active" *ngIf="last">{{url.title}}</li>
+      </ng-template>
+    </ol>
+  </div> -->
+</div>

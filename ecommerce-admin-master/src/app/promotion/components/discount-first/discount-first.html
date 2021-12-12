@@ -1,0 +1,18 @@
+<div>
+  <div class="title">
+    <h4>{{' Chiết khấu đơn hàng đầu tiên' | translate}}</h4>
+    <a><i class="fa fa-plus-circle"></i></a>
+  </div>
+  <table>
+    <tr *ngFor="let item of discountData">
+      <th>{{'Chiết khấu (%)' | translate}}</th>
+      <th><input (click)="$event.target.select()" type="number" [value]= item.id /></th>
+      <th>{{'đơn thứ' |translate}}</th>
+      <th><input (click)="$event.target.select()" type="number" [value]=item.numberorder /></th>
+      <th>{{'giá trị đơn sau chiết khấu' |translate}}</th>
+      <th><input (click)="$event.target.select()" type="number" [value]=item.discount /></th>
+      <th>{{'trở lên' |translate}}</th>
+      <th><a (click)="onRemove(item.id)"><i class="fa fa-trash"></i></a></th>
+    </tr>
+  </table>
+</div>

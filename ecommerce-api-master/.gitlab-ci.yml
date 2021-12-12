@@ -1,0 +1,70 @@
+stages:
+  - deploy development
+  - deploy staging
+  - deploy production
+
+deploy_dev_stage:
+  stage: deploy development
+  environment:
+    name: deploy development
+    url: http://api-ecommerce.tni.dev.ncs.int
+  only:
+    - develop
+  variables:
+        DOCKER_DRIVER: overlay
+        DOCKER_IMAGE_NAME: tni/api
+        DOCKER_IMAGE_TAG: latest
+        DOCKER_CONTAINER_NAME: tni-api-service-container-dev
+        DOCKER_CONTAINER_PORT_EXPOSE: 7001
+        DOCKER_VOLUME: '/home/tni/public'
+  script:
+      - chmod u+x ./deploy/develop/build.sh
+      - ./deploy/develop/build.sh
+      - chmod u+x ./deploy/develop/run.sh
+      - ./deploy/develop/run.sh
+deploy_stg_stage:
+  stage: deploy staging
+  environment:
+    name: deploy staging
+    url: http://api-ecommerce.tni.stg.ncs.int
+  only:
+    - develop
+  when:
+    manual
+  tags:
+    - stg
+  variables:
+        DOCKER_DRIVER: overlay
+        DOCKER_IMAGE_NAME: tni/api
+        DOCKER_IMAGE_TAG: latest
+        DOCKER_CONTAINER_NAME: tni-api-service-container-stg
+        DOCKER_CONTAINER_PORT_EXPOSE: 7001
+        DOCKER_VOLUME: '/home/tni/public'
+  script:
+      - chmod u+x ./deploy/staging/build.sh
+      - ./deploy/staging/build.sh
+      - chmod u+x ./deploy/staging/run.sh
+      - ./deploy/staging/run.sh
+deploy_prod_stage:
+  stage: deploy production
+  environment:
+    name: deployProduction
+    url: https://api-ecommerce.womencando.com.vn
+  only:
+    - tags
+  when:
+    manual
+  tags:
+    - production
+  variables:
+        DOCKER_DRIVER: overlay
+        DOCKER_IMAGE_NAME: tni/api
+        DOCKER_IMAGE_TAG: latest
+        DOCKER_CONTAINER_NAME: tni-api-service-container-prod
+        DOCKER_CONTAINER_PORT_EXPOSE: 7001
+        DOCKER_VOLUME: '/home/tni/public'
+  script:
+      - chmod u+x ./deploy/production/build.sh
+      - ./deploy/production/build.sh
+      - chmod u+x ./deploy/production/run.sh
+      - ./deploy/production/run.sh

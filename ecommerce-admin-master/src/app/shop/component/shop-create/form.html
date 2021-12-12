@@ -1,0 +1,132 @@
+<div class="card">
+  <div class="card-body">
+    <!-- <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 100%"></div> -->
+    <form role="form" #frm="ngForm" (submit)="submit(frm)" ngNativeValidate method="post">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>{{shopCreateTitleModel?.ShopName}} (*)</label>
+            <input type="text" class="form-control"  [(ngModel)]="shop.name" required name="name"
+              #name="ngModel" />
+            <div *ngIf="name.errors && (name.dirty || name.touched || isSubmitted)">
+              <p [hidden]="!name.errors.required" style="color:red">
+                {{shopCreateTitleModel?.Pleaseentershop}}!
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>{{shopCreateTitleModel?.Owner}} (*)</label>
+            <input type="text" name="owner" class="form-control" [class.is-invalid]="searchFailed" [(ngModel)]="owner"
+              [ngbTypeahead]="search"  [resultTemplate]="rt" [inputFormatter]="formatter" />
+            <span *ngIf="searching">{{shopCreateTitleModel?.searching}}...</span>
+            <div class="invalid-feedback" *ngIf="searchFailed">{{shopCreateTitleModel?.Sorrysuggestionscouldnotbeloaded}}.</div>
+            <ng-template #rt let-r="result" let-t="term">
+              <ngb-highlight [result]="r.username" [term]="t"></ngb-highlight>&nbsp;
+              <small>({{r.email}})</small>
+            </ng-template>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="form-group">
+            <label>{{shopCreateTitleModel?.Address}} (*)</label>
+            <input type="text" class="form-control" [(ngModel)]="shop.address" name="address"
+              required #address="ngModel" />
+            <div *ngIf="address.errors && (address.dirty || address.touched || isSubmitted)">
+              <p [hidden]="!address.errors.required" style="color:red">
+                {{shopCreateTitleModel?.Pleaseenteraddress}} !
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>{{shopCreateTitleModel?.City}} (*)</label>
+            <input type="text" class="form-control"  [(ngModel)]="shop.city" name="city"
+              required #city="ngModel" />
+            <div *ngIf="city.errors && (city.dirty || city.touched || isSubmitted)">
+              <p [hidden]="!city.errors.required" style="color:red">
+                {{shopCreateTitleModel?.Pleaseentercity}}!
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>{{shopCreateTitleModel?.District}} (*)</label>
+            <input type="text" class="form-control"  [(ngModel)]="shop.district" name="district"
+              required #district="ngModel" />
+            <div *ngIf="district.errors && (district.dirty || district.touched || isSubmitted)">
+              <p [hidden]="!district.errors.required" style="color:red">
+                {{shopCreateTitleModel?.Pleaseentercountry}}!
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>{{shopCreateTitleModel?.Ward}} (*)</label>
+            <input type="text" class="form-control" [(ngModel)]="shop.ward" name="ward"
+              required #ward="ngModel" />
+            <div *ngIf="ward.errors && (ward.dirty || ward.touched || isSubmitted)">
+              <p [hidden]="!ward.errors.required" style="color:red">
+                {{shopCreateTitleModel?.Pleaseenterstate}}!
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>{{shopCreateTitleModel?.Zipcode}} (*)</label>
+            <input type="text" class="form-control"  [(ngModel)]="shop.zipCode" name="zipcode"
+              required #zipcode="ngModel" />
+            <div *ngIf="zipcode.errors && (zipcode.dirty || zipcode.touched || isSubmitted)">
+              <p [hidden]="!zipcode.errors.required" style="color:red">
+                {{shopCreateTitleModel?.Pleaseenterzipcode}}!
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>{{shopCreateTitleModel?.Email}} (*)</label>
+            <input type="text" class="form-control"  [(ngModel)]="shop.email" name="email"
+              required #email="ngModel" />
+            <div *ngIf="email.errors && (email.dirty || email.touched || isSubmitted)">
+              <p [hidden]="!email.errors.required" style="color:red">
+                {{shopCreateTitleModel?.Pleaseenteremail}}!
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>{{shopCreateTitleModel?.Phonenumber}} (*)</label>
+            <input type="text" class="form-control"  [(ngModel)]="shop.phoneNumber"
+              name="phoneNumber" required #phoneNumber="ngModel" />
+            <div *ngIf="phoneNumber.errors && (phoneNumber.dirty || phoneNumber.touched || isSubmitted)">
+              <p [hidden]="!phoneNumber.errors.required" style="color:red">
+                {{shopCreateTitleModel?.Pleaseenterphonenumber}}!
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <div class="form-group">
+            <label>{{shopCreateTitleModel?.VerificationIssue}} <media-select (onSelect)="selectVerificationIssue($event)"></media-select></label><br />
+            <a href="{{verificationIssue?.fileUrl}}" download target="_blank">{{verificationIssue?.name}}</a>
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <div class="form-group">
+            <button class="btn btn-primary" type="submit">{{shopCreateTitleModel?.Save}}</button>&nbsp;
+            <a class="btn btn-warning" [routerLink]="['/shops']">{{shopCreateTitleModel?.Cancel}}</a>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

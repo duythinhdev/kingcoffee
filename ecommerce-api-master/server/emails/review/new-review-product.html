@@ -1,0 +1,18 @@
+{% extends '../layouts/layoutTemplateEmail.html' %}
+
+{% block content %}
+<p>Xin Chào,</p>
+
+<p>
+  <strong>{{user.name}}</strong> vừa đánh giá sản phẩm của bạn.
+</p>
+
+<p>
+  <strong>Sản Phẩm: </strong> {{product.name}}
+</p>
+<p>
+  <strong>Điểm Đánh Giá: </strong> {{review.rating}} <br />
+  <strong>Đánh Giá: </strong> {{review.comment}}
+</p>
+
+{% endblock %}

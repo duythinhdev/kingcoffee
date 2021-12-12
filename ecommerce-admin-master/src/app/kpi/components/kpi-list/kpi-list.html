@@ -1,0 +1,120 @@
+<div class="card" style="min-height: 300px;">
+  <div class="card-body table-responsive">
+    <div class="row">
+      <div class="col-xl-2 col-md-2 col-12">
+        <div class="input-group">
+          <p style="font-weight: bold; margin: 10px;">{{ 'From' | translate }}</p>
+          <input class="form-control" [dpDayPicker]="startMonthConfig" [mode]="'month'" [(ngModel)]="startMonth"
+            [theme]="'dp-material'" autocomplete="nope" style="border-radius: 0.25rem;" placeholder="Chọn tháng" />
+        </div>
+      </div>
+      <div class="col-xl-2 col-md-2 col-12">
+        <div class="input-group">
+          <p style="font-weight: bold; margin: 10px;">{{ 'To' | translate |lowercase }}</p>
+          <input class="form-control" [dpDayPicker]="endMonthConfig" [mode]="'month'" [(ngModel)]="endMonth"
+            [theme]="'dp-material'" autocomplete="nope" style="border-radius: 0.25rem;" placeholder="Chọn tháng"
+            (click)="getMinStartMonth()" />
+        </div>
+      </div>
+      <div class="col-xl-3 col-md-3 col-12">
+        <div class="input-group">
+          <p style="font-weight: bold; margin: 10px;">{{'ID' | translate}} KH</p>
+          <input class="form-control" [(ngModel)]="memberId" (keypress)="keyPress($event)" />
+        </div>
+      </div>
+      <div class="col-xl-2 col-md-2 col-12">
+        <a (click)="onSearch()" class="btn btn-primary">{{'Search' | translate}}</a>
+      </div>
+      <div class="col-xl-1 col-md-1 col-1"></div>
+    </div>
+    <table class="table border-1">
+      <thead>
+        <!-- <tr>
+          <th>
+            <div class="input-group">
+              <p style="font-weight: bold; margin: 10px;">{{ 'From' | translate }}</p>
+              <input class="form-control" [dpDayPicker]="startMonthConfig" [mode]="'month'" [(ngModel)]="startMonth"
+              [theme]="'dp-material'" autocomplete="nope" style="border-radius: 0.25rem;" placeholder="Chọn tháng" />
+            </div>
+        </th>
+          <th>
+            <div class="input-group">
+              <p style="font-weight: bold; margin: 10px;">{{ 'To' | translate |lowercase }}</p>
+              <input class="form-control" [dpDayPicker]="endMonthConfig" [mode]="'month'" [(ngModel)]="endMonth"
+              [theme]="'dp-material'" autocomplete="nope" style="border-radius: 0.25rem;" placeholder="Chọn tháng" (click)="getMinStartMonth()" />
+            </div>
+          </th>
+          <th></th>
+          <th>  
+            <div class="input-group">
+              <p style="font-weight: bold; margin: 10px;">{{'ID' | translate}} KH</p>
+            <input class="form-control" [(ngModel)]="memberId"  (keypress)="keyPress($event)" style="margin-top: 5px;" />
+            </div>
+          </th>
+          <th colspan="2"><a (click)="onSearch()" class="btn btn-primary">{{'Search' | translate}}</a></th>
+        </tr> -->
+
+        <tr>
+          <th><a>{{'Time' | translate}}</a></th>
+          <th><a>{{'Code Agency' | translate}}</a></th>
+          <th><a>{{'Name Agency' | translate}}</a></th>
+          <th><a>{{'Level of Expenditure' | translate}}/ {{'Months' | translate}}</a></th>
+          <!-- <th>
+            <a (click)="sortBy('totalProducts', 'desc')">{{reportSaleTitleModel?.TotalPrice}}</a>
+            <span *ngIf="sortOption.sortBy=='totalProducts'">
+              <a (click)="sortBy('totalProducts', 'asc')" *ngIf="sortOption.sortType=='desc'">
+                <i class="fa fa-caret-down"></i>
+              </a>
+              <a (click)="sortBy('totalProducts', 'desc')" *ngIf="sortOption.sortType=='asc'">
+                <i class="fa fa-caret-up"></i>
+              </a>
+            </span>
+          </th> -->
+          <th>
+            <a> {{'Ratio' | translate}}(%)/ {{'Months' | translate}}</a>
+          </th>
+          <th>
+            <a>{{'Reward Month' | translate}}</a>
+          </th>
+          <th>
+            <a>{{'Reward 3 Month' | translate}}</a>
+          </th>
+        </tr>
+        <tr>
+          <th colspan="5"></th>
+          <th><strong>{{totalKPIMonth | priceCurrency: 'VND'}}</strong></th>
+          <th><strong>{{totalKPIReward | priceCurrency: 'VND'}}</strong></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of orders">
+          <td>{{item?.month}}</td>
+          <td>
+            <!-- <a [routerLink]="['/shops/update', item?._id]">{{item?.user?.memberId}}</a> -->
+            <a>{{item?.user?.memberId}}</a>
+          </td>
+          <td>{{item?.user?.name || ""}}</td>
+          <td>{{item?.totalPriceMonth | priceCurrency: 'VND'}}</td>
+          <td>{{item?.valuePercent}}</td>
+          <td>{{item?.kpiMonth | priceCurrency: 'VND'}}</td>
+          <td>{{item?.kpiReward | priceCurrency: 'VND'}}</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="8" *ngIf="total > 10">
+            <ngb-pagination [collectionSize]="total" [(page)]="page" [maxSize]="5" (pageChange)="query()">
+            </ngb-pagination>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+
+    <!-- <div class="display-inline" [hidden]="totalShops < take">
+      <div class="pull-left">
+        <ngb-pagination [maxSize]="5" [collectionSize]="totalShops" [(page)]="page" [pageSize]="take" (pageChange)="changePage()">
+        </ngb-pagination>
+      </div>
+    </div> -->
+  </div>
+</div>

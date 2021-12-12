@@ -1,0 +1,96 @@
+<!-- <discount-first (removeRowData)="removeDataChild($event)" [discountData]="discountOrder" ></discount-first>
+<order-first></order-first> -->
+
+<style>
+    .h-300 {
+        min-height: 450px;
+    }
+</style>
+
+<div class="card mh-default">
+    <div class="card-block table-responsive mh-default">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        <a>{{'ID' | translate }} {{'isPromotion' | translate | lowercase}}</a>
+                    </th>
+                    <th>
+                        <a>{{'Name' | translate}} {{'isPromotion' | translate | lowercase}}</a>
+                    </th>
+                    <th>
+                        <a>{{'Promotion form' | translate}}</a>
+                    </th>
+                    <th>
+                        <a>{{'Type of program' | translate}}</a>
+                    </th>
+                    <th>
+                        <a>{{'Is Active' | translate}}</a>
+                    </th>
+                    <th>
+                        <a>{{'Active' | translate}}</a>
+                    </th>
+                    <th>
+                        <a>{{'Manipulation' | translate}}</a>
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                        <input class="form-control" [(ngModel)]="code" (keypress)="keyPress($event)"
+                            style="width:100%" />
+                    </th>
+                    <th></th>
+                    <th>
+                        <div class="input-group">
+                            <select class="form-control" [(ngModel)]="promotionForm" (change)="query()">
+                                <option></option>
+                                <option *ngFor="let item of promotionForms" [value]="item">{{item |translate}}</option>
+                            </select>
+                        </div>
+                    </th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th><a class="btn btn-primary" (click)="onSearch()">{{'Filters' | translate}}</a></th>
+                </tr>
+            </thead>
+            <tbody *ngIf="promotionList.length">
+                <tr *ngFor="let item of promotionList, let i = index">
+                    <td>{{item?.code}}</td>
+                    <td>{{item?.name}}</td>
+                    <td>{{item?.promotionForm | translate}}</td>
+                    <td>{{item?.promotionType?.name}}</td>
+                    <td>{{item?.status | translate}}</td>
+                    <td>
+                        <span class="label label-success text-nowrap"
+                            *ngIf="item?.isActive">{{'Active' | translate}}</span>
+                        <span class="label label-danger text-nowrap"
+                            *ngIf="!item?.isActive">{{'Deactive' | translate}}</span>
+                    </td>
+                    <td>
+                        <div style="display: flex;">
+                            <a *ngIf="item?.isActive && item?.status == 'running'" (click)="stop(item?._id)">
+                                <i class="fa fa-stop-circle-o" style="color: red;"></i>
+                            </a> &nbsp;
+                            <a (click)="edit(item?.status,item?._id)">
+                                <i class="fa fa-pencil" style="color: blue;"></i>
+                            </a> &nbsp;
+                            <a (click)="remove(item?._id,item?.status,item?.isActive,i)">
+                                <i class="fa fa-trash"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="8">
+                        <ngb-pagination [collectionSize]="total" [maxSize]="5" [(page)]="page" [pageSize]="take"
+                            (pageChange)="query()">
+                        </ngb-pagination>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>

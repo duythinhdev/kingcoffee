@@ -1,0 +1,137 @@
+<form role="form" #frm="ngForm" (submit)="submit(frm)" ngNativeValidate method="post">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>{{shopBasicInfoTitleModel?.ShopName}} (*)</label>
+        <input type="text" class="form-control"  [(ngModel)]="shop.name" required name="name" (change)="changeAlias()" #name="ngModel" />
+        <div *ngIf="name.errors && (name.dirty || name.touched || isSubmitted)">
+          <p [hidden]="!name.errors.required" style="color:red">
+            {{shopBasicInfoTitleModel?.Pleaseentershopname}}!
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>{{shopBasicInfoTitleModel?.ShopAlias}} (example: http://sitename/shops/shop-alias)</label>
+        <input type="text" class="form-control"  [(ngModel)]="shop.alias" name="alias" />
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group" *ngIf="shop.owner && shop.owner.username">
+        <label>{{shopBasicInfoTitleModel?.Owner}}</label>
+        <input type="text" class="form-control" [(ngModel)]="shop.owner.username" name="username" readonly />
+      </div>
+    </div>
+    <div class="col-md-6"></div>
+    <div class="col-md-12">
+      <div class="form-group">
+        <label>{{shopBasicInfoTitleModel?.Address}}</label>
+        <input type="text" class="form-control"  [(ngModel)]="shop.address" name="address" #address="ngModel" />
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>{{shopBasicInfoTitleModel?.City}}</label>
+        <input type="text" class="form-control"  [(ngModel)]="shop.city" name="city" #city="ngModel" />
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>{{shopBasicInfoTitleModel?.District}}</label>
+        <input type="text" class="form-control" [(ngModel)]="shop.district" name="district" #state="ngModel" />
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>{{shopBasicInfoTitleModel?.Ward}}</label>
+        <input type="text" class="form-control"  [(ngModel)]="shop.ward" name="ward" #country="ngModel" />
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>{{shopBasicInfoTitleModel?.Zipcode}}</label>
+        <input type="text" class="form-control"  [(ngModel)]="shop.zipCode" name="zipCode" #zipcode="ngModel" />
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>{{shopBasicInfoTitleModel?.Email}}</label>
+        <input type="text" class="form-control"  [(ngModel)]="shop.email" name="email" #email="ngModel" />
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>{{shopBasicInfoTitleModel?.Phonenumber}}</label>
+        <input type="text" class="form-control"  [(ngModel)]="shop.phoneNumber" name="phoneNumber" #phoneNumber="ngModel" />
+      </div>
+    </div>
+    <!-- <div class="col-md-12">
+      <div class="form-group">
+        <label>{{shopBasicInfoTitleModel?.ReturnAddress}}</label>
+        <input type="text" class="form-control" [(ngModel)]="shop.returnAddress" name="returnAddress" />
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="form-group">
+        <label>{{shopBasicInfoTitleModel?.HeaderText}}</label>
+        <input type="text" class="form-control"  [(ngModel)]="shop.headerText" name="text" />
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="form-group">
+        <label>{{shopBasicInfoTitleModel?.Announcement}}</label>
+        <textarea type="text" class="form-control"  [(ngModel)]="shop.announcement" name="announcement" cols="3"></textarea>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="form-group">
+        <label>{{shopBasicInfoTitleModel?.Googleanyalyticscode}}</label>
+        <input type="text" class="form-control" [(ngModel)]="shop.gaCode" name="gaCode" #gaCode="ngModel" />
+      </div>
+    </div> -->
+    <div class="col-md-12">
+      <div class="form-group">
+        <label>{{shopBasicInfoTitleModel?.Logo}} <media-select (onSelect)="selectLogo($event)"></media-select></label><br />
+        <img [src]="shop?.logo?.thumbUrl" class="avatar" width="150" *ngIf="shop?.logo" />
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="form-group">
+        <label>{{shopBasicInfoTitleModel?.VerificationIssue}} <media-select (onSelect)="selectVerificationIssue($event)"></media-select></label><br />
+        <a href="{{shop?.verificationIssue?.fileUrl}}" download target="_blank" *ngIf="shop?.verificationIssue?.fileUrl">
+          <i class="fa fa-file"></i> {{shopBasicInfoTitleModel?.Viewdocument}}
+        </a>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="form-group">
+        <label>{{shopBasicInfoTitleModel?.Banner}} <media-select (onSelect)="selectBanner($event)"></media-select></label><br />
+        <img [src]="shop?.banner?.thumbUrl" class="avatar" width="150" *ngIf="shop?.banner" />
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+        <label><input type="checkbox" [(ngModel)]="shop.activated" name="activated" />{{shopBasicInfoTitleModel?.Activated}}</label>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+        <label><input type="checkbox" [(ngModel)]="shop.verified" name="verified" />{{shopBasicInfoTitleModel?.Verified}} </label>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+        <label><input type="checkbox" [(ngModel)]="shop.featured" name="featured" />{{shopBasicInfoTitleModel?.Featured}} </label>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="form-group">
+        <button class="btn btn-primary" type="submit">{{shopBasicInfoTitleModel?.Save}}</button>&nbsp;
+        <a class="btn btn-warning" [routerLink]="['/shops']">{{shopBasicInfoTitleModel?.Cancel}}</a>
+      </div>
+    </div>
+  </div>
+</form>
+
+

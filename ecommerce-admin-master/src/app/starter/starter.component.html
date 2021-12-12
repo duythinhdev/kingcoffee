@@ -1,0 +1,53 @@
+<div class="row">
+  <div class="col-md-3">
+    <stat-card [stat]="shopStat" [type]="'shop'" *ngIf="shopStat"></stat-card>
+  </div>
+  <div class="col-md-3">
+    <stat-card [stat]="userStat" [type]="'user'" *ngIf="userStat"></stat-card>
+  </div>
+  <div class="col-md-3">
+    <stat-card [stat]="productStat" [type]="'product'" *ngIf="productStat"></stat-card>
+  </div>
+  <div class="col-md-3">
+    <stat-card [stat]="orderStat" [type]="'order'" *ngIf="orderStat"></stat-card>
+  </div>
+  <!-- <div class="col-lg-12 col-md-6">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">{{startTitleModel?.cardtitle}}</h4>
+        <div class="comment-widgets">
+          <div class="card-body table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>{{startTitleModel?.shop}}</th>
+                  <th>{{startTitleModel?.total}}</th>
+                  <th>{{startTitleModel?.commission}}</th>
+                  <th>{{startTitleModel?.shopBalance}}</th>
+                  <th>{{startTitleModel?.siteBalance}}</th>
+                  <th>{{startTitleModel?.paid}}</th>
+                  <th>{{startTitleModel?.createdAt}}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of requestPayout">
+                  <td><a [routerLink]="['/requestPayout', item?._id]">{{item?.shop?.name}}</a></td>
+                  <td>{{item?.total | currency}}</td>
+                  <td>{{item?.commission | currency}}</td>
+                  <td>{{item?.shopBalance | currency}}</td>
+                  <td>{{item?.siteBalance | currency}}</td>
+                  <td>
+                    <span *ngIf="item.status ==='approved'" class="label label-success">{{startTitleModel?.approved}}</span>
+                    <span *ngIf="item.status ==='rejected'" class="label label-danger">{{startTitleModel?.rejected}}</span>
+                    <span *ngIf="item.status ==='pending'" class="label label-warning">{{startTitleModel?.pending}}</span>
+                  </td>
+                  <td>{{item?.createdAt | date :'dd/MM/yyyy'}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->
+</div>

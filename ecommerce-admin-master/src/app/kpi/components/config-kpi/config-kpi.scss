@@ -1,0 +1,37 @@
+.card-body {
+  max-width: 60%;
+  h2 {
+    color: #000000;
+    font-size: 30px;
+  }
+  .kpimouth {
+    margin: 20px 0;
+    .kpiRow {
+      margin: 10px 0;
+      p {
+        margin-bottom: 0px;
+        font-size: 20px;
+      }
+    }
+  }
+  .submitKpi {
+    input {
+      width: 100px;
+      margin-right: 20px;
+    }
+  }
+  p {
+    font-size: 13px;
+  }
+  .kpiRow {
+    p {
+      font-size: 20px;
+      margin: 10px 0px 20px 0px;
+    }
+  }
+}
+p {
+  color: #000000;
+  margin-bottom: 0px;
+  margin-bottom: 50px;
+}

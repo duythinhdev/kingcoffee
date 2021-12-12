@@ -1,0 +1,136 @@
+<div class="card">
+  <div class="card-block table-responsive">
+    <!-- <table class="table">
+      <thead>
+        <tr>
+          <th></th>
+          <th>
+            <a>{{productCategoryTitleModel?.namCol}}</a>
+          </th>
+          <th>
+            <a>{{productCategoryTitleModel?.Children}}</a>
+          </th>
+          <th>
+            <a>{{productCategoryTitleModel?.CreatedAt}}</a>
+          </th>
+          <th>
+            {{productCategoryTitleModel?.Actions}}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of items, let i = index">
+          <td>
+            <img [src]="item.mainImage?.thumbUrl" *ngIf="item.mainImage?.thumbUrl" width="45px" />
+          </td>
+          <td>{{item?.name}}</td>
+          <td>
+            <span class="badge badge-info" *ngFor="let child of item.children" style="margin-right: 5px">
+              <a [routerLink]="['/products/categories/update', child._id]" style="color: #fff">{{child.name}}</a>
+            </span>
+          </td>
+          <td>
+            <span>{{item?.createdAt | date :'dd/MM/yyyy'}}</span>
+          </td>
+          <td>
+            <a [routerLink]="['/products/categories/update', item._id ]">
+              <i class="fa fa-pencil"></i>
+            </a>&nbsp;
+            <a (click)="remove(item, i)">
+              <i class="fa fa-trash"></i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table> -->
+    <div class="table-header">
+      <table>
+        <tr>
+          <th class="first-col text-left">
+            <a class="tree-node-ml">{{'Name' | translate}}</a>
+          </th>
+          <th>
+            <a>{{'Level' | translate}}</a>
+          </th>
+          <th class="col-active">
+            <a>{{'Is Active' | translate}}</a>
+          </th>
+          <th>
+            <a>{{'Create At' | translate}}</a>
+          </th>
+          <th>
+            {{'Actions' | translate}}
+          </th>
+        </tr>
+      </table>
+    </div>
+    <mat-tree [dataSource]="categories" [treeControl]="treeControl">
+      <mat-tree-node *matTreeNodeDef="let node; index as i">
+        <table>
+          <tr>
+            <td class="first-col text-left">
+              <div matTreeNodePadding>
+                  <p class="category-name tree-node-ml">{{node.name}}</p>
+              </div>
+            </td>
+            <td>
+              {{node._level}}
+            </td>
+            <td class="col-active">
+              <div class="label" [ngClass]="{'active': node.isActive , 'deactive': !node.isActive}">
+                {{(node.isActive == true ? 'Active': 'Deactive') | translate}}
+              </div>
+            </td>
+            <td>
+              {{node.createdAt | date :'dd/MM/yyyy'}}
+            </td>
+            <td>
+              <a [routerLink]="['/products/categories/update', node._id ]">
+                <i class="fa fa-pencil"></i>
+              </a>&nbsp;
+              <a (click)="remove(node, i)">
+                <i class="fa fa-trash"></i>
+              </a>
+            </td>
+          </tr>
+        </table>
+      </mat-tree-node>
+      <mat-tree-node *matTreeNodeDef="let node; index as i;when: hasChild">
+        <table>
+          <tr>
+            <td class="first-col text-left">
+              <div matTreeNodePadding>
+                <button class="btn expand-btn" mat-icon-button matTreeNodeToggle
+                        [attr.aria-label]="'Toggle ' + node.name">
+                  <mat-icon class="mat-icon-rtl-mirror">
+                    {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                  </mat-icon>
+                </button>
+                <p class="category-name">{{node.name}}</p>
+              </div>
+            </td>
+            <td>
+              {{node._level}}
+            </td>
+            <td class="col-active">
+              <div class="label" [ngClass]="{'active': node.isActive , 'deactive': !node.isActive}">
+                {{(node.isActive == true ? 'Active': 'Deactive') | translate}}
+              </div>
+            </td>
+            <td>
+              {{node.createdAt | date :'dd/MM/yyyy'}}
+            </td>
+            <td>
+              <a [routerLink]="['/products/categories/update', node._id ]">
+                <i class="fa fa-pencil"></i>
+              </a>&nbsp;
+              <a (click)="remove(node, i)">
+                <i class="fa fa-trash"></i>
+              </a>
+            </td>
+          </tr>
+        </table>
+      </mat-tree-node>
+    </mat-tree>
+  </div>
+</div>

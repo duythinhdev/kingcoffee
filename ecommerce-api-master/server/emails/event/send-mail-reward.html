@@ -1,0 +1,44 @@
+{% extends '../layouts/layoutTemplateEmail.html' %}
+
+{% block content %}
+<!--<p>Xin chào {{username}},</p>-->
+<div>
+  <h3>Thông tin trúng thưởng NHTS</h3>
+  <table class="table" width='100%'>
+    <tr>
+      <td width="30%"><strong>Tên tài khoản: </strong></td>
+      <td>{{data.username}}</td>
+    </tr>
+    <tr>
+      <td><strong>Mã vé: </strong></td>
+      <td>{{data.ticketCode}}</td>
+    </tr>
+    <tr>
+      <td><strong>Thời gian: </strong></td>
+      <td>{{data.date}}</td>
+    </tr>
+    <tr>
+      <td><strong>Giải thưởng: </strong></td>
+      <td>Một voucher mua {{data.product.name}} do hệ thống Gold Time phát hành có giá trị {{data.salePrice}}
+      </td>
+    </tr>
+    <tr>
+      <td><strong>Mã voucher: </strong></td>
+      <td>{{data.code}}</td>
+    </tr>
+    <tr>
+      <td><strong>Link sản phẩm: </strong></td>
+      <td>{{data.linkProduct}}</td>
+    </tr>
+    <tr>
+      <td><strong>Link tra cứu: </strong></td>
+      <td>{{data.reSearch}}</td>
+    </tr>
+  </table>
+  <div style="text-align: justify; margin-top: 10px; color: red;">
+    <i>Lưu ý : người trúng thưởng vui lòng đến 1 trong 2 điểm dưới đây để nhận thưởng<br />
+      - Trụ sở chính: 42/1A Nguyễn Minh Hoàng, phường 12, quận Tân Bình, thành phố Hồ Chí Minh.<br />
+      - Trụ sở Miền Bắc: 16A, ngõ 218 đường Lạc Long Quân, phường Bưởi, quận Tây Hồ, Hà Nội.</i>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,66 @@
+<form role="form" #frm="ngForm" (submit)="submit(frm)" novalidate>
+  <div class="row">
+    <div class="col col-md-6">
+      <div class="form-group">
+        <label>{{shopShippingInfoTitleModel?.Address}} (*)</label>
+        <input type="text" name="address" class="form-control" [(ngModel)]="shop.shippingSettings.address" />
+      </div>
+    </div>
+    <div class="col col-md-6">
+      <div class="form-group">
+        <label>{{shopShippingInfoTitleModel?.City}} (*)</label>
+        <input type="text" name="city"  class="form-control" [(ngModel)]="shop.shippingSettings.city" />
+      </div>
+    </div>
+    <div class="col col-md-6">
+      <div class="form-group">
+        <label>{{shopShippingInfoTitleModel?.District}} (*)</label>
+        <input type="text" name="district" class="form-control" [(ngModel)]="shop.shippingSettings.district" />
+      </div>
+    </div>
+    <div class="col col-md-6">
+      <div class="form-group">
+        <label>{{shopShippingInfoTitleModel?.Ward}} (*)</label>
+        <input type="text" name="ward"  class="form-control" [(ngModel)]="shop.shippingSettings.ward" />
+      </div>
+    </div>
+    <!-- <div class="col col-md-6">
+      <div class="form-group">
+        <label>District (*)</label>
+        <select [(ngModel)]="shop.shippingSettings.district" class="form-control" name="district" required #shipFrom="ngModel">
+          <option *ngFor="let item of countries" [ngValue]="item.isoCode">{{item.name}}</option>
+        </select>
+        <div *ngIf="district.errors && (district.dirty || district.touched || isSubmitted)">
+          <p [hidden]="!district.errors.required" style="color:red">
+            This field is required!
+          </p>
+        </div>
+      </div>
+    </div> -->
+    <!-- <div class="col col-md-6">
+      <div class="form-group">
+        <label>Ward (*)</label>
+        <select [(ngModel)]="shop.shippingSettings.ward" class="form-control" name="ward" required #shipFrom="ngModel">
+          <option *ngFor="let item of countries" [ngValue]="item.isoCode">{{item.name}}</option>
+        </select>
+        <div *ngIf="ward.errors && (ward.dirty || ward.touched || isSubmitted)">
+          <p [hidden]="!ward.errors.required" style="color:red">
+            This field is required!
+          </p>
+        </div>
+      </div>
+    </div> -->
+    <div class="col col-md-6">
+      <div class="form-group">
+        <label>{{shopShippingInfoTitleModel?.ZipCode}} (*)</label>
+        <input type="number" name="zipcode" class="form-control" [(ngModel)]="shop.shippingSettings.zipCode"/>
+      </div>
+    </div>
+    <div class="col col-md-12">
+      <div class="form-group">
+        <button class="btn btn-primary" type="submit">{{shopShippingInfoTitleModel?.Save}}</button>&nbsp;
+        <a class="btn btn-warning" [routerLink]="['/shops']">{{shopShippingInfoTitleModel?.Cancel}}</a>
+      </div>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,477 @@
+<style>
+  .mh-default {
+    overflow-x: auto !important;
+  }
+
+  .mh-default::-webkit-scrollbar {
+    width: 0px;
+  }
+
+  .table thead th, .table th {
+    min-width: 50px;
+  }
+
+  .center-btn, .center {
+    display: block;
+    width: fit-content;
+    margin: auto;
+  }
+
+  .rotate {
+    animation: rotation 1s infinite linear;
+  }
+
+  @keyframes rotation {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(359deg);
+    }
+  }
+</style>
+<div class="card mh-default">
+  <div class="card-body table-responsive mh-default" #mainScrollBlock>
+    <div class="scrollbar" #simulatorScrollBlock (scroll)="onScroll($event)">
+      <div class="force-overflow"></div>
+    </div>
+    <table class="table border-1">
+      <thead>
+      <tr>
+<!--        <th>-->
+<!--          <div class="input-group">-->
+<!--            <p style="font-weight: bold; margin: 10px;">{{ 'From' | translate }}</p>-->
+<!--            <input #dpFromDate class="form-control date-input-disable" [disabled]="true"-->
+<!--                   placeholder="{{'Chọn ngày' | translate}}" name="dpFromDate"-->
+<!--                   [value]="formatter.format(fromDate)" (input)="fromDate = validateInput(fromDate, dpFromDate.value)">-->
+<!--            <div class="input-group-append">-->
+<!--              <button class="btn btn-outline-secondary calendar" (click)="datepicker.toggle()" type="button"><i-->
+<!--                class="fa fa-calendar" title="Date" aria-hidden="true"></i></button>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="form-group hidden">-->
+<!--            <div class="input-group">-->
+<!--              <input name="datepicker" class="form-control" ngbDatepicker #datepicker="ngbDatepicker"-->
+<!--                     [autoClose]="'outside'" (dateSelect)="onDateSelection($event)" [displayMonths]="2"-->
+<!--                     [dayTemplate]="t"-->
+<!--                     outsideDays="hidden" [startDate]="fromDate!" style="display: none;">-->
+<!--              <ng-template #t let-date let-focused="focused">-->
+<!--                  <span class="custom-day" [class.focused]="focused" [class.range]="isRange(date)"-->
+<!--                        [class.faded]="isHovered(date) || isInside(date)" (mouseenter)="hoveredDate = date"-->
+<!--                        (mouseleave)="hoveredDate = null">-->
+<!--                    {{ date.day }}-->
+<!--                  </span>-->
+<!--              </ng-template>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </th>-->
+<!--        <th>-->
+<!--          <div class="input-group">-->
+<!--            <p style="font-weight: bold; margin: 10px;">{{ 'To' | translate | lowercase }}</p>-->
+<!--            <input #dpToDate class="form-control date-input-disable" [disabled]="true"-->
+<!--                   placeholder="{{'Chọn ngày' | translate}}" name="dpToDate"-->
+<!--                   [value]="formatter.format(toDate)" (input)="toDate = validateInput(toDate, dpToDate.value)">-->
+<!--            <div class="input-group-append">-->
+<!--              <button class="btn btn-outline-secondary calendar" (click)="datepicker.toggle()" type="button"><i-->
+<!--                class="fa fa-calendar" title="Date" aria-hidden="true"></i></button>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </th>-->
+<!--        <th colspan="3">-->
+<!--          <div class="input-group">-->
+<!--            <p style="font-weight: bold; margin: 10px;">{{ 'ID' | translate }} Định Danh</p>-->
+<!--            <input class="form-control" [(ngModel)]="memberId" (keypress)="keyPress($event)"-->
+<!--                   style="border-top-left-radius: 3px;border-bottom-left-radius: 3px;"/>-->
+<!--          </div>-->
+<!--        </th>-->
+<!--        <th colspan="7">-->
+<!--          <div class="input-group">-->
+<!--            <p style="font-weight: bold; margin: 10px;">Số Điện Thoại</p>-->
+<!--            <input class="form-control" [(ngModel)]="phoneNumber" (keypress)="keyPress($event)"-->
+<!--                   style="border-top-left-radius: 3px;border-bottom-left-radius: 3px;"/>-->
+<!--          </div>-->
+<!--        </th>-->
+<!--        <th colspan="4">-->
+<!--          <div class="input-group">-->
+<!--            <p style="font-weight: bold; margin: 10px;">Tên Khách hàng</p>-->
+<!--            <input class="form-control" [(ngModel)]="firstName" (keypress)="keyPress($event)"-->
+<!--                   style="border-top-left-radius: 3px;border-bottom-left-radius: 3px;"/>-->
+<!--          </div>-->
+<!--        </th>-->
+<!--        <th colspan="4">-->
+<!--          <div class="input-group">-->
+<!--            <p style="font-weight: bold; margin: 10px;">Mã Sản Phẩm</p>-->
+<!--            <input class="form-control" [(ngModel)]="sap" (keypress)="keyPress($event)"-->
+<!--                   style="border-top-left-radius: 3px;border-bottom-left-radius: 3px;"/>-->
+<!--          </div>-->
+<!--        </th>-->
+<!--        <th colspan="1"><a (click)="onSearch()" style="margin-bottom: 5px;"-->
+<!--                           class="btn btn-primary">{{'Search' | translate}}</a></th>-->
+        <th>
+          <a class="btn btn-primary" (click)="query(true)">{{'Export excel' | translate}}</a>
+        </th>
+        <th>
+<!--          <a class="btn btn-primary" style="margin-right: 25px;" (click)="onFilter()">{{'Filter' | translate}}</a>-->
+        </th>
+      </tr>
+      <tr>
+        <th><a>STT</a></th>
+        <th><a>Mã Định Danh</a></th>
+        <th><a>Loại Hình</a></th>
+        <th colspan="3"><a>Họ Và Tên</a></th>
+        <th  ><a>Ngày Sinh</a></th>
+        <th><a>{{'CMT/Passport' | translate}}</a></th>
+        <th><a>{{ 'Phone Number' | translate }} {{ 'Buyer' | translate | lowercase }}</a></th>
+        <th><a>{{ 'Email' | translate }} {{ 'Buyer' | translate | lowercase }}</a></th>
+        <th><a>Tỉnh / Thành Phố</a></th>
+<!--                <th>-->
+<!--                  <a (click)="sortBy('totalShops', 'desc')">{{reportSaleTitleModel?.TotalPrice}}</a>-->
+<!--                  <span *ngIf="sortOption.sortBy=='totalShops'">-->
+<!--                      <a (click)="sortBy('totalShops', 'asc')" *ngIf="sortOption.sortType=='desc'">-->
+<!--                        <i class="fa fa-caret-down"></i>-->
+<!--                      </a>-->
+<!--                      <a (click)="sortBy('totalProducts', 'desc')" *ngIf="sortOption.sortType=='asc'">-->
+<!--                        <i class="fa fa-caret-up"></i>-->
+<!--                      </a>-->
+<!--                    </span>-->
+<!--                </th>-->
+        <th>
+          <a>Quận / Huyện</a>
+        </th>
+        <th>
+          <a>Phường xã</a>
+        </th>
+        <th>
+          <a>{{'Address' | translate}}</a>
+        </th>
+        <th>
+          <a>Mã Sp(đã quét)</a>
+        </th>
+        <th colspan="5">
+          <a>Tên Sp(đã quét)</a>
+        </th>
+        <th>
+          <a>BU(từ Kênh nào)</a>
+        </th>
+        <th>
+          <a>Tổng đơn hàng</a>
+        </th>
+        <th colspan="3">
+          <a>Ngày tạo đơn (ngày quét QR)</a>
+        </th>
+        <th >
+          <a>Mã Dự Thưởng</a>
+        </th>
+      </tr>
+      <tr>
+        <th><strong>{{totalShops}}</strong></th>
+        <th >
+          <div class="input-group">
+            <input class="form-control" [(ngModel)]="memberId" (keypress)="keyPress($event)"
+                   style="border-top-left-radius: 3px;border-bottom-left-radius: 3px;"/>
+          </div>
+        </th>
+        <th>
+        <div class="d-inline-block" ngbDropdown #myDrop="ngbDropdown">
+          <button class="btn btn-outline-dark w-100" id="dropdownManual" ngbDropdownAnchor (focus)="myDrop.open()">{{rolesNameStatus}}</button>
+          <div ngbDropdownMenu aria-labelledby="dropdownManual">
+            <a *ngFor="let item of RolestatusList, let i = index" (click)="sortRolesStatus(item, rolesNameStatusList
+            [i])" class="dropdown-item">{{rolesNameStatusList[i]}}</a>
+          </div>
+        </div>
+        </th>
+        <th colspan="3" >
+          <div class="input-group">
+          <input class="form-control" [(ngModel)]="firstName" (keypress)="keyPress($event)"
+                 style="border-top-left-radius: 3px;border-bottom-left-radius: 3px;width: 100px;"/>
+        </div></th>
+        <th>
+        </th>
+        <th>
+        </th>
+        <th >
+          <div class="input-group">
+            <input class="form-control" [(ngModel)]="phoneNumber" (keypress)="keyPress($event)"
+                   style="border-top-left-radius: 3px;border-bottom-left-radius: 3px;width: 100px;"/>
+          </div>
+        </th>
+        <th>
+        </th>
+        <th>
+          <div class="d-inline-block" ngbDropdown #myDropCity="ngbDropdown" >
+            <button class="btn btn-outline-dark w-100" id="dropdownManualcity" ngbDropdownAnchor (focus)="myDropCity.open()">{{cityNameStatus}}</button>
+            <div ngbDropdownMenu aria-labelledby="dropdownManualcity" class="scrollcity">
+              <a *ngFor="let item of citystatusList, let i = index" (click)="sortCity(item, cityNameStatusList
+            [i])" class="dropdown-item">{{cityNameStatusList[i]}}</a>
+            </div>
+          </div>
+        </th>
+        <th>
+        </th>
+        <th>
+        </th>
+        <th >
+        </th>
+        <th>
+          <div class="input-group" >
+            <input class="form-control" [(ngModel)]="sap" (keypress)="keyPress($event)"
+                   style="border-top-left-radius: 3px;border-bottom-left-radius: 3px;width: 130px"/>
+          </div>
+        </th>
+        <th >
+        </th>
+        <th >
+        </th>
+        <th >
+        </th>
+        <th >
+        </th>
+        <th >
+        </th>
+        <th style="width: 200px;">
+          <div class="d-inline-block" ngbDropdown #myDropBravo="ngbDropdown" >
+            <button class="btn btn-outline-dark w-100" id="dropdownManualBravo" ngbDropdownAnchor (focus)="myDropBravo.open()">{{strbuStatus}}</button>
+            <div ngbDropdownMenu aria-labelledby="dropdownManualBravo">
+              <a *ngFor="let item of strBuList, let i = index" (click)="sortBravoCode(item, strbuStatusList[i])" class="dropdown-item">{{strbuStatusList[i]}}</a>
+            </div>
+          </div>
+        </th>
+        <th></th>
+        <th >
+          <div class="form-group hidden" style="width: 150px">
+            <div class="input-group">
+              <input name="datepicker"
+                     class="form-control"
+                     ngbDatepicker
+                     #datepicker="ngbDatepicker"
+                     [autoClose]="'outside'"
+                     (dateSelect)="onDateSelection($event)"
+                     [displayMonths]="2"
+                     [dayTemplate]="t"
+                     outsideDays="hidden"
+                     [startDate]="fromDate!"
+                     style="display: none;">
+              <ng-template #t let-date let-focused="focused">
+                  <span class="custom-day"
+                        [class.focused]="focused"
+                        [class.range]="isRange(date)"
+                        [class.faded]="isHovered(date) || isInside(date)"
+                        (mouseenter)="hoveredDate = date"
+                        (mouseleave)="hoveredDate = null">
+                    {{ date.day }}
+                  </span>
+              </ng-template>
+            </div>
+          </div>
+          <div>
+            <div class="input-group">
+              <input #dpFromDate
+                     class="form-control date-input-disable" placeholder="dd-yyyy-mm"
+                     name="dpFromDate"
+                     [value]="formatter.format(fromDate)"
+                     (input)="fromDate = validateInput(fromDate, dpFromDate.value)" [disabled]="true">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary calendar" (click)="datepicker.toggle()" type="button"><i class="fa fa-calendar" title="Date" aria-hidden="true"></i></button>
+              </div>
+            </div>
+          </div>
+          <br>
+          <div>
+            <div class="input-group">
+              <input #dpToDate
+                     class="form-control date-input-disable" placeholder="dd-mm-yyyy"
+                     name="dpToDate"
+                     [value]="formatter.format(toDate)"
+                     (input)="toDate = validateInput(toDate, dpToDate.value)" [disabled]="true">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary calendar" (click)="datepicker.toggle()" type="button"><i class="fa fa-calendar" title="Date" aria-hidden="true"></i></button>
+              </div>
+            </div>
+          </div>
+
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let shop of itemsData; index as i">
+        <td>{{(page - 1) * take + i + 1 }}</td>
+        <td>{{shop?.customer?.memberId}}</td>
+        <td *ngIf="!shop?.customer.userRoles">
+          <div  style="background: #D12886;">Không Có</div>
+        </td>
+        <td *ngIf="shop?.customer.userRoles">
+            <span *ngFor="let shop of shop.customer.userRoles" class="label d-inline-block"
+                  style="background: #D12886;">{{shop.RoleName === "5" ? "We MemBer" : shop.RoleName }}</span>
+        </td>
+        <td colspan="3">{{shop?.firstName}} {{shop?.lastName}}</td>
+        <td>{{shop?.customer?.birthday | date:'dd/MM/yyyy'}}</td>
+        <td>Không có</td>
+        <td>{{shop?.phoneNumber || ""}}</td>
+        <td>{{shop?.customer?.email || ""}}</td>
+        <td>{{shop?.city.name || ""}}</td>
+        <td>{{shop?.district.name || ""}}</td>
+        <td>{{shop?.ward.name || ""}}</td>
+        <td>{{shop?.streetAddress || ""}},{{shop?.ward.name || ""}},{{shop?.district.name || ""}}
+          ,{{shop?.city.name || ""}}</td>
+        <td>{{shop?.details[0].product.sap || ""}}</td>
+        <td colspan="5">{{shop?.details[0].product.name || ""}}</td>
+        <td>{{shop?.bu ? shop?.bu : "Không có"}}</td>
+        <td>{{ formatMoney.format(shop?.totalPrice) || ""}}</td>
+        <td colspan="3">{{shop?.createdAt | date:'dd/MM/yyyy'}}</td>
+        <td *ngIf="!shop.couponCode">
+          <div>Không Có</div>
+        </td>
+        <td *ngIf="shop?.couponCode">
+          <div *ngFor="let coupon of shop?.couponCode ">{{coupon.id}}</div>
+        </td>
+
+
+        <!--        <td>{{shop?.customer?.name}}</td>-->
+        <!--        <td>{{OrderStatusDescription[shop?.orderStatus] | translate}}</td>-->
+        <!--        <td>{{shop?.totalPrice | priceCurrency: 'VND'}}</td>-->
+        <!--        <td>-->
+        <!--            <span *ngIf="shop?.transaction?.paymentGateway" class="label d-inline-block"-->
+        <!--                  style="background: #D12886;">{{shop?.transaction?.paymentGateway | paymentGatewayName | translate }}</span>-->
+        <!--        </td>-->
+        <!--        <td>{{shop?.transportation}}</td>-->
+        <!--        <td>{{shop?.senderName}}</td>-->
+        <!--        <td>-->
+        <!--          <a (click)='printElem(shop?.orderCode)'><i class="fa fa-print" style="font-size: 30px;" title="Sprint"-->
+        <!--                                                     aria-hidden="true"></i></a>-->
+        <!-- Print -->
+        <!--          <div style="display: none;">-->
+        <!--            <div [id]="shop?.orderCode">-->
+        <!--              <div class="header" style="background:linear-gradient(106.76deg, #280d50 5%, #d11287 40%);height: 74px;display: flex;">-->
+        <!--                <img src="/assets/images/logo_sprint.png" width="80" style="margin-left: 22px;margin-top: 5px;" />-->
+        <!--                <h1 style="color: white;padding-left: 146px;">Thông tin đơn hàng</h1>-->
+        <!--              </div>-->
+        <!--              <div class="container" style="width: 90%;margin: auto;">-->
+        <!--                <h2 style="font-weight: bolder !important;">{{'Cảm ơn quý khách '+ shop?.customer?.name + ' đã đặt hàng tại WCD'}}</h2>-->
+        <!--                <h2 style="color: #D12886;font-weight: bolder !important;margin:0px">Thông tin đơn hàng {{shop?.orderCode}}</h2>-->
+        <!--                <hr>-->
+        <!--                <div style="display: flex;">-->
+        <!--                  <div style="width:50%">-->
+        <!--                    <p style="font-weight: bolder;">Thông tin thanh toán</p>-->
+        <!--                    <p>{{shop?.customer?.name}}</p>-->
+        <!--                    <a-->
+        <!--                      style="color: #D12886;">{{shop?.customer?.email}}</a>-->
+        <!--                    <p>{{shop?.customer?.phoneNumber || shop?.phoneNumber}}</p>-->
+        <!--                  </div>-->
+        <!--                  <div style="width:50%">-->
+        <!--                    <p style="font-weight: bolder;">Địa chỉ giao hàng</p>-->
+        <!--                    <p>{{shop?.lastName}} {{shop?.firstName}}</p>-->
+        <!--                    <a-->
+        <!--                      style="color: #D12886;">{{shop?.customer?.email}}</a>-->
+        <!--                    <p>{{shop?.streetAddress}}, {{shop?.ward?.name}}, {{shop?.district?.name}}, {{shop?.city?.name}}</p>-->
+        <!--                    <p>{{shop?.phoneNumber || shop?.customer?.phoneNumber}}</p>-->
+        <!--                  </div>-->
+        <!--                </div>-->
+        <!--                <div style="display: flex;">-->
+        <!--                  <div style="width:25%">-->
+        <!--                    <p style="font-weight: bolder ;">Phương thức thanh toán</p>-->
+        <!--                  </div>-->
+        <!--                  <div style="width:75%">-->
+        <!--                    <p *ngIf="shop?.transaction?.paymentGateway" >{{shop?.transaction?.paymentGateway | paymentGatewayName | translate }}</p>-->
+        <!--                  </div>-->
+        <!--                </div>-->
+        <!--                <div style="display: flex;">-->
+        <!--                  <div style="width:25%">-->
+        <!--                    <p style="font-weight: bolder;">Phí vận chuyển</p>-->
+        <!--                  </div>-->
+        <!--                  <div style="width:75%">-->
+        <!--                    <p>{{shop?.shippingPrice == 0 ? "Miễn phí" : shop?.shippingPrice | priceCurrency: 'VND'}}</p>-->
+        <!--                  </div>-->
+        <!--                </div>-->
+
+
+        <!--                <h2 style="color: #D12886;font-weight: bolder !important;margin:0px">Chi tiết đơn hàng</h2>-->
+        <!--                <hr>-->
+        <!--                <div>-->
+        <!--                  <table class="table table-detail" border=1 frame=void rules=rows-->
+        <!--                         style="width:100%;border-spacing: 0px;">-->
+        <!--                    <thead style="line-height: 40px;">-->
+        <!--                    <tr style="background:linear-gradient(106.76deg, #280d50 5%, #d11287 40%);color: white;">-->
+        <!--                      <th style="width: 23%;">-->
+        <!--                        Sản phẩm-->
+        <!--                      </th>-->
+        <!--                      <th style="width: 14%;">-->
+        <!--                        Đơn giá-->
+        <!--                      </th>-->
+        <!--                      <th style="width: 12%;">-->
+        <!--                        Số lượng-->
+        <!--                      </th>-->
+        <!--                      <th style="width: 15%;">-->
+        <!--                        Khuyến mãi-->
+        <!--                      </th>-->
+        <!--                      <th style="width: 17%;">-->
+        <!--                        Thành tiền-->
+        <!--                      </th>-->
+        <!--                    </tr>-->
+        <!--                    </thead>-->
+        <!--                    <tbody>-->
+        <!--                    <tr *ngFor="let item of shop?.details, let i = index">-->
+        <!--                      <td style="text-align: center;height: 40px;border-bottom: 1px solid #A97BA9;">{{item?.product?.name}}</td>-->
+        <!--                      <td style="text-align: center;height: 40px;border-bottom: 1px solid #A97BA9;">{{item?.unitPrice | priceCurrency: 'VND'}}</td>-->
+        <!--                      <td style="text-align: center;height: 40px;border-bottom: 1px solid #A97BA9;">{{item?.quantity}}</td>-->
+        <!--                      <td style="text-align: center;height: 40px;border-bottom: 1px solid #A97BA9;">{{item?.priceAfterPromo | priceCurrency: 'VND'}}</td>-->
+        <!--                      <td style="text-align: center;height: 40px;border-bottom: 1px solid #A97BA9;">{{item?.totalPrice | priceCurrency: 'VND'}}</td>-->
+        <!--                    </tr>-->
+        <!--                    </tbody>-->
+        <!--                  </table>-->
+        <!--                  <table style="width: 37%;-->
+        <!--                        margin-right: 0px;-->
+        <!--                        margin-left: auto;">-->
+        <!--                    <tr>-->
+        <!--                      <td>{{'Total money' | translate}} {{shop?.totalExtraProduct}}</td>-->
+        <!--                      <td>{{(shop?.totalExtraProduct ? shop?.totalPrice - shop?.shippingPrice + shop?.totalDiscountPrice - shop?.totalExtraProduct :-->
+        <!--                        shop?.totalPrice - shop?.shippingPrice + shop?.totalDiscountPrice ) | priceCurrency: 'VND'}}</td>-->
+        <!--                    </tr>-->
+        <!--                    <tr>-->
+        <!--                      <td>{{'Trade discount' | translate}} ({{shop?.percentDiscount * 100 | number}}%)</td>-->
+        <!--                      <td>{{shop?.totalDiscountPrice | priceCurrency: 'VND'}}</td>-->
+        <!--                    </tr>-->
+        <!--                    <tr>-->
+        <!--                      <td>{{'Total price after discount' | translate}}</td>-->
+        <!--                      <td>{{(shop?.totalExtraProduct ? shop?.totalPrice - shop?.shippingPrice - shop?.totalExtraProduct : shop?.totalPrice - shop?.shippingPrice) | priceCurrency: 'VND'}}</td>-->
+        <!--                    </tr>-->
+        <!--                    <tr *ngFor="let extraProduct of shop?.extraProducts">-->
+        <!--                      <td class="text-danger">Mua 1 <span class="short-text">{{extraProduct?.product?.name}}</span> ưu đãi</td>-->
+        <!--                      <td class="text-danger">{{extraProduct?.totalPrice | priceCurrency: 'VND'}}</td>-->
+        <!--                    </tr>-->
+        <!--                    <tr *ngFor="let item of shop?.promotions, let i = index">-->
+        <!--                      <td *ngIf="item?.discountPrice && item?.discountPercent">Khuyến mãi ({{item?.discountPercent}} %)</td>-->
+        <!--                      <td *ngIf="item?.discountPrice && !item?.discountPercent">Khuyến mãi</td>-->
+        <!--                      <td *ngIf="item?.discountPrice">{{item?.discountPrice | priceCurrency: 'VND'}}</td>-->
+        <!--                    </tr>-->
+        <!--                    <tr>-->
+        <!--                      <td>{{'Shipping Fee' | translate}}</td>-->
+        <!--                      <td>{{shop?.shippingPrice == 0 ? "Miễn phí" : shop?.shippingPrice | priceCurrency: 'VND'}}</td>-->
+        <!--                    </tr>-->
+        <!--                    <tr *ngFor="let item of shop?.freeShipList">-->
+        <!--                      <td *ngIf="item?.discountPrice">{{'Shipping price discount' | translate}}</td>-->
+        <!--                      <td *ngIf="item?.discountPrice">{{item?.discountPrice | priceCurrency: 'VND'}}</td>-->
+        <!--                    </tr>-->
+        <!--                    <tr>-->
+        <!--                      <td>{{'Total price' | translate}}</td>-->
+        <!--                      <td>{{shop?.totalPrice | priceCurrency: 'VND'}}-->
+        <!--                      </td>-->
+        <!--                    </tr>-->
+        <!--                  </table>-->
+        <!--                </div>-->
+        <!--              </div>-->
+        <!--            </div>-->
+        <!--          </div>-->
+        <!-- Print -->
+        <!--        </td>-->
+      </tr>
+      </tbody>
+    </table>
+    <div class="display-inline" [hidden]="totalShops < take">
+      <div class="pull-left">
+        <ngb-pagination [maxSize]="5" [collectionSize]="totalShops" [(page)]="page" [pageSize]="take"
+                        (pageChange)="query()">
+        </ngb-pagination>
+      </div>
+    </div>
+  </div>
+</div>

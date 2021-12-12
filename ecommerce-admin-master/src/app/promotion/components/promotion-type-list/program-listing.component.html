@@ -1,0 +1,127 @@
+<style>
+    .h-300 {
+        min-height: 450px;
+    }
+</style>
+
+<div class="card h-300">
+    <div class="card-block table-responsive h-300">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        <a>{{'Code program' | translate}}</a>
+                    </th>
+                    <th>
+                        <a>{{'Name program' | translate}}</a>
+                    </th>
+                    <th>
+                        <a>{{'Start date' | translate}}</a>
+                    </th>
+                    <th>
+                        <a>{{'End date' | translate}}</a>
+                    </th>
+                    <th>
+                      <a>{{'Is Active' | translate}}</a>
+                  </th>
+                  <!-- <th>
+                    <a>{{'Ordinal' | translate}}</a>
+                </th> -->
+                    <th>
+                        <a>{{'Active' | translate}}</a>
+                    </th>
+                    <th>
+                        <a>{{'Manipulation' | translate}}</a>
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                        <input class="form-control" [(ngModel)]="code" (keypress)="keyPress($event)" style="width:50%" />
+                    </th>
+                    <th></th>
+                    <th>
+                        <div class="input-group">
+                          <input #dpFromDate class="form-control date-input-disable" [disabled]="true" placeholder="{{'HH:mm DD-MM-YYYY' | translate}}" name="dpFromDate"
+                            [value]="formatTimePickerValue(fromTime)+formatter.format(fromDate)" (input)="fromDate = validateInput(fromDate, dpFromDate.value)" style="width:15px">
+                          <div class="input-group-append">
+                            <button class="btn btn-outline-secondary calendar" (click)="datepicker.toggle()" type="button"><i
+                                class="fa fa-calendar" title="Date" aria-hidden="true"></i></button>
+                          </div>
+                        </div>
+                        <div class="form-group hidden">
+                          <div class="input-group">
+                            <input name="datepicker" class="form-control" ngbDatepicker #datepicker="ngbDatepicker"
+                              [autoClose]="'outside'" (dateSelect)="onDateSelection($event)" [displayMonths]="2" 
+                              [footerTemplate]="f" [dayTemplate]="t"
+                              outsideDays="hidden" [startDate]="fromDate!" style="display: none;">
+                              <ng-template #t let-date let-focused="focused">
+                                <span class="custom-day" [class.focused]="focused" [class.range]="isRange(date)"
+                                  [class.faded]="isHovered(date) || isInside(date)" (mouseenter)="hoveredDate = date"
+                                  (mouseleave)="hoveredDate = null">
+                                  {{ date.day }}
+                                </span>
+                              </ng-template>
+                              <ng-template #f>
+                                <div class="row">
+                                  <div class="col-6 time-picker">
+                                    <ngb-timepicker [(ngModel)]="fromTime" name="fromTime"></ngb-timepicker>
+                                  </div>
+                                  <div class="col-6 time-picker">
+                                    <ngb-timepicker [(ngModel)]="toTime" name="toTime"></ngb-timepicker>
+                                  </div>
+                                </div>
+                              </ng-template>
+                          </div>
+                        </div>
+                      </th>
+                      <th>
+                        <div class="input-group">
+                          <!-- <p style="font-weight: bold; margin: 10px;">{{ 'To' | translate | lowercase }}</p> -->
+                          <input #dpToDate class="form-control date-input-disable" [disabled]="true" placeholder="{{'HH:mm DD-MM-YYYY' | translate}}" name="dpToDate"
+                            [value]="formatTimePickerValue(toTime)+formatter.format(toDate)" (input)="toDate = validateInput(toDate, dpToDate.value)" style="width:15px">
+                          <div class="input-group-append">
+                            <button class="btn btn-outline-secondary calendar" (click)="datepicker.toggle()" type="button"><i
+                                class="fa fa-calendar" title="Date" aria-hidden="true"></i></button>
+                          </div>
+                        </div>
+                      </th>
+                      <th colspan="2"></th>
+                    <th><a class="btn btn-primary" (click)="onSearch()">{{'Filters' | translate}}</a></th>
+                </tr>
+            </thead>
+            <tbody *ngIf="items.length">
+                <tr *ngFor="let item of items, let i = index">
+                    <td>{{item?.code}}</td>
+                    <td>{{item?.name}}</td>
+                    <td>{{item?.startDate | date: 'HH:mm dd/MM/yyyy'}}</td>
+                    <td>{{item?.endDate | date: 'HH:mm dd/MM/yyyy'}}</td>
+                    <td>{{item?.status | translate}}</td>
+                    <!-- <td>{{item?.ordering | translate}}</td> -->
+                    <td>            
+                        <span class="label label-success text-nowrap" *ngIf="item?.isActive">{{'Active' | translate}}</span>
+                        <span class="label label-danger text-nowrap" *ngIf="!item?.isActive">{{'Deactive' | translate}}</span>
+                    </td>
+                    <td>
+                      <a *ngIf="item?.isActive && item?.status == 'running'" (click)="stop(item?._id)">
+                        <i class="fa fa-stop-circle-o" style="color: red;"></i>
+                      </a> &nbsp;
+                        <a (click)="edit(item?.status,item?._id)">
+                          <i class="fa fa-pencil" style="color:blue;"></i>
+                        </a> &nbsp;
+                        <a (click)="remove(item?._id,item?.status,item?.isActive, i)">
+                          <i class="fa fa-trash"></i>
+                        </a>
+                      </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="8" *ngIf="total > take">
+                        <ngb-pagination [collectionSize]="total" [maxSize]="5" [(page)]="page" [pageSize]="take" (pageChange)="query()">
+                        </ngb-pagination>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>

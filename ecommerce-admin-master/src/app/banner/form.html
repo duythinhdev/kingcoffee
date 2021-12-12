@@ -1,0 +1,61 @@
+<div class="card">
+  <div class="card-body" *ngIf="banner">
+    <form (submit)="submit(frm)" #frm>
+      <div class="row">
+        <div class="col col-md-6">
+          <div class="form-group" >
+            <label>{{bannerCreateTitleModel?.Title}} (*)</label>
+            <input type="text" name="bannerName" class="form-control" [(ngModel)]="banner.title" required />
+          </div>
+        </div>
+        <div class="col col-md-6">
+          <div class="form-group">
+            <label>{{bannerCreateTitleModel?.Position}}</label>
+            <select name="Position" [(ngModel)]="banner.position" class="form-control">
+              <option *ngFor="let itemPos of postions" value="{{itemPos}}">{{itemPos | translate}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col col-md-12">
+          <div class="form-group">
+            <label>{{bannerCreateTitleModel?.Content}}</label>
+            <textarea class="form-control" name="bannerdesc" [(ngModel)]="banner.content"></textarea>
+          </div>
+        </div>
+
+        <div class="col col-md-6">
+          <div class="form-group">
+            <label>{{bannerCreateTitleModel?.Image}} (*)
+              <media-select [options]="mediaOptions" (onSelect)="selectMedia($event)"></media-select>
+            </label>
+            <div *ngIf="media">
+              <img [src]="media.thumbUrl" class="img-thumbnail" />
+            </div>
+          </div>
+        </div>
+        
+        <div class="col col-md-6">
+          <div class="form-group">
+            <div class="checkbox">
+              <label><input class="mr-1" type="checkbox" name="active"
+                  [(ngModel)]="banner.isActive" />{{bannerCreateTitleModel?.isActive}} </label>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="col col-md-6">
+          <div class="form-group">
+            <label>{{bannerCreateTitleModel?.Link}}</label>
+            <input type="text" name="link" class="form-control"  [(ngModel)]="banner.link" required />
+          </div>
+        </div> -->
+
+        <div class="col col-md-12">
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary">{{bannerCreateTitleModel?.Submit}}</button>&nbsp;
+            <a class="btn btn-warning" [routerLink]="['/banners']">{{bannerCreateTitleModel?.Cancel}}</a>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

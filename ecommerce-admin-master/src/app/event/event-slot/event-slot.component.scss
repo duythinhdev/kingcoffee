@@ -1,0 +1,183 @@
+#stage {
+  margin: 0 auto;
+  width: 600px;
+  padding: 0 0 40px;
+}
+
+.perspective-on {
+  -webkit-perspective: 1000px;
+     -moz-perspective: 1000px;
+          perspective: 1000px;    /* Setting the perspective of the contents of the stage but not the stage itself*/
+}
+.perspective-off {
+  -webkit-perspective: 0;
+     -moz-perspective: 0;
+          perspective: 0;
+}
+
+#rotate {
+  margin: 0 auto 0;
+  width: 540px;
+  height: 450px;
+  padding-top: 200px;
+  /* Ensure that we're in 3D space */
+  transform-style: preserve-3d;
+}
+
+.ring {
+  margin: 0 auto;
+  height: 80px;
+  width: 90px;
+  float: left;
+  transform-style: preserve-3d;
+}
+
+.backface-on {
+  -webkit-backface-visibility: visible;
+  -moz-backface-visibility: visible;
+  backface-visibility: visible;
+}
+
+.go {
+  display: block;
+  margin: 0 auto 20px;
+  padding:10px 30px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+label {
+  cursor: pointer;
+  display: inline-block;
+  width: 45%;
+  text-align: center;
+}
+
+.tilted {
+  transform: rotateY(45deg);
+}
+
+.center-retangle{
+  width: 100%;
+  height: 80px;
+  border: 2px solid red;
+  background: red;
+}
+
+.content, .sidebar{
+  display: inline-block;
+}
+
+.card-body{
+  display: inherit;
+  position: relative;
+  overflow: hidden;
+}
+
+.extend-container{
+  position: relative;
+  margin: 50px 50px 100px;
+  hr{
+    border-top: 2px solid #f1f1f1;
+  }
+}
+
+.extend-btn{
+  position: absolute;
+  padding: 8px 11px 4px;
+  background: white;
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  left: 50%;
+  top: -16px;
+  transform: translate(-50%, -50%);
+
+  i {
+    padding-left: 5px;
+    font-size: 20px;
+    padding: 0;
+    font-weight: bold;
+  }
+}
+
+.side-bar{
+  margin-left: 15px;
+}
+
+.sidebar{
+  background: #1a2580;
+  color: #fff;
+  position: fixed;
+  left: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  min-width: 250px;
+  z-index: 9999;
+}
+
+.toggle-btn{
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  padding: 8px 16px 4px 14px;
+  background: white;
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  z-index: 999;
+
+  i {
+    padding-left: 5px;
+    font-size: 20px;
+    padding: 0;
+    font-weight: bold;
+  }
+}
+
+/*--------------------------ANIMATION--------------------------*/
+$radius: 36;
+$spin0: 3923;
+@for $i from 1 through 10{
+  .spin-#{($i - 1)}{
+    transform: rotateX(-1*($spin0 + $radius*$i)+deg);
+  }
+}
+
+@for $i from 1 through 10{
+  .spin-#{($i - 1)}10{
+    transform: rotateX(-1*($spin0 + $radius*$i)+deg);
+    background: red;
+  }
+}
+
+/*=====*/
+@keyframes back-spin {
+    0%    { transform: rotateX(0deg); }
+    100%  { transform: rotateX(($radius)+deg); }
+}
+@keyframes tiltin {
+    0%    { transform: rotateY(0deg);}
+    50%   { transform: rotateY(0deg);}
+    100%  { transform: rotateY(45deg);}
+}
+@keyframes tiltout {
+    0%    { transform: rotateY(45deg);}
+    100%  { transform: rotateY(0deg);}
+}
+
+@for $i from 1 through 10{
+  @keyframes spin-#{($i - 1)} {
+    0%    { transform: rotateX(($radius)+deg); }
+    100%  { transform: rotateX(-1*($spin0 + $radius*$i) + deg); }
+  }
+}
+
+@for $i from 1 through 10{
+  @keyframes spin-#{($i - 1)}10 {
+    0%    { transform: rotateX(($radius)+deg); }
+    100%  { transform: rotateX(-1*($spin0 + $radius*$i) + deg); }
+  }
+}

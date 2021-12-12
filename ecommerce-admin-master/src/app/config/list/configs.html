@@ -1,0 +1,220 @@
+<div class="card">
+  <div class="card-block table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>{{configListTitleModel?.nameCol}}</th>
+          <th>{{configListTitleModel?.Value}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of items; let i = index">
+          <td *ngIf="item.key != 'kpiConfig'">{{item.name | translate}}</td>
+          <td>
+            <div class="input-group" *ngIf="item.type === 'number'">
+              <input type="number" class="form-control" [(ngModel)]="item.value" name="item{{item._id}}" min="0.01"
+                step="0.01" />
+              <span class="input-group-btn">
+                <button class="btn btn-primary" type="button"
+                  (click)="save(item)">{{configListTitleModel?.Save}}</button>
+              </span>
+            </div>
+            <div class="input-group" *ngIf="item.type === 'text'">
+              <input type="text" class="form-control" [(ngModel)]="item.value" name="item{{item._id}}" />
+              <span class="input-group-btn" *ngIf="item.key === 'siteLogo' || item.key === 'siteFavicon'">
+                <img width="40px" [src]="item?.value">
+                <media-select [options]="{multiple: true}" (onSelect)="selectMedial($event, i)"></media-select>
+              </span>
+              <span class="input-group-btn">
+                <button class="btn btn-primary" type="button"
+                  (click)="save(item)">{{configListTitleModel?.Save}}</button>
+              </span>
+            </div>
+            <div *ngIf="item.type === 'mixed'">
+              <div *ngIf="item.key === 'isMaintenance'">
+                <div class="form-group">
+                  <label><input type="checkbox" [(ngModel)]="item.value" name="maintenance"> </label>
+                </div>
+                <button class="btn btn-primary" (click)="save(item)">{{configListTitleModel?.Save}}</button>
+              </div>
+              <div *ngIf="item.key === 'paypal'">
+                <div class="form-group">
+                  <label>{{configListTitleModel?.Username}}</label>
+                  <input type="text" class="form-control" [(ngModel)]="item.value.username" />
+                </div>
+                <div class="form-group">
+                  <label>{{configListTitleModel?.Password}}</label>
+                  <input type="password" class="form-control" [(ngModel)]="item.value.password" />
+                </div>
+                <div class="form-group">
+                  <label>{{configListTitleModel?.Signature}}</label>
+                  <input type="password" class="form-control" [(ngModel)]="item.value.signature" />
+                </div>
+                <div class="form-group">
+                  <label>{{configListTitleModel?.Sandbox}} <input type="checkbox"
+                      [(ngModel)]="item.value.sandbox" /></label>
+                </div>
+                <div class="form-group">
+                  <button class="btn btn-primary" (click)="save(item)">{{configListTitleModel?.Save}}</button>
+                </div>
+              </div>
+              <div *ngIf="item.key === 'ccbill'">
+                <div class="form-group">
+                  <label>{{configListTitleModel?.AccountNumber}}</label>
+                  <input type="text" class="form-control" [(ngModel)]="item.value.accountNumber" />
+                </div>
+                <div class="form-group">
+                  <label>{{configListTitleModel?.SubaccountNumber}}</label>
+                  <input type="text" class="form-control" [(ngModel)]="item.value.subAccountNumber" />
+                </div>
+                <div class="form-group">
+                  <label>{{configListTitleModel?.Salt}}</label>
+                  <input type="text" class="form-control" [(ngModel)]="item.value.salt" />
+                </div>
+                <div class="form-group">
+                  <label>{{configListTitleModel?.Flexformsubscriptionid}}</label>
+                  <input type="text" class="form-control" [(ngModel)]="item.value.flexformSubscriptionId" />
+                </div>
+                <div class="form-group">
+                  <label>{{configListTitleModel?.Flexformsinglepaymentid}}</label>
+                  <input type="text" class="form-control" [(ngModel)]="item.value.flexformSingleId" />
+                </div>
+                <button class="btn btn-primary" (click)="save(item)">{{configListTitleModel?.Save}}</button>
+              </div>
+              <div *ngIf="item.key === 'homeSEO'">
+                <div class="form-group">
+                  <label>{{configListTitleModel?.Keywords}}</label>
+                  <input type="text" class="form-control" [(ngModel)]="item.value.keywords" />
+                </div>
+                <div class="form-group">
+                  <label>{{'Description' | translate}}</label>
+                  <textarea class="form-control" [(ngModel)]="item.value.description"></textarea>
+                </div>
+                <div class="form-group">
+                  <label>{{'Thumbnail' | translate}}</label>
+                  <span class="input-group-btn">
+                    <img width="100%" height="320px" style="object-fit: contain;" [src]="item?.value?.thumbnail">
+                    <media-select [options]="{multiple: true}" (onSelect)="addSEOThumbnail($event)"></media-select>
+                  </span>
+                </div>
+                <div class="form-group">
+                  <button class="btn btn-primary" (click)="save(item)">{{configListTitleModel?.Save}}</button>
+                </div>
+              </div>
+              <div *ngIf="item.key === 'securityIcon1' || item.key === 'securityIcon2' || item.key === 'securityIcon3'">
+                <div class="form-group">
+                  <label>{{configListTitleModel?.Icon}} <media-select [options]="{multiple: true}"
+                      (onSelect)="selectIcon($event, i)"></media-select>
+                    <img [src]="item?.value?.iconUrl" width="40px"></label>
+                  <input type="text" class="form-control" [(ngModel)]="item.value.iconUrl" />
+                </div>
+                <div class="form-group">
+                  <label>{{configListTitleModel?.Title}}</label>
+                  <input class="form-control" [(ngModel)]="item.value.title">
+                </div>
+                <div class="form-group">
+                  <label>{{configListTitleModel?.Displaytext}} </label>
+                  <textarea class="form-control" [(ngModel)]="item.value.displayText" rows="3"></textarea>
+                </div>
+                <button class="btn btn-primary" (click)="save(item)">{{configListTitleModel?.Save}}</button>
+              </div>
+              <div *ngIf="item.key === 'paymentGatewayConfig'">
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-md-4" *ngFor="let paymentGateway of item.value.paymentMethods">
+                      <label><input type="checkbox" [(ngModel)]="paymentGateway.enable" [name]="paymentGateway.name">
+                        {{paymentGateway.name | translate}}
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <button class="btn btn-primary" (click)="save(item)">{{configListTitleModel?.Save}}</button>
+              </div>
+              <div *ngIf="item.key === 'socialLinks'">
+                <div class="row">
+                  <div class="form-group col-md-12">
+                    <label>{{'Facebook' | translate}}</label>
+                    <input [(ngModel)]="item.value.facebook" name="facebook" class="form-control">
+                  </div>
+                  <div class="form-group col-md-12">
+                    <label>{{'Instagram' | translate}}</label>
+                    <input [(ngModel)]="item.value.instagram" name="instagram" class="form-control">
+                  </div>
+                  <!-- <div class="form-group col-md-12">
+                    <label>{{'Youtube' | translate}}</label>
+                    <input [(ngModel)]="item.value.youtube" name="youtube" class="form-control">
+                  </div> -->
+                  <div class="form-group col-md-12">
+                    <label>{{'Zalo' | translate}}</label>
+                    <input [(ngModel)]="item.value.zalo" name="zalo" class="form-control">
+                  </div>
+                </div>
+                <button class="btn btn-primary" (click)="save(item)">{{configListTitleModel?.Save}}</button>
+              </div>
+              <div *ngIf="item.key === 'tradeDiscount'">
+                <div class="row">
+                  <div class="form-group col-md-12">
+                    <label>{{'WE(%)' | translate}}</label>
+                    <input type="number" [(ngModel)]="item.value.we" name="facebook" class="form-control">
+                  </div>
+                  <div class="form-group col-md-12">
+                    <label>{{'HUBs(%)' | translate}}</label>
+                    <input type="number" [(ngModel)]="item.value.hubs" name="facebook" class="form-control">
+                  </div>
+                </div>
+                <button class="btn btn-primary" (click)="save(item)">{{configListTitleModel?.Save}}</button>
+              </div>
+              <div *ngIf="item.key === 'homeMiddleBanner'">
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-md-12" *ngFor="let homeBanner of item.value">
+                      <div class="form-group col-md-12">
+                        <label>{{'Title' | translate}} Banner</label>
+                        <input [(ngModel)]="homeBanner.title" name="title" class="form-control">
+                      </div>
+                      <div class="form-group col-md-12">
+                        <label>{{'Content' | translate}} Banner</label>
+                        <textarea [(ngModel)]="homeBanner.content" name="content" class="form-control"></textarea>
+                      </div>
+                      <div class="form-group col-md-12">
+                        <label>{{'Thumbnail' | translate}}</label>
+                        <span class="input-group-btn">
+                          <img width="100%" height="320px" style="object-fit: contain;" [src]="homeBanner?.thumbnail">
+                          <media-select [options]="{multiple: false}"
+                            (onSelect)="addHomeBannerThumbnail($event,homeBanner?.thumbnail)">
+                          </media-select>
+                        </span>
+                      </div>
+                      <div class="col-md-12"><label>{{'Button' | translate}}</label></div>
+                      <div class="col-md-12" *ngFor="let buttonLink of homeBanner.buttons">
+                        <div class="form-group col-md-12">
+                          <label>{{'Title' | translate}} Button</label>
+                          <input [(ngModel)]="buttonLink.title" name="title" class="form-control">
+                        </div>
+                        <div class="form-group col-md-12">
+                          <label>{{'Link' | translate}} Button</label>
+                          <input [(ngModel)]="buttonLink.link" name="link" class="form-control">
+                        </div>
+                      </div>
+                    </div>
+                    <hr/>
+                  </div>
+                </div>
+                <button class="btn btn-primary" (click)="save(item)">{{configListTitleModel?.Save}}</button>
+              </div>
+              <div *ngIf="item.key === 'appVersion'">
+                <div class="row">
+                  <div class="form-group col-md-12">
+                    <label>{{'App Version' | translate}}</label>
+                    <input type="number" [(ngModel)]="item.value" name="appVersion" class="form-control">
+                  </div>
+                </div>
+                <button class="btn btn-primary" (click)="save(item)">{{configListTitleModel?.Save}}</button>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

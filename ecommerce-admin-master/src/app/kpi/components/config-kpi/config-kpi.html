@@ -1,0 +1,24 @@
+<div class="card">
+  <div class="card-body table-responsive">
+    <h2>{{'Thiết lập KPIs theo tháng'}}</h2>
+    <div class="kpimouth">
+      <div *ngFor="let item of kpi.kpiMonth; let i = index" class="kpiRow" style="display: flex;align-items: center;justify-content: space-between;">
+        <p>{{'Mức chi tiêu'}} {{i+1}}</p>
+        <input [(ngModel)]="item.level"  type="number">
+        <p>{{'Tỷ lệ thưởng'}}(%)</p>
+        <input [(ngModel)]="item.valuePercent" type="number">
+      </div>
+    </div>
+    <p style="margin-bottom: 20px">*Công thức: Doanh thu * tỷ lệ thưởng</p>
+    <h2>{{'Thiết lập KPIs thưởng'}}</h2>
+    <div class="kpiRow" style="display: flex;align-items: center;justify-content: space-between;">
+      <p>{{'Điều kiện 3 tháng liên tục đạt mức chỉ tiêu thì tỷ lệ thưởng'}}(%)</p>
+      <input  type="number" [(ngModel)]="kpi.kpiReward" />
+    </div>
+    <p>*Công thức: Tổng doanh thu 3 tháng liên tiếp * tỷ lệ thưởng</p>
+    <div class="submitKpi">
+      <input (click)="save(items)" class="btn btn-primary" type="button" value="Lưu" />
+      <a [routerLink]="['/kpi/list']" class="btn btn-warning" type="button" >Huỷ</a>
+    </div>
+  </div>
+</div>

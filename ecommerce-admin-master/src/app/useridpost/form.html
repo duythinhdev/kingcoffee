@@ -1,0 +1,41 @@
+<div class="card">
+  <div class="card-body" *ngIf="memberIds">
+    <form (submit)="submit()" >
+      <div class="row">
+        <div class="col col-md-6">
+          <div class="form-group">
+            <label>Tiêu Đề (*)</label>
+<!--            <label>{{UserIdCreateTitle?.Title}} (*)</label>-->
+            <input type="text" name="bannerName" class="form-control" [(ngModel)]="memberIds.title" required  />
+          </div>
+        </div>
+        <div class="col col-md-6">
+          <div class="form-group">
+            <label>Mã Thành Viên (*)</label>
+<!--            <label>{{UserIdCreateTitle?.Title}} (*)</label>-->
+            <input type="text" name="bannerName" class="form-control" [(ngModel)]="memberIds.memberId"   required  />
+          </div>
+        </div>
+        <div class="col col-md-12">
+          <div class="form-group">
+            <label>Nội Dung (*)</label>
+<!--            <label>{{UserIdCreateTitle?.Content}}</label>-->
+            <textarea class="form-control" name="bannerdesc" [(ngModel)]="memberIds.description"></textarea>
+          </div>
+        </div>
+        <div class="col col-md-12">
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary">
+              Lưu
+<!--              {{UserIdCreateTitle?.Submit}}-->
+            </button>&nbsp;
+            <a class="btn btn-warning" [routerLink]="['/userids']">
+<!--              {{UserIdCreateTitle?.Cancel}}-->
+              Hủy
+            </a>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

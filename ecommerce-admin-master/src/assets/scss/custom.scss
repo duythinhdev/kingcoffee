@@ -1,0 +1,153 @@
+.horizontal-nav .left-sidebar {
+  position: relative;
+  width: 100%;
+  height: auto;
+  padding-top: 0px;
+  background: transparent !important;
+  box-shadow: unset;
+}
+
+.topbar .top-navbar {
+  background: #7460ee;
+}
+
+.fluid-custom { 
+  height: 65px; 
+  width: 100%;
+}
+
+.page-wrapper {
+  height: calc(100vh - 110px);
+}
+
+.horizontal-nav .sidebar-nav #sidebarnav>li>ul {
+  position: absolute;
+  left: 0px;
+  width: 100%;
+  max-height: 350px;
+  overflow-y: auto;
+  padding-bottom: 10px;
+  z-index: 1001;
+  background: #edf0f5;
+  display: none;
+  padding-left: 1px;
+  border-radius: 8px;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+.star {
+  i {
+    color: #ccc;
+  }
+
+  .active {
+    color: #eda71f;
+  }
+}
+
+.inline-block {
+  display: inline-block;
+  width: 100%;
+}
+
+.text-highlight {
+  font-size: 20px;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.d-flex.no-block {
+  .align-self-center {
+    align-self: unset !important;
+  }
+}
+
+.custom-file {
+  height: 100%;
+}
+
+.table-custom {
+  tr {
+    th {
+      min-width: 100px;
+    }
+
+    .min-w-158 {
+      min-width: 158px;
+    }
+
+    .min-w-120 {
+      min-width: 150px;
+    }
+  }
+}
+
+.error {
+  color: red;
+}
+
+.required-text {
+  color: red;
+}
+
+.daily-font-size {
+  font-size: 20px;
+}
+
+.option-row {
+  padding: 10px 0;
+  border-bottom: 1px solid #ccc;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.nav-top-cus.flex-column {
+  flex-direction: unset !important;
+  margin-bottom: 20px;
+
+  a.nav-link {
+    display: inline-block;
+    margin-right: 15px;
+
+    &:hover {
+      color: #fff;
+      background: #745af2;
+    }
+  }
+}
+
+.collapse.in {
+  display: block !important;
+}
+
+.menu-drop-bars {
+  display: none;
+}
+
+.btn.btn-success.btn-sroll-mobile {
+  display: none;
+}
+
+.no-wrap {
+  white-space: nowrap;
+}
+
+.min-w-200 {
+  min-width: 200px !important;
+}
+
+.fr-box {
+  padding-top: 85px;
+
+  .fr-toolbar.fr-top {
+    position: absolute;
+    width: 100%;
+  }
+}
+
+.modal.show .modal-dialog{
+  top: 45% !important;
+  transform: translateY(-50%) !important;
+}

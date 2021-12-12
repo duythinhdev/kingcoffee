@@ -1,0 +1,97 @@
+{% extends '../layouts/default.html' %}
+
+{% block content %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Template Email - Thông báo trúng thưởng</title>
+    {% block style %}
+    <style>
+        .ladi-wraper{
+            width: 420px;
+            height: 899.5px;
+            background-image: url("https://w.ladicdn.com/s750x1200/5fc9ad38f711010011efc911/trieu-chu-ky-thong-bao-khong-trung-thuong-bg-20210527080352.jpg");
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        .ladi-wraper-item{
+            position: absolute;
+            background-color: rgb(239, 220, 212);
+            width: 90%;
+            border-radius: 5px;
+            height: 230px;
+            top: 30%;
+            text-align: center;
+            font-size: 13px;
+            margin-top: 270px;
+            margin-left: 20px;
+        }
+        .ladi-element{
+            color: rgb(0,0,0);
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            line-height: 1.6;
+            margin-top: 10px;
+        }
+        .ladi-element-send{
+            margin-top: 13px;
+            color: rgb(0, 0, 0);
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            line-height: 1.6;
+        }
+        .ladi-paragraph-thank{
+            color: rgb(0,0,0);
+            font-size: 11.5px;
+            text-align: center;
+            line-height: 1.6;
+            margin: 0px 20px;
+        }
+        .ladi-element-lose{
+            color: rgb(0, 0, 0);
+            font-size: 11px;
+            text-align: center;
+            line-height: 1.6;
+            margin: 0px 20px;
+        }
+        .ladi-element-img{
+            margin-top: 20px;
+            margin-left: 120px;
+        }
+    </style>
+    {% endblock style %}
+</head>
+<body>
+<div class="ladi-wraper">
+    <div  class="ladi-wraper-item">
+        <div class='ladi-element-send'>
+            Kính gửi {{data.username}}
+        </div>
+        <div  class='ladi-element'>
+            <p class='ladi-paragraph-thank'>Cảm ơn {{data.username}} đã tham gia vòng quay may mắn của chương trình
+                <span style="font-weight: bold;">TRIỆU CHỮ KÝ MỘT NIỀM TIN CHIẾN THẮNG"</span>
+            </p>
+        </div>
+        <div  class='ladi-element'>
+            <p class='ladi-element-lose'>
+                <span>Rất tiếc bạn chưa nhận được giải thưởng từ chương trình, chúc bạn may mắn lần sau. Đừng quên còn nhiều cơ hội trúng thưởng khác đang chờ đón bạn</span>
+            </p>
+            <div>
+                <a href="https://www.niemtinchienthang.vn"> <img class="ladi-element-img" width="40%" height="35px" src="https://w.ladicdn.com/s450x350/5fc9ad38f711010011efc911/icon-kham-pha-ngay-20210527080352.png" /></a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+{% endblock content %}
+

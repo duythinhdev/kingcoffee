@@ -1,0 +1,19 @@
+.form-control {
+    margin-right: 20px;
+    border-radius: 0.25rem !important;
+}
+
+.input-group-btn{
+    margin-right: 20px;
+}
+
+table tr {
+    th:first-child, td:first-child{
+        padding-left: 25px;
+        width: 25%;
+    }
+
+    th:last-child, td:last-child{
+        padding-right: 15px;
+    }
+}

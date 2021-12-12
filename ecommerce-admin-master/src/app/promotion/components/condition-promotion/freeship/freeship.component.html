@@ -1,0 +1,161 @@
+<div class="condition">
+<label class="title">{{'Condition' | translate}} {{'Promotion only' | translate | lowercase}}</label>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+        <label translate >Orders are valid after discount</label>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="form-group">
+        <input type="text" class="form-control" [disabled]="isEdit" (change)="changePromotionFreeShip()" (keyup)="onCheckMoney($event)" 
+        [ngModel]="totalOrderPriceCondition | number" 
+        (ngModelChange)="totalOrderPriceCondition = currencyInputChanged($event)"
+        (keydown)="kd_checkNumber($event)" />
+      </div>
+    </div>
+    <div class="col-md-2 mt-1">
+      <div class="form-group">
+        <label>free ship(đ)</label>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="form-group">
+        <input type="text" class="form-control" [disabled]="isEdit" (change)="changePromotionFreeShip()" (keyup)="onCheckMoney($event)" 
+        [ngModel]="discountOrderPercent | number" 
+        (ngModelChange)="discountOrderPercent = currencyInputChanged($event)"
+        (keydown)="kd_checkNumber($event)" />
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+        <label >{{'Condition' | translate}} {{'Check voucher' | translate | lowercase}}</label>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="form-group">
+        <select class="form-control" name="freeShipCondition" (change)="changePromotionFreeShip()" [(ngModel)]="freeShipCondition" [attr.disabled]="isEdit ? '' : null">
+          <option *ngFor="let item of arrFreeShipCondition" [ngValue]="item">{{item |translate}}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <label>{{'Expiry' | translate}} {{'From' | translate | lowercase}}</label>
+    </div>
+    <div class="col-md-3">
+      <div class="input-group d-flex">
+        <input style="height: 40px;" #dpFromDate class="form-control" placeholder="{{'HH:mm DD-MM-YYYY' | translate}}"
+          name="dpFromDate" [value]="formatTimePickerValue(fromTime)+formatter.format(fromDate)"
+          (input)="fromDate = validateInput(fromDate, dpFromDate.value)" [disabled]="true">
+        <div class="input-group-append">
+          <button style="height: 40px;" class="btn btn-outline-secondary calendar" (click)="datepicker.toggle()"
+            type="button" [disabled]="isEdit || checkConditionFreeShip" ><i class="fa fa-calendar" title="Date" aria-hidden="true" ></i></button>
+        </div>
+      </div>
+      <div class="form-group hidden">
+        <div class="input-group">
+          <input name="datepicker" class="form-control" ngbDatepicker #datepicker="ngbDatepicker"
+            [autoClose]="'outside'" (dateSelect)="onDateSelection($event)" [displayMonths]="2" [footerTemplate]="f0" [dayTemplate]="t"
+            outsideDays="hidden" [startDate]="fromDate!" style="display: none;" [minDate]="minDate">
+          <ng-template #t let-date let-focused="focused">
+            <span class="custom-day" [class.focused]="focused" [class.range]="isRange(date)"
+              [class.faded]="isHovered(date) || isInside(date)" (mouseenter)="hoveredDate = date"
+              (mouseleave)="hoveredDate = null">
+              {{ date.day }}
+            </span>
+          </ng-template>
+          <ng-template #f0>
+            <div class="row">
+              <div class="col-6 time-picker">
+                <ngb-timepicker [(ngModel)]="fromTime" name="fromTime"></ngb-timepicker>
+              </div>
+              <div class="col-6 time-picker">
+                <ngb-timepicker [(ngModel)]="toTime" name="toTime"></ngb-timepicker>
+              </div>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2 mt-1">
+      <label>{{'To' | translate | lowercase}}</label>
+    </div>
+    <div class="col-md-3">
+      <div class="input-group">
+        <input style="height: 40px;" #dpToDate class="form-control" placeholder="{{'HH:mm DD-MM-YYYY' | translate}}"
+          name="dpToDate" [value]="formatTimePickerValue(toTime)+formatter.format(toDate)"
+          (input)="toDate = validateInput(toDate, dpToDate.value)" [disabled]="true" >
+        <div class="input-group-append">
+          <button style="height: 40px;" class="btn btn-outline-secondary calendar" (click)="datepicker.toggle()"
+            type="button" [disabled]="isEdit || checkConditionFreeShip"><i class="fa fa-calendar" title="Date" aria-hidden="true" ></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <label style="font-weight: 600;" translate >Applies to products</label>
+  <div class="row"> 
+    <div class="col-md-2">
+      <div class="form-group">
+        <label translate >Product Type</label>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+        <select class="form-control" [(ngModel)]="category" name="categoryId" [attr.disabled]="isEdit ? '' : null">
+          <option value="">-- {{'No category' | translate}} --</option>
+          <option *ngFor="let item of tree" [ngValue]="item._id">{{item.name}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-md-2">
+      <div class="form-group">
+        <label>{{'Product ID' | translate}}</label>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="form-group">
+        <!-- <input type="text" class="form-control" /> -->
+        <item-select [keyChange]="keychange" [isEdit]="isEdit" [categoryId]="category" (State)="importProduct($event)" (arrState)="importArrProduct($event)" ></item-select>
+      </div>
+    </div>
+    <div class="col-md-1">
+      <a (click)="addProduct()" *ngIf="!isEdit"><i class="fa fa-plus-circle" style="color: #0cda08; font-size: 25px;line-height: 38px;"></i></a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-10">
+      <table class="table" *ngIf="arrProduct.length != 0; else orderListEmpty">
+        <thead>
+          <tr>
+            <th>{{'Product Type' | translate}}</th>
+            <th>{{'Product ID' | translate}}</th>
+            <th>{{'Product name' | translate}}</th>
+            <th><a (click)="removeAllProduct()" *ngIf="!isEdit">
+              <i class="fa fa-trash"></i>
+            </a></th>
+            <th *ngIf="!isEdit"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of arrProduct, let i = index">
+            <td>{{item?.category}}</td>
+            <td>{{item?.sap}}</td>
+            <td>{{item?.name}}</td>
+            <td *ngIf="!isEdit"><a (click)="remove(i)">
+              <i class="fa fa-trash"></i>
+            </a></td>
+          </tr>
+        </tbody>
+      </table>
+      <ng-template #orderListEmpty>
+        <div class="order-list-empty">
+          <p class="depth" translate >No products found</p>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,226 @@
+<style>
+  .h-300 {
+    min-height: 300px;
+  }
+</style>
+
+<div class="card h-300">
+  <div class="card-block table-responsive h-300">
+    <table class="table">
+      <thead>
+        <tr>
+          <!-- <th>
+            Image
+          </th> -->
+          <th>
+            <a (click)="sortBy('name', 'desc')">{{productListTitleModel?.Name}}</a>
+            <span *ngIf="sortOption.sortBy=='name'">
+              <a (click)="sortBy('name', 'asc')" *ngIf="sortOption.sortType=='desc'"><i class="fa fa-caret-down"></i></a>
+              <a (click)="sortBy('name', 'desc')" *ngIf="sortOption.sortType=='asc'"><i class="fa fa-caret-up"></i></a>
+            </span>
+          </th>
+          <th>
+            <a (click)="sortBy('category.name', 'desc')">{{productListTitleModel?.Category}}</a>
+            <span *ngIf="sortOption.sortBy=='category.name'">
+              <a (click)="sortBy('category.name', 'asc')" *ngIf="sortOption.sortType=='desc'"><i class="fa fa-caret-down"></i></a>
+              <a (click)="sortBy('category.name', 'desc')" *ngIf="sortOption.sortType=='asc'"><i class="fa fa-caret-up"></i></a>
+            </span>
+          </th>
+          <!-- <th>
+            <a (click)="sortBy('brand.name', 'desc')">{{productListTitleModel?.Shop}}</a>
+            <span *ngIf="sortOption.sortBy=='brand.name'">
+              <a (click)="sortBy('brand.name', 'asc')" *ngIf="sortOption.sortType=='desc'"><i class="fa fa-caret-down"></i></a>
+              <a (click)="sortBy('brand.name', 'desc')" *ngIf="sortOption.sortType=='asc'"><i class="fa fa-caret-up"></i></a>
+            </span>
+          </th>
+          <th>
+            <a (click)="sortBy('featured', 'desc')">{{productListTitleModel?.Feature}}</a>
+            <span *ngIf="sortOption.sortBy=='featured'">
+              <a (click)="sortBy('featured', 'asc')" *ngIf="sortOption.sortType=='desc'"><i class="fa fa-caret-down"></i></a>
+              <a (click)="sortBy('featured', 'desc')" *ngIf="sortOption.sortType=='asc'"><i class="fa fa-caret-up"></i></a>
+            </span>
+          </th>
+          <th>
+            <a (click)="sortBy('hot', 'desc')">{{productListTitleModel?.Hot}}</a>
+            <span *ngIf="sortOption.sortBy=='hot'">
+              <a (click)="sortBy('hot', 'asc')" *ngIf="sortOption.sortType=='desc'"><i class="fa fa-caret-down"></i></a>
+              <a (click)="sortBy('hot', 'desc')" *ngIf="sortOption.sortType=='asc'"><i class="fa fa-caret-up"></i></a>
+            </span>
+          </th>
+          <th>
+            <a (click)="sortBy('bestSell', 'desc')">{{productListTitleModel?.BestSell}}</a>
+            <span *ngIf="sortOption.sortBy=='bestSell'">
+              <a (click)="sortBy('bestSell', 'asc')" *ngIf="sortOption.sortType=='desc'"><i class="fa fa-caret-down"></i></a>
+              <a (click)="sortBy('bestSell', 'desc')" *ngIf="sortOption.sortType=='asc'"><i class="fa fa-caret-up"></i></a>
+            </span>
+          </th> -->
+          <!-- <th>
+            <a (click)="sortBy('type', 'desc')">{{productListTitleModel?.Type}}</a>
+            <span *ngIf="sortOption.sortBy=='type'">
+              <a (click)="sortBy('type', 'asc')" *ngIf="sortOption.sortType=='desc'"><i class="fa fa-caret-down"></i></a>
+              <a (click)="sortBy('type', 'desc')" *ngIf="sortOption.sortType=='asc'"><i class="fa fa-caret-up"></i></a>
+            </span>
+          </th> -->
+          <!-- <th>
+            <a (click)="sortBy('dailyDeal', 'desc')">{{productListTitleModel?.DailyDeal}}</a>
+            <span *ngIf="sortOption.sortBy=='dailyDeal'">
+              <a (click)="sortBy('dailyDeal', 'asc')" *ngIf="sortOption.sortType=='desc'"><i class="fa fa-caret-down"></i></a>
+              <a (click)="sortBy('dailyDeal', 'desc')" *ngIf="sortOption.sortType=='asc'"><i class="fa fa-caret-up"></i></a>
+            </span>
+          </th> -->
+          <!-- <th>
+            {{productListTitleModel?.Status}}
+          </th> -->
+          <th>
+            {{productListTitleModel?.SAP}}
+          </th>
+          <th>
+            {{productListTitleModel?.Producer}}
+          </th>
+          <th>
+            <!-- <a (click)="sortBy('isActive', 'desc')">{{productListTitleModel?.Active}}</a>
+            <span *ngIf="sortOption.sortBy=='isActive'">
+              <a (click)="sortBy('isActive', 'asc')" *ngIf="sortOption.sortType=='desc'"><i class="fa fa-caret-down"></i></a>
+              <a (click)="sortBy('isActive', 'desc')" *ngIf="sortOption.sortType=='asc'"><i class="fa fa-caret-up"></i></a>
+            </span> -->
+            {{productListTitleModel?.Active}}
+          </th>
+          <!-- <th>
+            <a (click)="sortBy('shopVerified', 'desc')">{{productListTitleModel?.ShopVerified}}</a>
+            <span *ngIf="sortOption.sortBy=='shopVerified'">
+              <a (click)="sortBy('shopVerified', 'asc')" *ngIf="sortOption.sortType=='desc'"><i class="fa fa-caret-down"></i></a>
+              <a (click)="sortBy('shopVerified', 'desc')" *ngIf="sortOption.sortType=='asc'"><i class="fa fa-caret-up"></i></a>
+            </span>
+          </th> -->
+          <th>
+            <a (click)="sortBy('createdAt', 'desc')">{{productListTitleModel?.Createdat}}</a>
+            <span *ngIf="sortOption.sortBy=='createdAt'">
+              <a (click)="sortBy('createdAt', 'asc')" *ngIf="sortOption.sortType=='desc'"><i class="fa fa-caret-down"></i></a>
+              <a (click)="sortBy('createdAt', 'desc')" *ngIf="sortOption.sortType=='asc'"><i class="fa fa-caret-up"></i></a>
+            </span>
+          </th>
+          <th>
+            {{productListTitleModel?.Actions}}
+          </th>
+          <th><a class="btn btn-primary" (click)="templateCsv()">Template {{'Template' | translate}}</a></th>
+        </tr>
+        <tr>
+          <!-- <th></th> -->
+          <th>
+            <input class="form-control" [(ngModel)]="searchText"  (keypress)="keyPress($event)" />
+          </th>
+          <th></th>
+          <th>
+            <input type="text" class="form-control" [(ngModel)]="searchSap"  (keypress)="keyPress($event)" />
+          </th>
+          <th></th>
+          <th>
+            <div class="d-inline-block" ngbDropdown #myDrop="ngbDropdown">
+              <button class="btn btn-outline-dark w-100" id="dropdownActive" ngbDropdownAnchor (focus)="myDrop.open()">{{searchActive}}</button>
+              <div ngbDropdownMenu aria-labelledby="dropdownActive">
+                <a *ngFor="let item of searchActiveList; let i = index" (click)="sortActive(i)" class="dropdown-item">{{searchActiveList[i]}}</a>
+              </div>
+            </div>
+          </th>
+          <!-- <th>
+            <div class="d-inline-block" ngbDropdown #myDrop="ngbDropdown">
+              <button class="btn btn-outline-dark w-100" id="dropdownManual" ngbDropdownAnchor (focus)="myDrop.open()">{{searchStatus}}</button>
+              <div ngbDropdownMenu aria-labelledby="dropdownManual">
+                <a (click)="sortStatus(0)" class="dropdown-item">{{searchStatusList[0]}}</a>
+                <a (click)="sortStatus(1)" class="dropdown-item">{{searchStatusList[1]}}</a>
+                <a (click)="sortStatus(2)" class="dropdown-item">{{searchStatusList[2]}}</a>
+                <a (click)="sortStatus(3)" class="dropdown-item">{{searchStatusList[3]}}</a>
+              </div>
+            </div>
+          </th> -->
+          <th colspan="1"></th>
+          <th><a class="btn btn-primary" (click)="onSearch()">{{productListTitleModel?.Search}}</a></th>
+          <th>
+            <label for="file-upload" class="custom-file-upload">
+              Import
+            </label>
+            <input id="file-upload" type="file" (change)="import($event)" onclick="this.value = null"/>
+            &nbsp;
+            <a class="btn btn-primary" (click)="export()">Export</a>
+          </th>
+        </tr>
+      </thead>
+      <tbody *ngIf="items.length">
+        <tr *ngFor="let item of items, let i = index">
+          <!-- <td>
+            <img *ngIf="item.mainImage" [src]="item?.mainImage?.thumbUrl" class="image-responsive" style="width:40px" />
+          </td> -->
+          <td>
+            <a [routerLink]="['/products/update', item._id ]" *ngIf="item._id">
+              {{item?.name}}
+            </a>
+          </td>
+          <td><p *ngIf="item.category && item.category.name">{{item?.category?.name}}</p></td>
+          <!-- <td>
+            <a [routerLink]="['/shops/update', item.shopId ]" *ngIf="item.shopId">
+              {{item?.shop?.name}}
+            </a>
+          </td>
+          <td>
+            <span class="label label-success" *ngIf="item.featured">Y</span>
+            <span class="label label-warning" *ngIf="!item.featured">N</span>
+          </td>
+          <td>
+            <span class="label label-success" *ngIf="item.hot">Y</span>
+            <span class="label label-warning" *ngIf="!item.hot">N</span>
+          </td>
+          <td>
+            <span class="label label-success" *ngIf="item.bestSell">Y</span>
+            <span class="label label-warning" *ngIf="!item.bestSell">N</span>
+          </td> -->
+          <!-- <td>
+            <span class="label label-primary" *ngIf="item.type === 'physical'">{{productListTitleModel?.Physical}}</span>
+            <span class="label label-danger" *ngIf="item.type === 'digital'">{{productListTitleModel?.Digital}}</span>
+          </td> -->
+          <!-- <td>
+            <span class="label label-success" *ngIf="item.dailyDeal">Y</span>
+            <span class="label label-warning" *ngIf="!item.dailyDeal">N</span>
+          </td> -->
+          <!-- <td [ngSwitch]="item.status">
+            <span *ngSwitchCase="1" class="label label-success d-inline-block w-100 text-center py-2">Đã duyệt</span>
+            <span *ngSwitchCase="2" class="label label-warning d-inline-block w-100 text-center py-2">Chờ duyệt</span>
+            <span *ngSwitchCase="3" class="label label-danger d-inline-block w-100 text-center py-2">Từ chối</span>
+            <span *ngSwitchDefault>Lỗi</span>
+          </td> -->
+          <td>
+            <p *ngIf="item.sap">{{item?.sap}}</p>
+          </td>
+          <td>
+            <p *ngIf="item.producer">{{item?.producer}}</p>
+          </td>
+          <td>
+            <span class="label label-success text-nowrap" *ngIf="item.isActive">{{'Active' | translate}}</span>
+            <span class="label label-danger text-nowrap" *ngIf="!item.isActive">{{'Deactive' | translate}}</span>
+          </td>
+          <!-- <td>
+            <span class="label label-success" *ngIf="item.shopVerified">Y</span>
+            <span class="label label-warning" *ngIf="!item.shopVerified">N</span>
+          </td> -->
+          <td>
+            <span>{{item?.createdAt | date :'dd/MM/yyyy'}}</span>
+          </td>
+          <td>
+            <a [routerLink]="['/products/update', item._id]" *ngIf="item._id">
+              <i class="fa fa-pencil"></i>
+            </a> &nbsp;
+            <a (click)="remove(item?._id, i)">
+              <i class="fa fa-trash"></i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="8" *ngIf="total > 10">
+            <ngb-pagination [collectionSize]="total" [maxSize]="5" [(page)]="page" (pageChange)="query()"></ngb-pagination>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>

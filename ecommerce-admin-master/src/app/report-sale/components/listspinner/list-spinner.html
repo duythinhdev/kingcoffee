@@ -1,0 +1,122 @@
+<div class="card mh-default">
+  <div class="card-body table-responsive mh-default">
+    <table class="table border-1">
+      <thead>
+        <tr>
+            <a class="btn btn-primary" (click)="query(true)">{{'Export excel' | translate}}</a>
+        </tr>
+        <tr>
+          <th><a>Mã Thành Viên </a></th>
+          <th><a>Tên Tài Khoản </a></th>
+          <th><a> Số Điện Thoại </a></th>
+          <th><a>Địa Chỉ </a></th>
+          <th>
+            <a>Tên Người Dùng</a>
+          </th>
+          <th>
+            <a>Email Người Dùng </a>
+          </th>
+          <th>
+            <a>Ngày Tạo </a>
+          </th>
+          <th>
+            <a>{{'Roles' | translate}}</a>
+          </th>
+          <th>
+            <a>Kết Quả Quay Thưởng</a>
+          </th>
+          <th>
+            <a>Coupon Codes</a>
+          </th>
+        </tr>
+        <tr>
+          <th><strong>{{totals}}</strong></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let shop of itemsData">
+          <td>{{shop?.memberId || ""}}</td>
+          <td>{{shop?.username || ""}}</td>
+          <td>{{shop?.phoneNumber}}</td>
+          <td>{{shop?.address}}</td>
+<!--          <td>{{OrderStatusDescription[shop?.orderStatus] | translate}}</td>-->
+<!--          <td>{{shop?.totalPrice | priceCurrency: 'VND'}}</td>-->
+          <td>{{shop?.name}}</td>
+          <td>{{shop?.email}}</td>
+          <td>{{shop?.createdAt}}</td>
+          <td *ngIf="shop.userRoles">
+            <span *ngFor="let shop of shop.userRoles" class="label d-inline-block"
+                  style="background: #D12886;">{{shop.RoleName === "5" ? "We MemBer" : shop.RoleName| translate }}</span>
+          </td>
+          <td *ngIf="shop?.wheelSpinned">
+            <span  class="label d-inline-block"
+                   style="background: #D12886;"
+                   *ngIf="shop?.wheelSpinned === 'QT1' || shop?.wheelSpinned === 'QT2' || shop?.wheelSpinned === 'QT3'">
+            Xe máy điện Vinfast Impes
+            </span>
+            <span
+              class="label d-inline-block"
+              style="background: #D12886;"
+              *ngIf="shop?.wheelSpinned === 'QT4'">
+            Mũ Bảo Hiểm
+            </span>
+            <span
+              class="label d-inline-block"
+              style="background: #D12886;"
+              *ngIf="shop?.wheelSpinned === 'QT5'">
+             Balo
+            </span>
+            <span
+              class="label d-inline-block"
+              style="background: #D12886;"
+              *ngIf="shop?.wheelSpinned === 'QT6'">
+            Túi xách
+            </span>
+            <span
+              class="label d-inline-block"
+              style="background: #D12886;"
+              *ngIf="shop?.wheelSpinned === 'QT7'">
+              Voucher WE4.0 500k
+            </span>
+            <span
+              class="label d-inline-block"
+              style="background: #D12886;"
+              *ngIf="shop.wheelSpinned === 'QT8'">
+            Voucher WE4.0 100k
+            </span>
+            <span
+              class="label d-inline-block"
+              style="background: #D12886;"
+              *ngIf="shop?.wheelSpinned === 'QT10'">
+            Chúc Bạn May Mắn lần sau
+            </span>
+          </td>
+          <td *ngIf="!shop?.wheelSpinned" >
+              <span
+                class="label d-inline-block"
+                style="background: #D12886;">
+                Không Có
+            </span>
+          </td>
+          <td *ngIf="shop?.couponCodes">
+              <span *ngFor="let shop of shop?.couponCodes"
+                    class="label d-inline-block"
+                style="background: #D12886;">{{shop.code}}
+              </span>
+              <span *ngIf="shop?.couponCodes.length == 0"
+                    class="label d-inline-block"
+                    style="background: #D12886;"> Không có
+              </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="display-inline" [hidden]="totals < take">
+      <div class="pull-left">
+        <ngb-pagination [maxSize]="5" [collectionSize]="totals" [(page)]="page" [pageSize]="take"
+          (pageChange)="handlePageChange()">
+        </ngb-pagination>
+      </div>
+    </div>
+  </div>
+</div>

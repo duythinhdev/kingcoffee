@@ -1,0 +1,27 @@
+{% extends '../layouts/layoutTemplateEmail.html' %}
+
+{% block content %}
+<p>Xin chào {{user.name}},</p>
+
+<p>Sản phảm trong đơn hàng <a href="{{orderLink}}">#{{subOrder.trackingCode}}</a> được cập nhật trạng thái: <strong>{{subOrder.status}}</strong></p>
+
+<table class="table">
+  <tr>
+    <td><strong>Sản phẩm:</strong></td>
+    <td>{{subOrder.productDetails.name}}</td>
+  </tr>
+  <tr>
+    <td><strong>Số lượng:</strong></td>
+    <td>{{subOrder.quantity|number}}</td>
+  </tr>
+  <tr>
+    <td>Tổng tiền:</td>
+    <td>{{subOrder.userCurrency}} {{subOrder.userTotalPrice|money}}</td>
+  </tr>
+  <tr>
+    <td>Trạng thái:</td>
+    <td>{{subOrder.status}}</td>
+  </tr>
+</table>
+
+{% endblock %}
